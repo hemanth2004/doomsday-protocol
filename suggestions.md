@@ -1,7 +1,8 @@
 # Suggestions of content to download
 
 - Wikipedia English (with some tool to browse it)
-- LLMs of different sizes
+- LLMs of different sizes 
+- Lightweight offline LLM inference tool
 - Books on
   1. Survival
   2. Biology and Medicine
