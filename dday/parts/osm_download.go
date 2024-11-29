@@ -11,7 +11,7 @@ import (
 	"github.com/hemanth2004/doomsday-protocol/dday/core"
 )
 
-func InitiateOSMDownload(folderPath string, logFunction func(string), downloadStruct *core.Download) error {
+func InitiateOSMDownload(folderPath string, logFunction func(string), downloadStruct *core.Resource) error {
 
 	// Ensure the folder path is valid
 	if _, err := os.Stat(folderPath); os.IsNotExist(err) {
@@ -26,7 +26,8 @@ func InitiateOSMDownload(folderPath string, logFunction func(string), downloadSt
 	}
 
 	// Start the request
-	resp, err := client.Get(downloadStruct.Url)
+	url := downloadStruct.UrlGetter.GetUrl()
+	resp, err := client.Get(url)
 	if err != nil {
 		return fmt.Errorf("failed to start download: %v", err)
 	}
@@ -68,7 +69,7 @@ func InitiateOSMDownload(folderPath string, logFunction func(string), downloadSt
 			elapsed := time.Since(startTime).Seconds()
 			if elapsed > 0 {
 				downloadStruct.Info.Bandwidth = doneBytes / elapsed
-				downloadStruct.Info.ETA = fmt.Sprintf("%.2f seconds", (downloadStruct.Info.Size-doneBytes)/downloadStruct.Info.Bandwidth)
+				downloadStruct.Info.ETA = uint64((downloadStruct.Info.Size - doneBytes) / downloadStruct.Info.Bandwidth)
 			}
 		}
 

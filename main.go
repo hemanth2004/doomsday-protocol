@@ -1,49 +1,48 @@
+//go dday.Resources[0].InitiateDownload("downloads/", DebugPrint, &dday.Resources[0])
+//go dday.Resources[1].InitiateDownload("downloads/", DebugPrint, &dday.Resources[1])
+
 package main
 
 import (
 	"log"
-	"time"
-
-	"github.com/alecthomas/kingpin"
-	"github.com/jroimartin/gocui"
 
 	"github.com/hemanth2004/doomsday-protocol/dday"
+	"github.com/hemanth2004/doomsday-protocol/dday/core"
+	"github.com/hemanth2004/doomsday-protocol/dday/debug"
+	"github.com/hemanth2004/doomsday-protocol/dday/ui"
+
+	tea "github.com/charmbracelet/bubbletea"
 )
 
-var (
-	app  = kingpin.New("dday-prtcl", "A command-line emergency application.").Terminate(nil)
-	post = app.Command("post", "Post a message to a channel.")
-)
+var Application core.Application = core.Application{
+	ResourceList: core.ResourceList{
+		DefaultResources: dday.DefaultResources,
+	},
+	Logs: "",
+}
+
+var p *tea.Program
 
 func main() {
-	g, _ := SetupTui()
-	defer g.Close()
+	defer debug.Close()
 
-	var SimpleLog func(s string) = func(s string) {
-		LogToConsole(g, s)
+	p = tea.NewProgram(ui.InitialTeaModel(&Application))
+	Application.TeaProgram = p
+	Application.LogFunction = DebugPrintGoroutine
+
+	go Application.StartPeriodicTicks(500)
+	go Application.InitiateProtocol()
+
+	if _, err := p.Run(); err != nil {
+		log.Fatal(err)
 	}
+}
 
-	go dday.Resources[0].InitiateDownload("downloads/", SimpleLog, &dday.Resources[0])
-	go dday.Resources[1].InitiateDownload("downloads/", SimpleLog, &dday.Resources[1])
-
-	// Update loop
-	go func(g *gocui.Gui) {
-		ticker := time.NewTicker(1 * time.Second)
-		defer ticker.Stop()
-
-		for {
-			select {
-			case <-ticker.C:
-				g.Update(func(g *gocui.Gui) error {
-					return dday.RenderDownloads(g)
-				})
-			}
-		}
-	}(g)
-
-	if err := g.MainLoop(); err != nil && err != gocui.ErrQuit {
-
-		log.Panicln(err)
-	}
-
+func DebugPrintGoroutine(message string) {
+	go DebugPrint(&Application, message)
+}
+func DebugPrint(a *core.Application, message string) {
+	a.Log(message)
+	debug.Log(a.Logs)
+	p.Send(core.LoggedMsg(a.Logs))
 }
