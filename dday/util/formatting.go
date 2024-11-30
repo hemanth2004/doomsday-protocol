@@ -30,15 +30,15 @@ func FormatSize(bytes int) string {
 
 	switch {
 	case bytes >= tb:
-		return fmt.Sprintf("%.2f TB", float64(bytes)/float64(tb))
+		return fmt.Sprintf("%.2fTB", float64(bytes)/float64(tb))
 	case bytes >= gb:
-		return fmt.Sprintf("%.2f GB", float64(bytes)/float64(gb))
+		return fmt.Sprintf("%.2fGB", float64(bytes)/float64(gb))
 	case bytes >= mb:
-		return fmt.Sprintf("%.2f MB", float64(bytes)/float64(mb))
+		return fmt.Sprintf("%.2fMB", float64(bytes)/float64(mb))
 	case bytes >= kb:
-		return fmt.Sprintf("%.2f KB", float64(bytes)/float64(kb))
+		return fmt.Sprintf("%.2fKB", float64(bytes)/float64(kb))
 	default:
-		return fmt.Sprintf("%d B", bytes)
+		return fmt.Sprintf("%dB", bytes)
 	}
 }
 

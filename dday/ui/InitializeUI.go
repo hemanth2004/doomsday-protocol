@@ -10,13 +10,66 @@ import (
 	"github.com/evertras/bubble-table/table"
 )
 
-const (
-	columnKeyID          = "id"
-	columnKeyName        = "element"
-	columnKeyProgressBar = "bar"
-	columnKeyStatus      = "status"
-	columnKeySpeed       = "speed"
-	columnKeyETA         = "eta"
+type ColumnKeyWidthPair struct {
+	Key      string
+	Width    int
+	Flexible bool
+}
+
+var (
+	idPair = ColumnKeyWidthPair{
+		Key:      "id",
+		Width:    3,
+		Flexible: false,
+	}
+	namePair = ColumnKeyWidthPair{
+		Key:      "element",
+		Width:    3,
+		Flexible: true,
+	}
+	progressBarPair = ColumnKeyWidthPair{
+		Key:      "bar",
+		Width:    4,
+		Flexible: true,
+	}
+	statusPair = ColumnKeyWidthPair{
+		Key:      "status",
+		Width:    11,
+		Flexible: false,
+	}
+	sizePair = ColumnKeyWidthPair{
+		Key:      "size",
+		Width:    2,
+		Flexible: true,
+	}
+	speedPair = ColumnKeyWidthPair{
+		Key:      "speed",
+		Width:    13,
+		Flexible: false,
+	}
+	etaPair = ColumnKeyWidthPair{
+		Key:      "eta",
+		Width:    2,
+		Flexible: true,
+	}
+	allColumnKeyPairs = []ColumnKeyWidthPair{
+		idPair,
+		namePair,
+		progressBarPair,
+		statusPair,
+		sizePair,
+		speedPair,
+		etaPair,
+	}
+	downloadTableColumns = []table.Column{
+		table.NewColumn(idPair.Key, "ID", idPair.Width),
+		table.NewFlexColumn(namePair.Key, "Name", namePair.Width),
+		table.NewFlexColumn(progressBarPair.Key, "Progress", progressBarPair.Width),
+		table.NewColumn(statusPair.Key, "Status", statusPair.Width),
+		table.NewFlexColumn(sizePair.Key, "Size", sizePair.Width),
+		table.NewColumn(speedPair.Key, "Speed", speedPair.Width),
+		table.NewFlexColumn(etaPair.Key, "ETA", etaPair.Width),
+	}
 )
 
 func InitialTeaModel(Application *core.Application) MainModel {
@@ -29,16 +82,15 @@ func InitialTeaModel(Application *core.Application) MainModel {
 		Downloads: DownloadsModel{
 			ResourceList: &Application.ResourceList,
 
+			LogFunction:   &Application.LogFunction,
 			CurrentWindow: util.NewStateHandler([]int{2, 1, 0}),
+			ConsoleOpened: true,
 
-			DownloadsTable: table.New([]table.Column{
-				table.NewColumn(columnKeyID, "ID", 3),
-				table.NewFlexColumn(columnKeyName, "Name", 2),
-				table.NewFlexColumn(columnKeyProgressBar, "Progress", 2),
-				table.NewFlexColumn(columnKeyStatus, "Status", 1),
-				table.NewFlexColumn(columnKeySpeed, "Speed", 1),
-				table.NewFlexColumn(columnKeyETA, "ETA", 1),
-			}).Border(styles.CustomBorder).WithBaseStyle(styles.TableStyle),
+			DownloadsTable: table.New(downloadTableColumns).
+				Border(styles.CustomBorder).
+				WithBaseStyle(styles.TableStyle).
+				WithMultiline(true),
+			//WithPageSize(2),
 
 			ResourceTree: tree.New([]tree.Node{}),
 

@@ -43,6 +43,5 @@ func DebugPrintGoroutine(message string) {
 }
 func DebugPrint(a *core.Application, message string) {
 	a.Log(message)
-	debug.Log(a.Logs)
 	p.Send(core.LoggedMsg(a.Logs))
 }

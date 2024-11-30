@@ -30,9 +30,12 @@ func (a *Application) StartPeriodicTicks(deltaTime int) {
 // Initiate the downloads
 func (a *Application) InitiateProtocol() {
 	a.LogFunction("Initiating doomsday-protocol.")
-	for i := range a.ResourceList.DefaultResources {
-		a.LogFunction("Starting download of resource: " + a.ResourceList.DefaultResources[i].Name)
-		go a.ResourceList.DefaultResources[i].InitiateDownload("downloads/", a.LogFunction, &a.ResourceList.DefaultResources[i])
+	for i, r := range a.ResourceList.DefaultResources {
+		if r.Tier == 0 {
+			go a.ResourceList.DefaultResources[i].InitiateDownload("downloads/tier0/", a.LogFunction, &a.ResourceList.DefaultResources[i])
+		} else if r.Tier == 1 {
+			go a.ResourceList.DefaultResources[i].InitiateDownload("downloads/tier1/", a.LogFunction, &a.ResourceList.DefaultResources[i])
+		}
 
 	}
 }

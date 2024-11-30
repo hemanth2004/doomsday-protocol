@@ -3,13 +3,14 @@ package dday
 import (
 	"github.com/hemanth2004/doomsday-protocol/dday/core"
 	"github.com/hemanth2004/doomsday-protocol/dday/parts"
+	"github.com/hemanth2004/doomsday-protocol/dday/resources"
 )
 
 var DefaultResources []core.Resource = []core.Resource{
 
 	{
-		Name:        "Indian OSM",
-		Description: "Maps",
+		Name:        "OpenStreetMaps India",
+		Description: "The latest map of all of India.",
 		Note:        "",
 		UrlGetter: core.UrlGetter{
 			Key:           "india-osm",
@@ -19,7 +20,7 @@ var DefaultResources []core.Resource = []core.Resource{
 			},
 		},
 		FileName:         "india-latest.osm.pbf",
-		InitiateDownload: parts.InitiateOSMDownload,
+		InitiateDownload: parts.InitiateFileDownload,
 		Info:             core.ResourceInformation{},
 		Status:           core.StatusQueued,
 		Error:            nil,
@@ -27,7 +28,7 @@ var DefaultResources []core.Resource = []core.Resource{
 
 	{
 		Name:        "Wikipedia English",
-		Description: "All text of all topics of the english Wikipedia",
+		Description: "All text of all topics of the english Wikipedia.",
 		Note:        "",
 		UrlGetter: core.UrlGetter{
 			Key:           "simple-wikipedia",
@@ -42,4 +43,47 @@ var DefaultResources []core.Resource = []core.Resource{
 		Status:           core.StatusQueued,
 		Error:            nil,
 	},
+
+	resources.SurvivalBooks[0],
+	resources.SurvivalBooks[1],
+	resources.SurvivalBooks[2],
+	resources.SurvivalBooks[3],
+
+	{
+		Name:        "Sample 100MB",
+		Description: "Sample 100MB file",
+		Note:        "",
+		Tier:        1,
+		UrlGetter: core.UrlGetter{
+			Key:           "sample-100mb",
+			UpdatedURLURL: []string{},
+			DefaultURLs: []string{
+				"http://speedtest.tele2.net/100MB.zip",
+			},
+		},
+		FileName:         "100MB.zip",
+		InitiateDownload: parts.InitiateFileDownload,
+		Info:             core.ResourceInformation{},
+		Status:           core.StatusQueued,
+		Error:            nil,
+	},
+
+	// {
+	// 	Name:        "Sample 1GB",
+	// 	Description: "Sample 1GB file",
+	// 	Note:        "",
+	// 	Tier:        1,
+	// 	UrlGetter: core.UrlGetter{
+	// 		Key:           "sample-1gb",
+	// 		UpdatedURLURL: []string{},
+	// 		DefaultURLs: []string{
+	// 			"http://speedtest.tele2.net/1GB.zip",
+	// 		},
+	// 	},
+	// 	FileName:         "1GB.zip",
+	// 	InitiateDownload: parts.InitiateFileDownload,
+	// 	Info:             core.ResourceInformation{},
+	// 	Status:           core.StatusQueued,
+	// 	Error:            nil,
+	// },
 }

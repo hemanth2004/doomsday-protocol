@@ -53,3 +53,9 @@ https://distro.ibiblio.org/puppylinux/puppy-fossa/
 ### Feature Ideations
 1. Let user add custom resources with links and descriptions (form filling UI ig)
 2. Let user attach notes to default and custom resources.
+
+### Development
+
+Currently focusing on UI, features and base architecture of the app.
+Then once I'm done, I'll start curating resources and testing. The app will be Linux-only so I need to shift from Windows
+to Linux soon after the UI, features and base architecture are done. Then I'll probably move to ubuntu or smthng.
