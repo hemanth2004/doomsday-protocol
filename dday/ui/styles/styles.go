@@ -10,6 +10,8 @@ const (
 	Black          = lipgloss.Color("0")
 	Maroon         = lipgloss.Color("1")
 	Green          = lipgloss.Color("2")
+	Green3         = lipgloss.Color("40")
+	Orange4        = lipgloss.Color("58")
 	Olive          = lipgloss.Color("3")
 	Navy           = lipgloss.Color("4")
 	Purple         = lipgloss.Color("5")
@@ -24,7 +26,9 @@ const (
 	Pink           = lipgloss.Color("13")
 	Yellow         = lipgloss.Color("11")
 	Grey39         = lipgloss.Color("241")
+	Grey50         = lipgloss.Color("244")
 	Grey54         = lipgloss.Color("245")
+	Grey78         = lipgloss.Color("251")
 	Aquamarine1    = lipgloss.Color("122")
 )
 
@@ -32,12 +36,22 @@ const (
 var (
 	Border     = lipgloss.RoundedBorder()
 	DebugStyle = lipgloss.NewStyle().Foreground(Grey39)
+	GreyStyle  = lipgloss.NewStyle().Foreground(Grey54) // Basically debig style but a bit brighter
 	MainStyle  = lipgloss.NewStyle().Foreground(Silver)
+
+	HelpStyle1 = lipgloss.NewStyle().Foreground(Grey78)
+	HelpStyle2 = lipgloss.NewStyle().Foreground(Grey50)
 
 	PanelStyle          = lipgloss.NewStyle().Border(Border).BorderForeground(Grey37)
 	PanelHighlightStyle = lipgloss.NewStyle().Border(Border).BorderForeground(Aquamarine1)
 
-	TableStyle = lipgloss.NewStyle().Foreground(Silver).BorderForeground(Grey39)
+	TreeDescriptionTitle = lipgloss.NewStyle().Foreground(Black).Background(Yellow).Bold(true)
+
+	TableStyle                    = lipgloss.NewStyle().Foreground(Silver).BorderForeground(Grey39)
+	DefaultResourceHeaderRowStyle = lipgloss.NewStyle().Foreground(Yellow).Bold(true).Background(Green)
+	CustomResourceHeaderRowStyle  = lipgloss.NewStyle().Foreground(Yellow).Bold(true).Background(Blue)
+
+	UnderlineStyle = lipgloss.NewStyle().Underline(true)
 )
 
 var (

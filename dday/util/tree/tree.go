@@ -229,11 +229,12 @@ func (m Model) View() string {
 	}
 
 	count := 0 // This is used to keep track of the index of the node we are on (important because we are using a recursive function)
-	sections = append(sections, lipgloss.NewStyle().Height(availableHeight).Render(m.renderTree(m.nodes, 0, &count)), help)
+	sections = append(sections, lipgloss.NewStyle().Height(availableHeight).Render(m.renderTree(m.nodes, 0, &count)))
 
 	if len(nodes) == 0 {
 		return "No data"
 	}
+
 	return lipgloss.JoinVertical(lipgloss.Left, sections...)
 }
 

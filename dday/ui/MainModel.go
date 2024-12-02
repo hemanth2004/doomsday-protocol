@@ -9,8 +9,6 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-type BoxResolution [2]int
-
 type MainModel struct {
 	width  int
 	height int
@@ -22,6 +20,7 @@ type MainModel struct {
 	Downloads    DownloadsModel
 	NewResource  NewResourceModel
 	Guides       GuidesModel
+	HelpSet      HelpSet
 }
 
 // bubbletea methods
@@ -30,7 +29,6 @@ func (m MainModel) Init() tea.Cmd {
 }
 
 func (m MainModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-
 	var cmds []tea.Cmd
 
 	// Just setting window properties
@@ -38,21 +36,46 @@ func (m MainModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.WindowSizeMsg:
 		m.width = msg.Width - 4
 		m.height = msg.Height
+
+		m.Guides.AllottedHeight = m.height - topSectionHeight - bottomSectionHeight
+		m.Guides.AllottedWidth = m.width
+
 		m.Downloads.AllottedHeight = m.height - topSectionHeight - bottomSectionHeight
 		m.Downloads.AllottedWidth = m.width
+
+		m.NewResource.AllottedHeight = m.height - topSectionHeight - bottomSectionHeight
+		m.NewResource.AllottedWidth = m.width
 
 		cmds = append(cmds, NewMainResizedCmd())
 	}
 
-	// Handle messages for child models
-	updatedDownloads, cmd := m.Downloads.Update(msg)
-	if updatedDownloads, ok := updatedDownloads.(DownloadsModel); ok {
-		m.Downloads = updatedDownloads
-		if cmd != nil {
-			cmds = append(cmds, cmd)
+	if m.CurrentState.Index() == 0 {
+		updatedGuides, cmd := m.Guides.Update(msg)
+		if updatedGuides, ok := updatedGuides.(GuidesModel); ok {
+			m.Guides = updatedGuides
+			if cmd != nil {
+				cmds = append(cmds, cmd)
+			}
+		}
+	} else if m.CurrentState.Index() == 1 {
+		updatedDownloads, cmd := m.Downloads.Update(msg)
+		if updatedDownloads, ok := updatedDownloads.(DownloadsModel); ok {
+			m.Downloads = updatedDownloads
+			if cmd != nil {
+				cmds = append(cmds, cmd)
+			}
+		}
+	} else if m.CurrentState.Index() == 2 {
+		updatedNewResource, cmd := m.NewResource.Update(msg)
+		if updatedNewResource, ok := updatedNewResource.(NewResourceModel); ok {
+			m.NewResource = updatedNewResource
+			if cmd != nil {
+				cmds = append(cmds, cmd)
+			}
 		}
 	}
 
+	// Handle messages for child models
 	switch msg := msg.(type) {
 
 	case tea.KeyMsg:
@@ -73,7 +96,7 @@ func (m MainModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 // Some constant variables that'll help me render UI better
 const (
 	topSectionHeight    int = 1
-	bottomSectionHeight int = 3
+	bottomSectionHeight int = 4 // -2 for borders
 )
 
 func (m MainModel) View() string {
@@ -95,8 +118,26 @@ func (m MainModel) View() string {
 	}
 	s += lipgloss.Place(m.width, topSectionHeight, lipgloss.Center, lipgloss.Center, stateLine) + "\n"
 
-	s += m.Downloads.View()
-	return s
+	defaultHelpText := m.HelpSet.View("    ")
+	guidesHelpText := m.Guides.HelpSet.View("    ")
+	downloadsHelpText := m.Downloads.HelpSet[m.Downloads.CurrentWindow.Index()].View("    ")
+	newresourceHelpText := m.NewResource.HelpSet.View("    ")
+
+	sep := " | "
+	helpBoxContent := ""
+
+	if m.CurrentState.Index() == 0 {
+		s += m.Guides.View()
+		helpBoxContent += guidesHelpText + sep + defaultHelpText
+	} else if m.CurrentState.Index() == 1 {
+		s += m.Downloads.View()
+		helpBoxContent += downloadsHelpText + sep + defaultHelpText
+	} else if m.CurrentState.Index() == 2 {
+		s += m.NewResource.View()
+		helpBoxContent += newresourceHelpText + sep + defaultHelpText
+	}
+
+	return s + lipgloss.Place(m.width, bottomSectionHeight-2, lipgloss.Center, lipgloss.Bottom, helpBoxContent)
 }
 
 // tea.Msg defined to propogate window resize changes downwards

@@ -36,14 +36,17 @@ type DownloadsModel struct {
 	CurrentWindow   *util.StateHandler[int]
 	ConsoleOpened   bool
 	ResourceTree    tree.Model
+	InspectModel    InspectModel
 	DownloadsTable  table.Model
 	ConsoleViewport viewport.Model
+
+	HelpSet []HelpSet
 }
 
 func (m DownloadsModel) GetWindowDimensions() (int, int, int, int) {
 	leftWidth := m.AllottedWidth / 4
 	rightWidth := m.AllottedWidth - leftWidth
-	rightHeightPrimary := int(0.7*float64(m.AllottedHeight)) - 2
+	rightHeightPrimary := int(0.6*float64(m.AllottedHeight)) - 2
 	rightHeightSecondary := m.AllottedHeight - rightHeightPrimary - 2
 
 	if !m.ConsoleOpened {
@@ -56,38 +59,68 @@ func (m DownloadsModel) GetWindowDimensions() (int, int, int, int) {
 
 type RowsMsg []table.Row
 
-func InitRows(m DownloadsModel, tableWidth int) ([]table.Row, [][]string) {
+func InitRows(m *DownloadsModel, tableWidth int) ([]table.Row, [][]string) {
+	convertStringToRow := func(s []string, resource *core.Resource) table.Row {
+		return table.NewRow(table.RowData{
+			idPair.Key:          s[0],
+			namePair.Key:        s[1],
+			progressBarPair.Key: s[2],
+			statusPair.Key:      s[3],
+			sizePair.Key:        s[4],
+			speedPair.Key:       s[5],
+			etaPair.Key:         s[6],
+			"resourceObject":    resource,
+		})
+	}
 	var rows []table.Row
 	var rowsString [][]string
-	for i, resource := range m.ResourceList.DefaultResources {
 
-		width := calculateColumnWidth(downloadTableColumns, tableWidth, getColumnFromKey(downloadTableColumns, progressBarPair.Key))
+	// Adding default resources rows
+	for tier := 0; tier < 2; tier++ {
 
-		bar := progress.New(
-			progress.WithWidth(width-2),
-			progress.WithDefaultGradient(),
-		)
-		rowString := []string{
-			strconv.Itoa(i + 1),
-			resource.Name,
-			bar.ViewAs(float64(resource.Info.Done) / float64(resource.Info.Size)),
-			string(resource.Status),
-			util.FormatSize(int(resource.Info.Done)) + " / " + util.FormatSize(int(resource.Info.Size)),
-			util.FormatSpeed(int(resource.Info.Bandwidth)),
-			util.FormatTime(resource.Info.ETA),
+		defaultResourcesHeader := []string{
+			" ",
+			"Default Resources",
+			"Tier " + strconv.Itoa(tier),
+			" ",
+			" ",
+			" ",
+			" ",
 		}
-		row := table.NewRow(table.RowData{
-			idPair.Key:          rowString[0],
-			namePair.Key:        rowString[1],
-			progressBarPair.Key: rowString[2],
-			statusPair.Key:      rowString[3],
-			sizePair.Key:        rowString[4],
-			speedPair.Key:       rowString[5],
-			etaPair.Key:         rowString[6],
-		})
+		rows = append(rows, convertStringToRow(defaultResourcesHeader, &core.EmptyResource).WithStyle(styles.DefaultResourceHeaderRowStyle))
+		rowsString = append(rowsString, defaultResourcesHeader)
+		countInThisTier := 0
+		for i, resource := range m.ResourceList.DefaultResources {
 
-		rows = append(rows, row)
-		rowsString = append(rowsString, rowString)
+			if resource.Tier == tier {
+				width := calculateColumnWidth(downloadTableColumns, tableWidth, getColumnFromKey(downloadTableColumns, progressBarPair.Key))
+
+				bar := progress.New(
+					progress.WithWidth(width-5),
+					progress.WithDefaultGradient(),
+				)
+				rowString := []string{
+					strconv.Itoa(i + 1),
+					resource.Name,
+					bar.ViewAs(float64(resource.Info.Done) / float64(resource.Info.Size)),
+					string(resource.Status),
+					util.FormatSize(int(resource.Info.Done)) + " / " + util.FormatSize(int(resource.Info.Size)),
+					util.FormatSpeed(int(resource.Info.Bandwidth)),
+					util.FormatTime(resource.Info.ETA),
+				}
+				row := convertStringToRow(rowString, &m.ResourceList.DefaultResources[i])
+
+				rows = append(rows, row)
+				rowsString = append(rowsString, rowString)
+				countInThisTier++
+
+			}
+		}
+		if countInThisTier == 0 {
+			rows = util.DeleteElement[table.Row](rows, len(rows)-1)
+			rowsString = util.DeleteElement[[]string](rowsString, len(rowsString)-1)
+			break
+		}
 	}
 
 	return rows, rowsString
@@ -102,12 +135,12 @@ func (m DownloadsModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmds []tea.Cmd
 
 	leftWidth, rightWidth, rightHeightPrimary, rightHeightSecondary := m.GetWindowDimensions()
-	rows, rowsString := InitRows(m, rightWidth)
+	rows, rowsString := InitRows(&m, rightWidth)
 
 	m.DownloadsTable, cmd = m.DownloadsTable.Update(msg)
 	cmds = append(cmds, cmd)
 
-	tableHeight := rightHeightPrimary - 9
+	tableHeight := rightHeightPrimary - util.IfElse(leftWidth < acceptableLeftWidth, 12, 8)
 	m.DownloadsTable = m.DownloadsTable.
 		WithRows(rows).
 		WithTargetWidth(rightWidth).
@@ -119,16 +152,19 @@ func (m DownloadsModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case tea.WindowSizeMsg:
 
-		leftHeight := int(float64(m.AllottedHeight)/2) - 1
+		leftHeight := m.AllottedHeight - 3
 		m.ResourceTree.Resize(leftWidth, leftHeight)
 		m.WindowDimensions[0] = [2]int{leftWidth, leftHeight}
 
 		m.WindowDimensions[1] = [2]int{rightWidth, tableHeight}
 
-		m.ConsoleViewport = viewport.New(rightWidth, rightHeightSecondary-2)
+		m.ConsoleViewport = viewport.New(rightWidth, rightHeightSecondary-3)
 		m.ConsoleViewport.SetContent(m.LogsContent)
 		m.ConsoleViewport.GotoBottom()
-		m.WindowDimensions[2] = [2]int{rightWidth, rightHeightSecondary - 2}
+		m.WindowDimensions[2] = [2]int{rightWidth, rightHeightSecondary - 3}
+
+		m.InspectModel.Width = leftWidth
+		m.InspectModel.Height = leftHeight
 
 	case core.LoggedMsg:
 		m.ConsoleViewport.SetContent(string(msg))
@@ -149,9 +185,28 @@ func (m DownloadsModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	}
 
+	// Update Inpsect Model
+	selectedResource := m.DownloadsTable.HighlightedRow().Data["resourceObject"].(*core.Resource)
+	if selectedResource.Name == "" {
+		//selectedResource
+	}
+
+	//(*m.LogFunction)(selectedResource.Name)
+	m.InspectModel.InspectingDownload = selectedResource
+	updatedInspect, cmd := m.InspectModel.Update(msg)
+
+	if updatedInspect, ok := updatedInspect.(InspectModel); ok {
+		m.InspectModel = updatedInspect
+		if cmd != nil {
+			cmds = append(cmds, cmd)
+		}
+	}
+
 	// Update Resource Tree
 	if m.CurrentWindow.Index() == 1 {
 		m.ResourceTree, cmd = m.ResourceTree.Update(msg)
+	} else if m.CurrentWindow.Index() == 0 {
+		m.ConsoleViewport, cmd = m.ConsoleViewport.Update(msg)
 	}
 	m.ResourceTree.SetNodes(m.GenerateResourceTree())
 	cmds = append(cmds, cmd)
@@ -161,44 +216,18 @@ func (m DownloadsModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m DownloadsModel) GenerateResourceTree() []tree.Node {
 	// Initialize the tree structure
-	a := []tree.Node{
-		{
-			Value: "Default Resources",
-			Desc:  "Resources that the protocol recommends.",
-			Children: []tree.Node{
-				{
-					Value:    "Tier 0",
-					Desc:     "Absolutely necessary.",
-					Children: []tree.Node{},
-				},
-				{
-					Value:    "Tier 1",
-					Desc:     "Slightly less absolutely necessary.",
-					Children: []tree.Node{},
-				},
-			},
-		},
-		{
-			Value:    "Custom Resources",
-			Desc:     "Resources that the user has added.",
-			Children: []tree.Node{},
-		},
-	}
+	a := tree.InitResourceTree()
 
 	// Populate default resources with their respective tiers based on their Tier field
 	for _, resource := range m.ResourceList.DefaultResources {
 		newNode := tree.Node{
 			Value:    resource.Name,
-			Desc:     resource.Description,
+			Desc:     styles.TreeDescriptionTitle.Render(resource.Name+":") + "\n" + resource.Description,
 			Children: []tree.Node{},
 		}
 
 		// Check the Tier and add to the corresponding tier node
-		if resource.Tier == 0 {
-			a[0].Children[0].Children = append(a[0].Children[0].Children, newNode)
-		} else if resource.Tier == 1 {
-			a[0].Children[1].Children = append(a[0].Children[1].Children, newNode)
-		}
+		a[0].Children[resource.Tier].Children = append(a[0].Children[resource.Tier].Children, newNode)
 	}
 
 	// If no resources are added under a specific tier, add an empty node
@@ -234,6 +263,12 @@ func (m DownloadsModel) GenerateResourceTree() []tree.Node {
 	return a
 }
 
+func (m *DownloadsModel) EnsureValidSelect(msg tea.Msg) {
+
+}
+
+var acceptableLeftWidth = 35
+
 func (m DownloadsModel) View() string {
 	var s string
 
@@ -244,7 +279,13 @@ func (m DownloadsModel) View() string {
 	// Rendering content in each window
 
 	// Console Viewport content
-	bottomRightContent := fmt.Sprintf("CONSOLE\n%s\n", styles.DebugStyle.Render(util.DrawLine(rightWidth)))
+	consoleState := ""
+	if m.ConsoleOpened {
+		consoleState = styles.GreyStyle.Render("[Opened]")
+	} else {
+		consoleState = styles.GreyStyle.Render("[Closed]")
+	}
+	bottomRightContent := fmt.Sprintf("CONSOLE "+consoleState+"\n%s\n", styles.DebugStyle.Render(util.DrawLine(rightWidth)))
 	if m.ConsoleOpened {
 		bottomRightContent += m.ConsoleViewport.View()
 	}
@@ -254,12 +295,8 @@ func (m DownloadsModel) View() string {
 	topRightContent += m.DownloadsTable.View()
 
 	// Resource Tree content
-	leftContent := fmt.Sprintf("RESOURCES\n%s\n%s", styles.DebugStyle.Render(util.DrawLine(leftWidth)), m.ResourceTree.View())
-	leftContent += "\n" + styles.DebugStyle.Render(util.DrawLine(leftWidth))
-	curNode := m.ResourceTree.NodeAtCursor()
-	if curNode != nil {
-		leftContent += "\n" + curNode.Desc
-	}
+	leftContent := fmt.Sprintf("RESOURCES\n%s\n", styles.DebugStyle.Render(util.DrawLine(leftWidth)))
+	leftContent += m.InspectModel.View()
 
 	//-------------
 
@@ -296,7 +333,7 @@ func (m DownloadsModel) View() string {
 
 func updateTableHeightAndFooter(m *DownloadsModel, rowsString [][]string, width, viewportHeight int) {
 	linesUsedByEachTableRow := calculateExtraMultilineRows(downloadTableColumns, rowsString, width-2)
-	pageSize := calculatePaginationSize(linesUsedByEachTableRow, len(rowsString), viewportHeight)
+	pageSize := max(1, calculatePaginationSize(linesUsedByEachTableRow, len(rowsString), viewportHeight))
 
 	startIndex, endIndex := m.DownloadsTable.VisibleIndices()
 	visibleRowsHeight := 0
@@ -306,7 +343,7 @@ func updateTableHeightAndFooter(m *DownloadsModel, rowsString [][]string, width,
 	unusedHeight := viewportHeight - visibleRowsHeight
 	customFooter := fmt.Sprintf("%d / %d ", m.DownloadsTable.CurrentPage(), m.DownloadsTable.MaxPages())
 	for i := 0; i < unusedHeight-2; i++ {
-		customFooter += "\n"
+		customFooter += ""
 	}
 
 	m.DownloadsTable = m.DownloadsTable.
@@ -423,22 +460,4 @@ func calculatePaginationSize(linesUsedByEachTableRow []int, totalRows, viewportH
 
 	//fmt.Print("Lines In Each Row:", linesUsedByEachTableRow, "\n\r", "Size: ", size, "\n\r")
 	return
-}
-
-func printMatrix(matrix [][]int) (s string) {
-	for _, row := range matrix { // Loop through each row
-		for _, col := range row { // Loop through each column in the row
-			s += strconv.Itoa(col) + "  " // Print each element with a space
-		}
-		s += "\n"
-	}
-	return
-}
-
-func sum(arr []int) int {
-	sum := 0
-	for _, num := range arr {
-		sum += num
-	}
-	return sum
 }

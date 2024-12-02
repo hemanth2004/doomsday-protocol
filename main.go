@@ -30,7 +30,7 @@ func main() {
 	Application.TeaProgram = p
 	Application.LogFunction = DebugPrintGoroutine
 
-	go Application.StartPeriodicTicks(500)
+	go Application.StartPeriodicTicks(250) // > 4FPS
 	go Application.InitiateProtocol()
 
 	if _, err := p.Run(); err != nil {

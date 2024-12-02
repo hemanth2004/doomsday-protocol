@@ -1,6 +1,8 @@
 package core
 
-import "time"
+import (
+	"time"
+)
 
 // 2-3 Downloads downloading at a time
 // Rest are queued
@@ -13,10 +15,13 @@ type Resource struct {
 
 	UrlGetter        UrlGetter
 	FileName         string
+	Location         string
 	InitiateDownload func(path string, logFunction func(string), infoStruct *Resource) error
 	Info             ResourceInformation
 	Status           DownloadStatus
 	Error            error
+
+	CustomResource bool
 }
 
 // Download info to construct the UI
@@ -45,3 +50,22 @@ const (
 	StatusCompleted   DownloadStatus = "Completed"
 	StatusFailed      DownloadStatus = "Failed"
 )
+
+var EmptyResource = Resource{
+	Name:        "example",
+	Description: "example",
+	Note:        "example",
+	Tier:        1,
+	UrlGetter: UrlGetter{
+		Key:           "example",
+		UpdatedURLURL: []string{},
+		DefaultURLs: []string{
+			"https://www.example.com",
+		},
+	},
+	FileName:         "example.txt",
+	InitiateDownload: func(path string, logFunction func(string), infoStruct *Resource) error { return nil },
+	Info:             ResourceInformation{},
+	Status:           StatusQueued,
+	Error:            nil,
+}

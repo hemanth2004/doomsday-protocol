@@ -1,5 +1,7 @@
 package util
 
+import "strconv"
+
 // Draw a line
 func DrawLine(width int) string {
 	var s string = ""
@@ -72,4 +74,38 @@ func SetColumn[T any](matrix [][]T, colIndex int, value T) {
 			matrix[i][colIndex] = value
 		}
 	}
+}
+
+func PrintMatrix(matrix [][]int) (s string) {
+	for _, row := range matrix { // Loop through each row
+		for _, col := range row { // Loop through each column in the row
+			s += strconv.Itoa(col) + "  " // Print each element with a space
+		}
+		s += "\n"
+	}
+	return
+}
+
+func Sum(arr []int) int {
+	sum := 0
+	for _, num := range arr {
+		sum += num
+	}
+	return sum
+}
+
+// Ternary Operator
+func IfElse[T any](cond bool, exp1, exp2 T) T {
+	if cond {
+		return exp1
+	} else {
+		return exp2
+	}
+}
+
+func MarginHor(s string, amt int) string {
+	for i := 0; i < amt; i++ {
+		s = " " + s + " "
+	}
+	return s
 }

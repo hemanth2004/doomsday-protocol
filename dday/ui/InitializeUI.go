@@ -10,6 +10,8 @@ import (
 	"github.com/evertras/bubble-table/table"
 )
 
+type BoxResolution [2]int
+
 type ColumnKeyWidthPair struct {
 	Key      string
 	Width    int
@@ -52,15 +54,6 @@ var (
 		Width:    2,
 		Flexible: true,
 	}
-	allColumnKeyPairs = []ColumnKeyWidthPair{
-		idPair,
-		namePair,
-		progressBarPair,
-		statusPair,
-		sizePair,
-		speedPair,
-		etaPair,
-	}
 	downloadTableColumns = []table.Column{
 		table.NewColumn(idPair.Key, "ID", idPair.Width),
 		table.NewFlexColumn(namePair.Key, "Name", namePair.Width),
@@ -78,12 +71,12 @@ func InitialTeaModel(Application *core.Application) MainModel {
 		Application:  Application,
 		ResourceList: &Application.ResourceList,
 
-		CurrentState: util.NewStateHandler([]string{"guides", "downloads", "new resource"}),
+		CurrentState: util.NewStateHandler([]string{"guides", "downloads", "new resource"}, 1),
 		Downloads: DownloadsModel{
 			ResourceList: &Application.ResourceList,
 
 			LogFunction:   &Application.LogFunction,
-			CurrentWindow: util.NewStateHandler([]int{2, 1, 0}),
+			CurrentWindow: util.NewStateHandler([]int{2, 1, 0}, 0),
 			ConsoleOpened: true,
 
 			DownloadsTable: table.New(downloadTableColumns).
@@ -95,8 +88,39 @@ func InitialTeaModel(Application *core.Application) MainModel {
 			ResourceTree: tree.New([]tree.Node{}),
 
 			ConsoleViewport: viewport.New(5, 5),
+
+			HelpSet: InitDownloadsHelpSet(),
 		},
 		NewResource: NewResourceModel{},
 		Guides:      GuidesModel{},
+
+		HelpSet: InitMainHelpSet(),
+	}
+}
+
+func InitMainHelpSet() HelpSet {
+	return HelpSet{
+		{"ctrl+q/e", "switch tabs"},
+	}
+}
+
+func InitDownloadsHelpSet() []HelpSet {
+	return []HelpSet{
+		// Console
+		{
+			{"enter", "close/open"},
+			{"tab", "switch panels"},
+		},
+		// Resource tree
+		{
+			{"↑/↓", "navigate"},
+			{"tab", "switch panels"},
+		},
+		// Downloads Table
+		{
+			{"↑/↓", "navigate"},
+			{"space", "pause selected"},
+			{"tab", "switch panels"},
+		},
 	}
 }

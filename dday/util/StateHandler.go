@@ -6,11 +6,11 @@ type StateHandler[T comparable] struct {
 }
 
 // NewStateHandler initializes the state handler with a slice of states.
-func NewStateHandler[T comparable](states []T) *StateHandler[T] {
+func NewStateHandler[T comparable](states []T, cur int) *StateHandler[T] {
 	if len(states) == 0 {
 		panic("states cannot be empty")
 	}
-	return &StateHandler[T]{states: states, current: 0}
+	return &StateHandler[T]{states: states, current: cur}
 }
 
 // CurrentState returns the current state.

@@ -26,10 +26,12 @@ func InitiateFileDownload(folderPath string, logFunction func(string), downloadS
 			return fmt.Errorf(errMsg)
 		}
 		logFunction(fmt.Sprintf("Folder created: %s", folderPath))
+
 	}
 
 	// Create the full file path
 	filePath := filepath.Join(folderPath, downloadStruct.FileName)
+	downloadStruct.Location = filePath
 
 	client := &http.Client{
 		Timeout: 10 * time.Minute,
