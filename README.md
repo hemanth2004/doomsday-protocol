@@ -51,7 +51,16 @@ Links
 https://distro.ibiblio.org/puppylinux/puppy-fossa/
 
 ## TO-DO
-1. Improve and polish https downloads
+1. Better core download functionality
+	a. Pause and Resume downloads
+	b. Retry failed downloads
+	c. Auto & Manual check validity of download files
+	d. Concurrent download of upto N resources
+	e. Rest will be queued and downloaded in series
+	f. Edit N value from settings
+	g. TODO: in the far future.
+		- Setup server for hosting up to date links for resources
+		- Or even better to get the default resources list from the server
 2. Create Guides for default resources
 3. New/Edit Resource Form Tab
 4. Feature-rich guides, notes, common files - browser & reader

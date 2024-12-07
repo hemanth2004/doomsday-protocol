@@ -13,7 +13,7 @@ type Application struct {
 	ResourceList ResourceList
 
 	LogFunction func(string)
-	Logs        string
+	Logs        Log
 }
 
 type TickMsg time.Time
@@ -40,9 +40,13 @@ func (a *Application) InitiateProtocol() {
 	}
 }
 
+// Logs Logic
+type Log = [][2]string
+
 // Log a message on the console
 func (a *Application) Log(s string) {
-	a.Logs += "> " + s + "\n"
+	a.Logs = append(a.Logs, [2]string{s, time.Now().Format(time.DateTime)})
+	a.TeaProgram.Send(LoggedMsg(a.Logs))
 }
 
-type LoggedMsg string
+type LoggedMsg [][2]string

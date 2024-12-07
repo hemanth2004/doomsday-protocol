@@ -15,9 +15,9 @@ import (
 const (
 	bottomLeft string = " └─"
 
-	white  = lipgloss.Color("#ffffff")
-	black  = lipgloss.Color("#000000")
-	purple = lipgloss.Color("#bd93f9")
+	white  = styles.BrightWhite
+	black  = styles.Black
+	purple = styles.BrightBlue
 )
 
 type Styles struct {
@@ -29,8 +29,8 @@ type Styles struct {
 
 func defaultStyles() Styles {
 	return Styles{
-		Shapes:     lipgloss.NewStyle().Margin(0, 0, 0, 0).Foreground(lipgloss.Color("200")),
-		Selected:   lipgloss.NewStyle().Margin(0, 0, 0, 0).Background(styles.Grey37),
+		Shapes:     lipgloss.NewStyle().Margin(0, 0, 0, 0).Foreground(white),
+		Selected:   lipgloss.NewStyle().Margin(0, 0, 0, 0).Background(black),
 		Unselected: lipgloss.NewStyle().Margin(0, 0, 0, 0).Foreground(lipgloss.AdaptiveColor{Light: "#000000", Dark: "#ffffff"}),
 		Help:       lipgloss.NewStyle().Margin(0, 0, 0, 0).Foreground(lipgloss.AdaptiveColor{Light: "#000000", Dark: "#ffffff"}),
 	}

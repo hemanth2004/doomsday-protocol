@@ -12,7 +12,7 @@ import (
 )
 
 // InitiateFileDownload handles downloading a file to a specified folder while updating core.Resource and logging progress.
-func InitiateFileDownload(folderPath string, logFunction func(string), downloadStruct *core.Resource) error {
+func InitiateHTTPDownload(folderPath string, logFunction func(string), downloadStruct *core.Resource) error {
 	downloadStruct.Status = core.StatusQueued
 
 	// Ensure the folder path exists or create it

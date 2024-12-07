@@ -18,7 +18,7 @@ var Application core.Application = core.Application{
 	ResourceList: core.ResourceList{
 		DefaultResources: dday.DefaultResources,
 	},
-	Logs: "",
+	Logs: [][2]string{},
 }
 
 var p *tea.Program
@@ -43,5 +43,4 @@ func DebugPrintGoroutine(message string) {
 }
 func DebugPrint(a *core.Application, message string) {
 	a.Log(message)
-	p.Send(core.LoggedMsg(a.Logs))
 }

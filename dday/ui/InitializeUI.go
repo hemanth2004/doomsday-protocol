@@ -76,8 +76,7 @@ func InitialTeaModel(Application *core.Application) MainModel {
 			ResourceList: &Application.ResourceList,
 
 			LogFunction:   &Application.LogFunction,
-			CurrentWindow: util.NewStateHandler([]int{2, 1, 0}, 0),
-			ConsoleOpened: true,
+			CurrentWindow: util.NewStateHandler([]int{2, 1, 0}, 2),
 
 			DownloadsTable: table.New(downloadTableColumns).
 				Border(styles.CustomBorder).
@@ -87,7 +86,11 @@ func InitialTeaModel(Application *core.Application) MainModel {
 
 			ResourceTree: tree.New([]tree.Node{}),
 
-			ConsoleViewport: viewport.New(5, 5),
+			ConsoleModel: ConsoleModel{
+				Viewport:      viewport.New(5, 5),
+				ConsoleOpened: true,
+				LogsContent:   [][2]string{},
+			},
 
 			HelpSet: InitDownloadsHelpSet(),
 		},
@@ -109,11 +112,12 @@ func InitDownloadsHelpSet() []HelpSet {
 		// Console
 		{
 			{"enter", "close/open"},
+			{"↑/↓", "navigate"},
 			{"tab", "switch panels"},
 		},
-		// Resource tree
+		// Download Inspector
 		{
-			{"↑/↓", "navigate"},
+			{"↑/↓", "navigate about"},
 			{"tab", "switch panels"},
 		},
 		// Downloads Table

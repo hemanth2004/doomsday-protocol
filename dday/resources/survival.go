@@ -2,7 +2,7 @@ package resources
 
 import (
 	"github.com/hemanth2004/doomsday-protocol/dday/core"
-	"github.com/hemanth2004/doomsday-protocol/dday/parts"
+	"github.com/hemanth2004/doomsday-protocol/dday/core/parts"
 )
 
 var (
@@ -20,7 +20,7 @@ var (
 				},
 			},
 			FileName:         "The_Ultimate_Survial_Guide.txt",
-			InitiateDownload: parts.InitiateFileDownload,
+			InitiateDownload: parts.InitiateHTTPDownload,
 			Info:             core.ResourceInformation{},
 			Status:           core.StatusQueued,
 			Error:            nil,
@@ -39,7 +39,7 @@ var (
 				},
 			},
 			FileName:         "The_Ultimate_Survial_Guide.pdf",
-			InitiateDownload: parts.InitiateFileDownload,
+			InitiateDownload: parts.InitiateHTTPDownload,
 			Info:             core.ResourceInformation{},
 			Status:           core.StatusQueued,
 			Error:            nil,
@@ -58,7 +58,7 @@ var (
 				},
 			},
 			FileName:         "The_Survial_Medicine_Handbook.pdf",
-			InitiateDownload: parts.InitiateFileDownload,
+			InitiateDownload: parts.InitiateHTTPDownload,
 			Info:             core.ResourceInformation{},
 			Status:           core.StatusQueued,
 			Error:            nil,
@@ -77,7 +77,7 @@ var (
 				},
 			},
 			FileName:         "The_Survial_Medicine_Handbook.txt",
-			InitiateDownload: parts.InitiateFileDownload,
+			InitiateDownload: parts.InitiateHTTPDownload,
 			Info:             core.ResourceInformation{},
 			Status:           core.StatusQueued,
 			Error:            nil,

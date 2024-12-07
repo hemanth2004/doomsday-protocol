@@ -1,7 +1,10 @@
 package ui
 
 import (
+	"strconv"
+
 	"github.com/hemanth2004/doomsday-protocol/dday/core"
+	"github.com/hemanth2004/doomsday-protocol/dday/debug"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui/styles"
 	"github.com/hemanth2004/doomsday-protocol/dday/util"
 
@@ -20,6 +23,7 @@ type MainModel struct {
 	Downloads    DownloadsModel
 	NewResource  NewResourceModel
 	Guides       GuidesModel
+	Statusbar    StatusbarModel
 	HelpSet      HelpSet
 }
 
@@ -46,7 +50,10 @@ func (m MainModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.NewResource.AllottedHeight = m.height - topSectionHeight - bottomSectionHeight
 		m.NewResource.AllottedWidth = m.width
 
+		m.Statusbar.Width = m.width
+
 		cmds = append(cmds, NewMainResizedCmd())
+		debug.Log(strconv.Itoa(msg.Width))
 	}
 
 	if m.CurrentState.Index() == 0 {
@@ -137,7 +144,7 @@ func (m MainModel) View() string {
 		helpBoxContent += newresourceHelpText + sep + defaultHelpText
 	}
 
-	return s + lipgloss.Place(m.width, bottomSectionHeight-2, lipgloss.Center, lipgloss.Bottom, helpBoxContent)
+	return s + lipgloss.Place(m.width, bottomSectionHeight-3, lipgloss.Center, lipgloss.Bottom, helpBoxContent) + "\n" + m.Statusbar.View()
 }
 
 // tea.Msg defined to propogate window resize changes downwards
