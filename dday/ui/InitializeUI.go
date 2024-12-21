@@ -4,6 +4,7 @@ import (
 	"github.com/charmbracelet/bubbles/viewport"
 	"github.com/hemanth2004/doomsday-protocol/dday/core"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui/styles"
+	"github.com/hemanth2004/doomsday-protocol/dday/ui/submodels"
 	"github.com/hemanth2004/doomsday-protocol/dday/util"
 	"github.com/hemanth2004/doomsday-protocol/dday/util/tree"
 
@@ -71,7 +72,7 @@ func InitialTeaModel(Application *core.Application) MainModel {
 		Application:  Application,
 		ResourceList: &Application.ResourceList,
 
-		CurrentState: util.NewStateHandler([]string{"guides", "downloads", "new resource"}, 1),
+		CurrentState: util.NewStateHandler([]string{"guides", "downloads", "new resource"}, 0),
 		Downloads: DownloadsModel{
 			ResourceList: &Application.ResourceList,
 
@@ -86,7 +87,7 @@ func InitialTeaModel(Application *core.Application) MainModel {
 
 			ResourceTree: tree.New([]tree.Node{}),
 
-			ConsoleModel: ConsoleModel{
+			ConsoleModel: submodels.ConsoleModel{
 				Viewport:      viewport.New(5, 5),
 				ConsoleOpened: true,
 				LogsContent:   [][2]string{},
@@ -95,7 +96,13 @@ func InitialTeaModel(Application *core.Application) MainModel {
 			HelpSet: InitDownloadsHelpSet(),
 		},
 		NewResource: NewResourceModel{},
-		Guides:      GuidesModel{},
+		Home: HomeModel{
+			CurrentWindow: util.NewStateHandler([]int{2, 1, 0}, 0),
+			TextViewer:    submodels.TextViewerModel{},
+			GuideTree:     submodels.GuideTreeModel{},
+			StatusModel:   submodels.StatusModel{},
+			HelpSet:       InitHomeHelpSet(),
+		},
 
 		HelpSet: InitMainHelpSet(),
 	}

@@ -1,4 +1,4 @@
-package ui
+package submodels
 
 import (
 	"strconv"
@@ -46,7 +46,10 @@ func (m InspectModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmd tea.Cmd
 
 	switch msg := msg.(type) {
-	case tea.WindowSizeMsg:
+	case ResizeMsgL2:
+		m.Width = msg.Width
+		m.Height = msg.Height
+		debug.Log("InspectModel: Resize: " + strconv.Itoa(msg.Width) + " " + strconv.Itoa(msg.Height))
 		m.viewport = viewport.New(m.Width, m.Height-3)
 	case tea.KeyMsg:
 		debug.Log("Movingviewport " + msg.String())
@@ -75,57 +78,67 @@ func (m InspectModel) View() string {
 			buttonRender = styles.TertiaryInvertedStyle.Render(util.MarginHor(" Open Guide (ctrl+g) ", 3))
 		}
 		guideButton := "\n" + lipgloss.Place(m.Width, 3, lipgloss.Center, lipgloss.Center, buttonRender)
-		horizontalLine := styles.DebugStyle.Render(util.DrawLine(m.Width))
+		horizontalLine := styles.PrimaryStyle.Render(util.DrawLine(m.Width))
 		bottomSection = horizontalLine + guideButton
-
 	}
 
 	return m.viewport.View() + bottomSection
 }
 
 func (m InspectModel) UpdateContent() string {
-
 	var s string
+	if m.InspectingDownload != nil {
 
-	if m.InspectingDownload.Name == "" || m.InspectingDownload.Name == "example" {
-		s = "No download selected on the table."
-		return s
+		if m.InspectingDownload.Name == "" || m.InspectingDownload.Name == "example" {
+			s = "No download selected on the table."
+			return s
+		}
+
+		horizontalLine := styles.DebugStyle.Render(util.DrawLine(m.Width))
+
+		var header string
+		header += headStyle.Render(util.MarginHor(m.InspectingDownload.Name, 1))
+		header += "\nTYPE: " + util.IfElse(m.InspectingDownload.CustomResource, "Custom", "Default")
+		header += util.IfElse(!m.InspectingDownload.CustomResource, "\nTIER: "+strconv.Itoa(m.InspectingDownload.Tier), "") + "\n"
+		header += "\nSIZE: " + util.FormatSize(int(m.InspectingDownload.Info.Size))
+		var statusStyle lipgloss.Style
+		switch m.InspectingDownload.Status {
+		case core.StatusCompleted:
+			statusStyle = statusSuccessStyle
+		case core.StatusDownloading:
+			statusStyle = statusDownloadingStyle
+		case core.StatusFailed:
+			statusStyle = statusFailStyle
+		default:
+			statusStyle = statusWaitStyle
+		}
+		header += "\nSTATUS: " + statusStyle.Render(util.MarginHor(string(m.InspectingDownload.Status), 1)) + "\n\n"
+
+		var fileDetails string
+		fileDetails += "Source URL:\n" + underlineStyle.Render(m.InspectingDownload.UrlGetter.RecentURLUsed)
+		fileDetails += "\nLocation:\n" + underlineStyle.Render(m.InspectingDownload.Location) + "\n\n"
+
+		var resourceDetails string
+		resourceDetails += "\n\n" + detailsStyle.Render("# Description ") + "\n" +
+			m.InspectingDownload.Description
+		resourceDetails += "\n\n" + detailsStyle.Render("# Note ") + "\n" +
+			util.IfElse(m.InspectingDownload.Note == "", "-", m.InspectingDownload.Note) + "\n\n"
+
+		var allSources string
+		allSources += "\n\n" + "All Sources:\n"
+
+		s += header + fileDetails + horizontalLine + resourceDetails + horizontalLine + allSources
 	}
-
-	horizontalLine := styles.DebugStyle.Render(util.DrawLine(m.Width))
-
-	var header string
-	header += headStyle.Render(util.MarginHor(m.InspectingDownload.Name, 1))
-	header += "\nTYPE: " + util.IfElse(m.InspectingDownload.CustomResource, "Custom", "Default")
-	header += util.IfElse(!m.InspectingDownload.CustomResource, "\nTIER: "+strconv.Itoa(m.InspectingDownload.Tier), "") + "\n"
-	header += "\nSIZE: " + util.FormatSize(int(m.InspectingDownload.Info.Size))
-	var statusStyle lipgloss.Style
-	switch m.InspectingDownload.Status {
-	case core.StatusCompleted:
-		statusStyle = statusSuccessStyle
-	case core.StatusDownloading:
-		statusStyle = statusDownloadingStyle
-	case core.StatusFailed:
-		statusStyle = statusFailStyle
-	default:
-		statusStyle = statusWaitStyle
-	}
-	header += "\nSTATUS: " + statusStyle.Render(util.MarginHor(string(m.InspectingDownload.Status), 1)) + "\n\n"
-
-	var fileDetails string
-	fileDetails += "Source URL:\n" + underlineStyle.Render(m.InspectingDownload.UrlGetter.RecentURLUsed)
-	fileDetails += "\nLocation:\n" + underlineStyle.Render(m.InspectingDownload.Location) + "\n\n"
-
-	var resourceDetails string
-	resourceDetails += "\n\n" + detailsStyle.Render("# Description ") + "\n" +
-		m.InspectingDownload.Description
-	resourceDetails += "\n\n" + detailsStyle.Render("# Note ") + "\n" +
-		util.IfElse(m.InspectingDownload.Note == "", "-", m.InspectingDownload.Note) + "\n\n"
-
-	var allSources string
-	allSources += "\n\n" + "All Sources:\n"
-
-	s += header + fileDetails + horizontalLine + resourceDetails + horizontalLine + allSources
 
 	return s
+}
+
+type ResizeMsgL2 struct {
+	Width  int
+	Height int
+}
+
+type ResizeMsgL3 struct {
+	Width  int
+	Height int
 }

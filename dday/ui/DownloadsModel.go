@@ -5,6 +5,7 @@ import (
 
 	"github.com/hemanth2004/doomsday-protocol/dday/core"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui/styles"
+	"github.com/hemanth2004/doomsday-protocol/dday/ui/submodels"
 	"github.com/hemanth2004/doomsday-protocol/dday/util"
 	"github.com/hemanth2004/doomsday-protocol/dday/util/tableutils"
 	"github.com/hemanth2004/doomsday-protocol/dday/util/tree"
@@ -18,8 +19,8 @@ import (
 )
 
 type DownloadsModel struct {
-	AllottedHeight int
-	AllottedWidth  int
+	Height int
+	Width  int
 
 	// Core
 	LogFunction  *func(string)
@@ -32,22 +33,22 @@ type DownloadsModel struct {
 	// 2-Console(bottomRight)
 	CurrentWindow  *util.StateHandler[int]
 	ResourceTree   tree.Model
-	InspectModel   InspectModel
+	InspectModel   submodels.InspectModel
 	DownloadsTable table.Model
-	ConsoleModel   ConsoleModel
+	ConsoleModel   submodels.ConsoleModel
 
 	HelpSet []HelpSet
 }
 
-func (m DownloadsModel) GetWindowDimensions() (int, int, int, int) {
-	leftWidth := m.AllottedWidth / 4
-	rightWidth := m.AllottedWidth - leftWidth
-	rightHeightPrimary := int(0.75*float64(m.AllottedHeight)) - 2
-	rightHeightSecondary := m.AllottedHeight - rightHeightPrimary - 2
+func (m DownloadsModel) GetPanelDimensions() (int, int, int, int) {
+	leftWidth := m.Width / 4
+	rightWidth := m.Width - leftWidth
+	rightHeightPrimary := int(0.75*float64(m.Height)) - 2
+	rightHeightSecondary := m.Height - rightHeightPrimary - 2
 
 	if !m.ConsoleModel.ConsoleOpened {
 		rightHeightSecondary = 4
-		rightHeightPrimary = m.AllottedHeight - 2 - rightHeightSecondary
+		rightHeightPrimary = m.Height - 2 - rightHeightSecondary
 	}
 
 	return leftWidth, rightWidth, rightHeightPrimary, rightHeightSecondary
@@ -131,7 +132,7 @@ func (m DownloadsModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmd tea.Cmd = nil
 	var cmds []tea.Cmd
 
-	leftWidth, rightWidth, rightHeightPrimary, rightHeightSecondary := m.GetWindowDimensions()
+	_, rightWidth, rightHeightPrimary, _ := m.GetPanelDimensions()
 	rows, rowsString := InitRows(&m, rightWidth)
 
 	m.DownloadsTable, cmd = m.DownloadsTable.Update(msg)
@@ -156,25 +157,30 @@ func (m DownloadsModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	m.DownloadsTable = tableutils.UpdateTableHeightAndFooter(m.DownloadsTable, rowsString, downloadTableColumns, rightWidth, tableHeight)
 
 	switch msg := msg.(type) {
+	case ResizeMsgL1:
 
-	case tea.WindowSizeMsg:
+		m.Height = msg.Height
+		m.Width = msg.Width
+		leftWidth, rightWidth, _, rightHeightSecondary := m.GetPanelDimensions()
 
-		leftHeight := m.AllottedHeight - 3
+		leftHeight := m.Height - 3
 		m.ResourceTree.Resize(leftWidth, leftHeight)
 
 		rows[1] = rows[1].Selected(true)
 		m.DownloadsTable = m.DownloadsTable.WithRows(rows)
 
 		// Update Console Viewport
-		if updatedConsole, _ := m.ConsoleModel.Update(tea.WindowSizeMsg{Width: rightWidth, Height: rightHeightSecondary}); updatedConsole != nil {
-			m.ConsoleModel = updatedConsole.(ConsoleModel)
+		if updatedConsole, _ := m.ConsoleModel.Update(submodels.ResizeMsgL2{Width: rightWidth, Height: rightHeightSecondary}); updatedConsole != nil {
+			m.ConsoleModel = updatedConsole.(submodels.ConsoleModel)
 		}
-		m.InspectModel.Width = leftWidth
-		m.InspectModel.Height = leftHeight
+		// Update Inspect Model Viewport
+		if updatedInspect, _ := m.InspectModel.Update(submodels.ResizeMsgL2{Width: leftWidth, Height: leftHeight}); updatedInspect != nil {
+			m.InspectModel = updatedInspect.(submodels.InspectModel)
+		}
 
 	case core.LoggedMsg:
 		if updatedConsole, _ := m.ConsoleModel.Update(msg); updatedConsole != nil {
-			m.ConsoleModel = updatedConsole.(ConsoleModel)
+			m.ConsoleModel = updatedConsole.(submodels.ConsoleModel)
 		}
 
 	case tea.KeyMsg:
@@ -187,23 +193,18 @@ func (m DownloadsModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		m.ConsoleModel.Focused = m.CurrentWindow.Index() == 0
 		if updatedConsole, _ := m.ConsoleModel.Update(msg); updatedConsole != nil {
-			m.ConsoleModel = updatedConsole.(ConsoleModel)
+			m.ConsoleModel = updatedConsole.(submodels.ConsoleModel)
 		}
 
+		m.InspectModel.Focused = m.CurrentWindow.Index() == 1
+		if updatedInspect, _ := m.InspectModel.Update(msg); updatedInspect != nil {
+			m.InspectModel = updatedInspect.(submodels.InspectModel)
+		}
 	}
 
-	// Update Inpsect Model
+	// Inform InspectModel about the selected resource on the table
 	selectedResource := m.DownloadsTable.HighlightedRow().Data["resourceObject"].(*core.Resource)
-
-	//(*m.LogFunction)(selectedResource.Name)
 	m.InspectModel.InspectingDownload = selectedResource
-	updatedInspect, cmd := m.InspectModel.Update(msg)
-	if updatedInspect, ok := updatedInspect.(InspectModel); ok {
-		m.InspectModel = updatedInspect
-		if cmd != nil {
-			cmds = append(cmds, cmd)
-		}
-	}
 
 	return m, tea.Batch(cmds...)
 }
@@ -212,19 +213,17 @@ func (m DownloadsModel) View() string {
 	var s string
 
 	// Specifying dimensions of windows
-	leftWidth, rightWidth, rightHeightPrimary, _ := m.GetWindowDimensions()
+	leftWidth, rightWidth, rightHeightPrimary, _ := m.GetPanelDimensions()
 
 	//----------------
 	// Rendering content in each window
-
-	// Console Viewport content
 
 	// Downloads Table content
 	topRightContent := fmt.Sprintf("DOWNLOADS\n%s", "")
 	topRightContent += m.DownloadsTable.View()
 
 	// Resource Tree content
-	leftContent := fmt.Sprintf("RESOURCES\n%s\n", styles.DebugStyle.Render(util.DrawLine(leftWidth)))
+	leftContent := fmt.Sprintf("INSPECTOR\n%s\n", styles.DebugStyle.Render(util.DrawLine(leftWidth)))
 	leftContent += m.InspectModel.View()
 
 	//-------------
@@ -240,9 +239,9 @@ func (m DownloadsModel) View() string {
 
 	if m.CurrentWindow.CurrentState() == 1 {
 		// Highlight Resources panel if active
-		leftWindow = styles.PanelHighlightStyle.Width(leftWidth).Height(m.AllottedHeight).Render(leftContent)
+		leftWindow = styles.PanelHighlightStyle.Width(leftWidth).Height(m.Height).Render(leftContent)
 	} else {
-		leftWindow = styles.PanelStyle.Width(leftWidth).Height(m.AllottedHeight).Render(leftContent)
+		leftWindow = styles.PanelStyle.Width(leftWidth).Height(m.Height).Render(leftContent)
 	}
 
 	bottomRightWindow = m.ConsoleModel.View()

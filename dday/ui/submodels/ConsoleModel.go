@@ -1,4 +1,4 @@
-package ui
+package submodels
 
 import (
 	"fmt"
@@ -31,7 +31,8 @@ func (m ConsoleModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmds []tea.Cmd
 
 	switch msg := msg.(type) {
-	case tea.WindowSizeMsg:
+	case ResizeMsgL2:
+		debug.Log("ConsoleModel: Resize: " + strconv.Itoa(msg.Width) + " " + strconv.Itoa(msg.Height))
 		m.Width = msg.Width
 		m.Height = msg.Height
 

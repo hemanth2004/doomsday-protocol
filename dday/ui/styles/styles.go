@@ -59,21 +59,24 @@ var (
 	PrimaryColor   = BrightWhite
 	SecondaryColor = White
 	TertiaryColor  = BrightBlack
-	Accent1Color   = BrightYellow
-	Accent2Color   = BrightMagenta
+	Accent1Color   = BrightYellow  // Bright Highlight
+	Accent2Color   = BrightMagenta // Slightly less important highlight
+	Accent3Color   = Yellow        // Least important highlight
 
 	// Styles
-	PrimaryStyle   = lipgloss.NewStyle().Foreground(BrightWhite)
-	SecondaryStyle = lipgloss.NewStyle().Foreground(White)
-	TertiaryStyle  = lipgloss.NewStyle().Foreground(BrightBlack)
-	Accent1Style   = lipgloss.NewStyle().Foreground(BrightYellow)
-	Accent2Style   = lipgloss.NewStyle().Foreground(BrightMagenta)
+	PrimaryStyle   = lipgloss.NewStyle().Foreground(PrimaryColor)
+	SecondaryStyle = lipgloss.NewStyle().Foreground(SecondaryColor)
+	TertiaryStyle  = lipgloss.NewStyle().Foreground(TertiaryColor)
+	Accent1Style   = lipgloss.NewStyle().Foreground(Accent1Color)
+	Accent2Style   = lipgloss.NewStyle().Foreground(Accent2Color)
+	Accent3Style   = lipgloss.NewStyle().Foreground(Accent3Color)
 
-	PrimaryInvertedStyle   = lipgloss.NewStyle().Foreground(Black).Background(BrightWhite)
-	SecondaryInvertedStyle = lipgloss.NewStyle().Foreground(Black).Background(White)
-	TertiaryInvertedStyle  = lipgloss.NewStyle().Foreground(Black).Background(BrightBlack)
-	Accent1InvertedStyle   = lipgloss.NewStyle().Foreground(Black).Background(BrightYellow)
-	Accent2InvertedStyle   = lipgloss.NewStyle().Foreground(Black).Background(BrightMagenta)
+	PrimaryInvertedStyle   = lipgloss.NewStyle().Foreground(Black).Background(PrimaryColor)
+	SecondaryInvertedStyle = lipgloss.NewStyle().Foreground(Black).Background(SecondaryColor)
+	TertiaryInvertedStyle  = lipgloss.NewStyle().Foreground(Black).Background(TertiaryColor)
+	Accent1InvertedStyle   = lipgloss.NewStyle().Foreground(Black).Background(Accent1Color)
+	Accent2InvertedStyle   = lipgloss.NewStyle().Foreground(Black).Background(Accent2Color)
+	Accent3InvertedStyle   = lipgloss.NewStyle().Foreground(Black).Background(Accent3Color)
 )
 
 var (

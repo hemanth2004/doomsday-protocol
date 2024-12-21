@@ -1,4 +1,4 @@
-package ui
+package submodels
 
 import (
 	"unicode/utf8"

@@ -2,6 +2,10 @@ package util
 
 import "strconv"
 
+type ResizeHandler interface {
+	Resize(width int, height int)
+}
+
 // Draw a line
 func DrawLine(width int) string {
 	var s string = ""

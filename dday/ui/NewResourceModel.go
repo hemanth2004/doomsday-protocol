@@ -3,8 +3,8 @@ package ui
 import tea "github.com/charmbracelet/bubbletea"
 
 type NewResourceModel struct {
-	AllottedHeight int
-	AllottedWidth  int
+	Height int
+	Width  int
 
 	HelpSet HelpSet // Will be used by parent model to render help
 }

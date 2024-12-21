@@ -12,6 +12,7 @@ type Resource struct {
 	Description string
 	Note        string
 	Tier        int
+	Guide       Guide
 
 	UrlGetter        UrlGetter
 	FileName         string
