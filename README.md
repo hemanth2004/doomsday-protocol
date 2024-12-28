@@ -1,20 +1,18 @@
 # doomsday-protocol
 
-  
-### Code Details
-|C|Value|
-|-|-|
-|Language|`Go`|
-|TUI |`BubbleTea`|
-|Repo Link|[`https://github.com/hemanth2004/doomsday-protocol`](https://github.com/hemanth2004/doomsday-protocol)|
-
 ### What is it?
 
-A TUI application to download the world’s most important internet resources at the click of a button (and a few more). If the apocalypse/war/end/collapse was to arrive tomorrow, you’ll have the doomsday-protocol at hand to download and keep track of stuff.
+A TUI application to download the world’s most important internet resources at the click of a button (and a few more). If the apocalypse/end/collapse was to arrive tomorrow, you’ll have the doomsday-protocol at hand to download and keep track of stuff.
 
-There’ll be a torrent GUI-like interface to track and manage your downloads or even add new resources. We can include a manual to understand how and where you can use each of these resources. Without the user actually initiating the **doomsday protocol**, we can still let the user update and add new resource links.
+There’ll be a TUI interface to track and manage your downloads or even add new resources. We include a guides to understand how and where you can use each of these resources. Without the user actually initiating the **doomsday protocol**, we can still let the user update and add new resource links.
 
-The tool itself doesn’t do much. But finding the right resources and mirrors will be challenging.
+> ***The application is **very much** in design & developmental stages***
+
+> Screenshot of the download page
+> <img style="width: 800px; height: auto; " src="https://github.com/hemanth2004/doomsday-protocol/blob/main/screenshots/28-12-24/downloadsscreenshot.png" />
+
+> Screenshot of the home page with all the guides
+> <img style="width: 800px; height: auto; " src="https://github.com/hemanth2004/doomsday-protocol/blob/main/screenshots/28-12-24/homescreenshot.png" />
 
 ### Resources
 The resources in this tool are divided into `default resources` and `user defined resources`.  
@@ -53,21 +51,31 @@ https://distro.ibiblio.org/puppylinux/puppy-fossa/
 ## TO-DO
 1. Better core download functionality
 	a. Pause and Resume downloads
+
 	b. Retry failed downloads
+
 	c. Auto & Manual check validity of download files
+
 	d. Concurrent download of upto N resources
+
 	e. Rest will be queued and downloaded in series
+
 	f. Edit N value from settings
+
 	g. TODO: in the far future.
+
 		- Setup server for hosting up to date links for resources
+   
 		- Or even better to get the default resources list from the server
-2. Create Guides for default resources
-3. New/Edit Resource Form Tab
-4. Feature-rich guides, notes, common files - browser & reader
+   
+3. Create Guides for default resources
+4. New/Edit Resource Form Tab
+5. Feature-rich guides, notes, common files - browser & reader
 
 ### Known bugs
 1. bubble-table pagination stutter
-2. For very small downloads ( < download speed), the bytes downloaded are set as negative and eta is integer limit
+2. Guides page markdown renderer is not compliant with escape codes available in virtual consoles
+3. For very small downloads ( < download speed), the bytes downloaded are set as negative 1 Byte and eta is integer limit
 
 ### Feature Ideations
 1. Let user add custom resources with links and descriptions (form filling UI ig)
