@@ -14,6 +14,8 @@ There’ll be a TUI interface to track and manage your downloads or even add new
 > Screenshot of the home page with all the guides
 > <img style="width: 800px; height: auto; " src="https://github.com/hemanth2004/doomsday-protocol/blob/main/screenshots/28-12-24/homescreenshot.png" />
 
+*Being developed with Go and BubbleTea*
+
 ### Resources
 The resources in this tool are divided into `default resources` and `user defined resources`.  
 ✅ := I'm sure about the size and specifications of the resource
