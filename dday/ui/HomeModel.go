@@ -52,7 +52,7 @@ func (m HomeModel) GetPanelDimensions() (int, int, int, int, int) {
 }
 
 func (m HomeModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	//var cmd tea.Cmd
+	//var cmd Tea.Cmd
 	var cmds []tea.Cmd
 
 	switch msg := msg.(type) {
@@ -82,6 +82,29 @@ func (m HomeModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 		if msg.String() == "shift+tab" {
 			m.CurrentWindow.PrevState()
+		}
+
+		m.GuideTree.Focused = m.CurrentWindow.Index() == 0
+		m.TextViewer.Focused = m.CurrentWindow.Index() == 1
+		m.StatusModel.Focused = m.CurrentWindow.Index() == 2
+
+		if m.GuideTree.Focused {
+			if updatedGuideTree, cmd := m.GuideTree.Update(msg); updatedGuideTree != nil {
+				m.GuideTree = updatedGuideTree.(submodels.GuideTreeModel)
+				cmds = append(cmds, cmd)
+			}
+		}
+		if m.TextViewer.Focused {
+			if updatedViewer, cmd := m.TextViewer.Update(msg); updatedViewer != nil {
+				m.TextViewer = updatedViewer.(submodels.TextViewerModel)
+				cmds = append(cmds, cmd)
+			}
+		}
+		if m.StatusModel.Focused {
+			if updatedStatus, cmd := m.StatusModel.Update(msg); updatedStatus != nil {
+				m.StatusModel = updatedStatus.(submodels.StatusModel)
+				cmds = append(cmds, cmd)
+			}
 		}
 	}
 

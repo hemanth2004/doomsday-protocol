@@ -17,6 +17,7 @@ type TextViewerModel struct {
 	Height int
 
 	Focused  bool
+	Path     string
 	Viewport viewport.Model
 	Content  string
 }
@@ -34,7 +35,7 @@ func (m TextViewerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.Width = msg.Width
 		m.Height = msg.Height
 
-		m.Viewport = viewport.New(m.Width-2, m.Height-5)
+		m.Viewport = viewport.New(m.Width-2, m.Height-2)
 
 	case tea.KeyMsg:
 		if m.Focused {
@@ -43,26 +44,7 @@ func (m TextViewerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	}
 
-	path := "README.md"
-	source, err := os.ReadFile(path)
-	if err != nil {
-		panic(err)
-	}
-
-	m.Content = string(markdown.Render(
-		string(source),
-		m.Width-2,
-		0,
-	))
-	// Replace escape sequences with their text representation
-	//m.Content = strings.ReplaceAll(m.Content, "\n", "\\n")
-	m.Content = strings.ReplaceAll(m.Content, "\r", "")
-	//m.Content = strings.ReplaceAll(m.Content, "\t", "\\t")
-	//m.Content = strings.ReplaceAll(m.Content, "\b", "\\b")
-	//m.Content = strings.ReplaceAll(m.Content, "\f", "\\f")
-	//m.Content = strings.ReplaceAll(m.Content, "\v", "\\v")
-	//m.Content = strings.ReplaceAll(m.Content, "\a", "\\a")
-	m.Viewport.SetContent(m.Content)
+	m.GetSetViewerContent()
 
 	return m, tea.Batch(cmds...)
 }
@@ -80,4 +62,29 @@ func (m TextViewerModel) View() string {
 	}
 
 	return s
+}
+
+func (m *TextViewerModel) GetSetViewerContent() {
+	path := m.Path
+
+	source, err := os.ReadFile(path)
+	if err != nil {
+		panic(err)
+	}
+
+	if strings.HasSuffix(path, ".md") {
+		m.Content = string(markdown.Render(
+			string(source),
+			m.Width-2,
+			0,
+		))
+
+		// Remove carriage returns
+		m.Content = strings.ReplaceAll(m.Content, "\r", "")
+
+	} else {
+		m.Content = string(source)
+	}
+
+	m.Viewport.SetContent(m.Content)
 }

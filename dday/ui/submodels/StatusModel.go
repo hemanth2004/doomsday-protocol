@@ -40,6 +40,7 @@ func (m StatusModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m StatusModel) View() string {
 	var s string
 	content := fmt.Sprintf("STATUS " + "\n")
+	content += "Shortened status of all current downloads."
 
 	if m.Focused {
 		// Highlight Window if active

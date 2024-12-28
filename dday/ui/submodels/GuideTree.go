@@ -3,17 +3,21 @@ package submodels
 import (
 	"fmt"
 
+	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/hemanth2004/doomsday-protocol/dday/debug"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui/styles"
 	"github.com/hemanth2004/doomsday-protocol/dday/util"
+	"github.com/hemanth2004/doomsday-protocol/dday/util/tree"
 )
 
 type GuideTreeModel struct {
 	Width  int
 	Height int
 
-	Focused bool
+	Focused  bool
+	Viewport viewport.Model
+	Tree     tree.Model
 }
 
 func (m GuideTreeModel) Init() tea.Cmd {
@@ -43,7 +47,7 @@ func (m GuideTreeModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m GuideTreeModel) View() string {
 	var s string
 	content := fmt.Sprintf("GUIDES "+"\n%s", styles.DebugStyle.Render(util.DrawLine(m.Width))+"\n")
-	content += "GUIDES"
+	content += "Guide Tree Content"
 
 	if m.Focused {
 		// Highlight Window if active

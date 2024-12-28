@@ -1342,3 +1342,415 @@ Link|[]([34mhttps://github.com/hemanth2004/doomsday-protocol[0m)|
 2024/12/21 20:23:33 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
 2024/12/21 20:23:33 ConsoleModel: Resize: 114 9
 2024/12/21 20:23:33 InspectModel: Resize: 38 33
+2024/12/21 20:29:09 HomeModel: Resize: 152 36
+2024/12/21 20:29:09 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/21 20:29:09 ConsoleModel: Resize: 114 9
+2024/12/21 20:29:09 InspectModel: Resize: 38 33
+2024/12/21 20:29:24 HomeModel: Resize: 152 36
+2024/12/21 20:29:24 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/21 20:29:24 ConsoleModel: Resize: 114 9
+2024/12/21 20:29:24 InspectModel: Resize: 38 33
+2024/12/21 20:29:52 HomeModel: Resize: 152 36
+2024/12/21 20:29:52 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/21 20:29:52 ConsoleModel: Resize: 114 9
+2024/12/21 20:29:52 InspectModel: Resize: 38 33
+2024/12/21 20:30:08 HomeModel: Resize: 152 36
+2024/12/21 20:30:08 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/21 20:30:17 HomeModel: Resize: 152 36
+2024/12/21 20:30:17 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/21 20:30:17 ConsoleModel: Resize: 114 9
+2024/12/21 20:30:17 InspectModel: Resize: 38 33
+2024/12/21 20:30:40 HomeModel: Resize: 152 36
+2024/12/21 20:30:40 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/21 20:30:40 ConsoleModel: Resize: 114 9
+2024/12/21 20:30:40 InspectModel: Resize: 38 33
+2024/12/21 20:32:24 HomeModel: Resize: 152 36
+2024/12/21 20:32:24 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/21 20:32:24 ConsoleModel: Resize: 114 9
+2024/12/21 20:32:24 InspectModel: Resize: 38 33
+2024/12/21 20:32:43 HomeModel: Resize: 152 36
+2024/12/21 20:32:43 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/21 20:32:43 ConsoleModel: Resize: 114 9
+2024/12/21 20:32:43 InspectModel: Resize: 38 33
+2024/12/21 20:36:36 HomeModel: Resize: 152 36
+2024/12/21 20:36:36 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/21 20:36:36 ConsoleModel: Resize: 114 9
+2024/12/21 20:36:36 InspectModel: Resize: 38 33
+2024/12/21 20:36:50 HomeModel: Resize: 152 36
+2024/12/21 20:36:50 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/21 20:36:50 ConsoleModel: Resize: 114 9
+2024/12/21 20:36:50 InspectModel: Resize: 38 33
+2024/12/21 20:37:45 HomeModel: Resize: 152 36
+2024/12/21 20:37:45 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/21 20:37:45 ConsoleModel: Resize: 114 9
+2024/12/21 20:37:45 InspectModel: Resize: 38 33
+2024/12/21 20:38:17 HomeModel: Resize: 152 36
+2024/12/21 20:38:17 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/21 20:38:17 ConsoleModel: Resize: 114 9
+2024/12/21 20:38:17 InspectModel: Resize: 38 33
+2024/12/21 20:40:38 HomeModel: Resize: 152 36
+2024/12/21 20:40:38 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/21 20:40:38 ConsoleModel: Resize: 114 9
+2024/12/21 20:40:38 InspectModel: Resize: 38 33
+2024/12/21 20:42:14 HomeModel: Resize: 152 36
+2024/12/21 20:42:14 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/21 20:42:14 ConsoleModel: Resize: 114 9
+2024/12/21 20:42:14 InspectModel: Resize: 38 33
+2024/12/21 20:42:48 HomeModel: Resize: 152 36
+2024/12/21 20:42:48 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/21 20:42:48 ConsoleModel: Resize: 114 9
+2024/12/21 20:42:48 InspectModel: Resize: 38 33
+2024/12/21 20:45:45 HomeModel: Resize: 152 36
+2024/12/21 20:45:45 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/21 20:45:45 ConsoleModel: Resize: 114 9
+2024/12/21 20:45:45 InspectModel: Resize: 38 33
+2024/12/27 14:07:16 HomeModel: Resize: 155 8
+2024/12/27 14:07:16 GuideTreeModelWindowSizeMsg{Width:38 Height:3}
+2024/12/27 14:07:16 ConsoleModel: Resize: 117 2
+2024/12/27 14:07:16 InspectModel: Resize: 38 5
+2024/12/27 14:08:31 HomeModel: Resize: 206 53
+2024/12/27 14:08:31 GuideTreeModelWindowSizeMsg{Width:51 Height:48}
+2024/12/27 14:08:31 ConsoleModel: Resize: 155 14
+2024/12/27 14:08:31 InspectModel: Resize: 51 50
+2024/12/27 14:08:40 Movingviewport ctrl+e
+2024/12/27 14:08:41 Movingviewport tab
+2024/12/27 14:08:41 Movingviewport down
+2024/12/27 14:08:42 Movingviewport tab
+2024/12/27 14:08:42 Movingviewport tab
+2024/12/27 14:08:42 Movingviewport down
+2024/12/27 14:08:42 Movingviewport down
+2024/12/27 14:08:43 Movingviewport down
+2024/12/27 14:08:43 Movingviewport down
+2024/12/27 14:08:43 Movingviewport down
+2024/12/27 14:08:43 Movingviewport down
+2024/12/27 14:08:43 Movingviewport down
+2024/12/27 14:08:44 Movingviewport down
+2024/12/27 14:08:44 Movingviewport up
+2024/12/27 14:08:45 Movingviewport down
+2024/12/27 14:08:45 Movingviewport down
+2024/12/27 14:08:45 Movingviewport down
+2024/12/27 14:08:46 Movingviewport down
+2024/12/27 14:08:46 Movingviewport down
+2024/12/27 14:08:47 Movingviewport down
+2024/12/27 14:08:47 Movingviewport down
+2024/12/27 14:08:47 Movingviewport down
+2024/12/27 14:08:48 Movingviewport down
+2024/12/27 14:08:49 Movingviewport down
+2024/12/27 14:08:49 Movingviewport down
+2024/12/27 14:08:50 Movingviewport down
+2024/12/27 14:08:50 Movingviewport down
+2024/12/27 14:08:50 Movingviewport down
+2024/12/27 14:08:50 Movingviewport down
+2024/12/27 14:08:51 Movingviewport down
+2024/12/27 14:08:51 Movingviewport down
+2024/12/27 14:08:51 Movingviewport down
+2024/12/27 14:08:52 Movingviewport tab
+2024/12/27 14:08:52 Console opened: false
+2024/12/27 14:08:52 Movingviewport enter
+2024/12/27 14:08:52 Console opened: true
+2024/12/27 14:08:52 Movingviewport enter
+2024/12/27 14:08:53 Console opened: false
+2024/12/27 14:08:53 Movingviewport enter
+2024/12/27 14:08:54 Console opened: true
+2024/12/27 14:08:54 Movingviewport enter
+2024/12/27 14:08:55 Movingviewport  
+2024/12/27 14:08:56 Movingviewport ctrl+e
+2024/12/27 14:08:56 Movingviewport  
+2024/12/27 14:08:57 Movingviewport ctrl+e
+2024/12/27 14:08:57 Movingviewport  
+2024/12/27 14:08:58 Movingviewport ctrl+q
+2024/12/27 14:08:58 Movingviewport  
+2024/12/27 14:08:59 Movingviewport ctrl+e
+2024/12/27 14:09:21 HomeModel: Resize: 206 53
+2024/12/27 14:09:21 GuideTreeModelWindowSizeMsg{Width:51 Height:48}
+2024/12/27 14:09:21 ConsoleModel: Resize: 155 14
+2024/12/27 14:09:21 InspectModel: Resize: 51 50
+2024/12/27 14:09:25 Movingviewport tab
+2024/12/27 14:09:27 Console opened: false
+2024/12/27 14:09:27 Movingviewport enter
+2024/12/27 14:09:31 Console opened: true
+2024/12/27 14:09:31 Movingviewport enter
+2024/12/27 14:09:32 Console opened: false
+2024/12/27 14:09:32 Movingviewport enter
+2024/12/27 14:09:32 Console opened: true
+2024/12/27 14:09:32 Movingviewport enter
+2024/12/27 14:09:33 Console opened: false
+2024/12/27 14:09:33 Movingviewport enter
+2024/12/27 14:09:33 Console opened: true
+2024/12/27 14:09:33 Movingviewport enter
+2024/12/27 14:09:35 Console opened: false
+2024/12/27 14:09:35 Movingviewport enter
+2024/12/27 14:09:43 Console opened: true
+2024/12/27 14:09:43 Movingviewport enter
+2024/12/27 14:09:50 Movingviewport  
+2024/12/27 14:10:09 Movingviewport ctrl+e
+2024/12/27 14:10:10 Movingviewport  
+2024/12/27 14:10:11 Movingviewport ctrl+q
+2024/12/27 14:10:11 Movingviewport  
+2024/12/27 14:10:12 Movingviewport ctrl+e
+2024/12/27 14:10:12 Movingviewport  
+2024/12/27 14:10:13 Movingviewport ctrl+e
+2024/12/27 14:10:13 Movingviewport  
+2024/12/27 14:10:19 Movingviewport ctrl+e
+2024/12/27 14:10:20 Movingviewport down
+2024/12/27 14:10:20 Movingviewport down
+2024/12/27 14:10:21 Movingviewport down
+2024/12/27 14:10:21 Movingviewport up
+2024/12/27 14:10:21 Movingviewport tab
+2024/12/27 14:10:22 Movingviewport tab
+2024/12/27 14:10:22 Movingviewport tab
+2024/12/27 14:10:22 Movingviewport tab
+2024/12/27 14:10:23 Movingviewport tab
+2024/12/27 14:10:23 Movingviewport tab
+2024/12/27 14:10:23 Movingviewport up
+2024/12/27 14:10:23 Movingviewport up
+2024/12/27 14:10:24 Movingviewport up
+2024/12/27 14:10:24 Movingviewport up
+2024/12/27 14:10:24 Movingviewport up
+2024/12/27 14:10:24 Movingviewport down
+2024/12/27 14:10:25 Movingviewport down
+2024/12/27 14:10:25 Movingviewport down
+2024/12/27 14:10:25 Movingviewport down
+2024/12/27 14:10:25 Movingviewport down
+2024/12/27 14:10:26 Movingviewport down
+2024/12/27 14:10:27 Movingviewport down
+2024/12/27 14:10:27 Movingviewport down
+2024/12/27 14:10:29 Movingviewport up
+2024/12/27 14:10:29 Movingviewport up
+2024/12/27 14:10:29 Movingviewport up
+2024/12/27 14:10:29 Movingviewport up
+2024/12/27 14:10:29 Movingviewport up
+2024/12/27 14:10:29 Movingviewport up
+2024/12/27 14:10:29 Movingviewport up
+2024/12/27 14:10:29 Movingviewport up
+2024/12/27 14:10:29 Movingviewport up
+2024/12/27 14:10:29 Movingviewport up
+2024/12/27 14:10:30 Movingviewport up
+2024/12/27 14:10:30 Movingviewport up
+2024/12/27 14:10:30 Movingviewport up
+2024/12/27 14:10:30 Movingviewport up
+2024/12/27 14:10:30 Movingviewport up
+2024/12/27 14:10:30 Movingviewport up
+2024/12/27 14:10:30 Movingviewport up
+2024/12/27 14:10:30 Movingviewport up
+2024/12/27 14:10:30 Movingviewport up
+2024/12/27 14:10:30 Movingviewport up
+2024/12/27 14:10:30 Movingviewport down
+2024/12/27 14:10:30 Movingviewport down
+2024/12/27 14:10:30 Movingviewport down
+2024/12/27 14:10:30 Movingviewport down
+2024/12/27 14:10:31 Movingviewport down
+2024/12/27 14:10:31 Console opened: false
+2024/12/27 14:10:31 Movingviewport enter
+2024/12/27 14:10:31 Console opened: true
+2024/12/27 14:10:31 Movingviewport enter
+2024/12/27 14:10:36 Movingviewport tab
+2024/12/27 14:10:36 Movingviewport tab
+2024/12/27 14:10:36 Movingviewport tab
+2024/12/27 14:10:37 Movingviewport tab
+2024/12/27 14:10:37 Movingviewport tab
+2024/12/27 14:10:38 Movingviewport  
+2024/12/27 14:10:50 Movingviewport ctrl+e
+2024/12/27 14:10:52 Movingviewport  
+2024/12/27 14:10:52 Movingviewport ctrl+q
+2024/12/27 14:12:00 HomeModel: Resize: 152 36
+2024/12/27 14:12:00 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/27 14:12:00 ConsoleModel: Resize: 114 9
+2024/12/27 14:12:00 InspectModel: Resize: 38 33
+2024/12/27 14:12:00 HomeModel: Resize: 152 36
+2024/12/27 14:12:00 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/27 14:12:00 ConsoleModel: Resize: 114 9
+2024/12/27 14:12:00 InspectModel: Resize: 38 33
+2024/12/27 14:12:06 HomeModel: Resize: 152 36
+2024/12/27 14:12:06 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/27 14:12:06 ConsoleModel: Resize: 114 9
+2024/12/27 14:12:06 InspectModel: Resize: 38 33
+2024/12/27 14:12:06 Movingviewport ctrl+q
+2024/12/27 14:12:07 Movingviewport ctrl+e
+2024/12/27 14:12:08 Movingviewport tab
+2024/12/27 14:12:09 Movingviewport tab
+2024/12/27 14:12:09 Movingviewport tab
+2024/12/27 14:12:09 Movingviewport down
+2024/12/27 14:12:09 Movingviewport down
+2024/12/27 14:12:09 Movingviewport down
+2024/12/27 14:12:10 Movingviewport down
+2024/12/27 14:12:10 Movingviewport down
+2024/12/27 14:12:10 Movingviewport down
+2024/12/27 14:12:10 Movingviewport down
+2024/12/27 14:12:10 Movingviewport down
+2024/12/27 14:12:10 Movingviewport down
+2024/12/27 14:12:10 Movingviewport down
+2024/12/27 14:12:11 Movingviewport down
+2024/12/27 14:12:11 Movingviewport down
+2024/12/27 14:12:11 Movingviewport tab
+2024/12/27 14:12:11 Console opened: false
+2024/12/27 14:12:11 Movingviewport enter
+2024/12/27 14:12:12 Movingviewport  
+2024/12/27 14:12:29 Movingviewport ctrl+e
+2024/12/27 14:12:30 Movingviewport tab
+2024/12/27 14:12:31 Movingviewport alt+ 
+2024/12/27 14:12:50 Movingviewport alt+ 
+2024/12/27 14:12:53 Movingviewport alt+ 
+2024/12/27 14:13:07 Movingviewport  
+2024/12/28 19:50:33 HomeModel: Resize: 152 36
+2024/12/28 19:50:33 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/28 19:50:33 ConsoleModel: Resize: 114 9
+2024/12/28 19:50:33 InspectModel: Resize: 38 33
+2024/12/28 19:50:34 Movingviewport ctrl+q
+2024/12/28 19:50:36 Movingviewport tab
+2024/12/28 19:50:36 Console opened: false
+2024/12/28 19:50:36 Movingviewport enter
+2024/12/28 19:50:37 Console opened: true
+2024/12/28 19:50:37 Movingviewport enter
+2024/12/28 19:50:37 Console opened: false
+2024/12/28 19:50:37 Movingviewport enter
+2024/12/28 19:50:37 Console opened: true
+2024/12/28 19:50:37 Movingviewport enter
+2024/12/28 19:50:37 Console opened: false
+2024/12/28 19:50:37 Movingviewport enter
+2024/12/28 19:50:39 Console opened: true
+2024/12/28 19:50:39 Movingviewport enter
+2024/12/28 19:50:40 Movingviewport  
+2024/12/28 19:50:48 Movingviewport ctrl+e
+2024/12/28 19:50:50 Movingviewport ctrl+e
+2024/12/28 19:50:50 Movingviewport ctrl+q
+2024/12/28 19:50:56 Movingviewport  
+2024/12/28 19:50:56 Movingviewport ctrl+q
+2024/12/28 19:57:13 HomeModel: Resize: 152 36
+2024/12/28 19:57:13 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/28 19:57:13 ConsoleModel: Resize: 114 9
+2024/12/28 19:57:13 InspectModel: Resize: 38 33
+2024/12/28 19:57:22 Movingviewport ctrl+q
+2024/12/28 19:57:22 Movingviewport ctrl+e
+2024/12/28 19:57:23 Movingviewport ctrl+e
+2024/12/28 19:57:23 Movingviewport ctrl+q
+2024/12/28 19:57:25 Movingviewport ctrl+q
+2024/12/28 19:57:27 Movingviewport  
+2024/12/28 19:57:30 Movingviewport ctrl+e
+2024/12/28 19:57:39 Movingviewport ctrl+e
+2024/12/28 19:57:40 Movingviewport ctrl+q
+2024/12/28 19:57:41 Movingviewport  
+2024/12/28 19:57:41 Movingviewport  
+2024/12/28 19:57:41 Movingviewport  
+2024/12/28 19:57:41 Movingviewport  
+2024/12/28 19:57:41 Movingviewport  
+2024/12/28 19:57:41 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:42 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:43 Movingviewport  
+2024/12/28 19:57:44 Movingviewport  
+2024/12/28 19:57:44 Movingviewport  
+2024/12/28 19:57:44 Movingviewport  
+2024/12/28 19:57:44 Movingviewport  
+2024/12/28 19:57:44 Movingviewport  
+2024/12/28 19:57:44 Movingviewport  
+2024/12/28 19:57:44 Movingviewport  
+2024/12/28 19:57:44 Movingviewport  
+2024/12/28 19:57:44 Movingviewport  
+2024/12/28 19:57:44 Movingviewport  
+2024/12/28 19:57:44 Movingviewport  
+2024/12/28 19:57:44 Movingviewport  
+2024/12/28 19:57:44 Movingviewport  
+2024/12/28 19:57:44 Movingviewport  
+2024/12/28 19:57:44 Movingviewport  
+2024/12/28 19:57:44 Movingviewport  
+2024/12/28 19:57:44 Movingviewport  
+2024/12/28 19:57:45 Movingviewport ctrl+e
+2024/12/28 19:57:47 Movingviewport ctrl+e
+2024/12/28 19:57:48 Movingviewport ctrl+w
+2024/12/28 19:57:49 Movingviewport  
+2024/12/28 19:58:54 HomeModel: Resize: 152 36
+2024/12/28 19:58:54 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/28 19:58:54 ConsoleModel: Resize: 114 9
+2024/12/28 19:58:54 InspectModel: Resize: 38 33
+2024/12/28 19:58:56 Movingviewport ctrl+q
+2024/12/28 19:59:37 HomeModel: Resize: 152 36
+2024/12/28 19:59:37 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/28 19:59:37 ConsoleModel: Resize: 114 9
+2024/12/28 19:59:37 InspectModel: Resize: 38 33
+2024/12/28 19:59:37 Movingviewport ctrl+q
+2024/12/28 20:06:26 HomeModel: Resize: 152 36
+2024/12/28 20:06:26 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/28 20:06:26 ConsoleModel: Resize: 114 9
+2024/12/28 20:06:26 InspectModel: Resize: 38 33
+2024/12/28 20:06:28 Movingviewport down
+2024/12/28 20:06:45 Movingviewport down
+2024/12/28 20:06:45 Movingviewport up
+2024/12/28 20:06:46 Movingviewport down
+2024/12/28 20:06:46 Movingviewport up
+2024/12/28 20:06:47 Movingviewport up
+2024/12/28 20:06:47 Movingviewport down
+2024/12/28 20:06:47 Movingviewport down
+2024/12/28 20:06:54 Movingviewport down
+2024/12/28 20:06:59 Movingviewport up
+2024/12/28 20:07:01 Movingviewport up
+2024/12/28 20:07:03 Movingviewport down
+2024/12/28 20:07:05 Movingviewport up
+2024/12/28 20:07:08 Movingviewport down
+2024/12/28 20:07:08 Movingviewport down
+2024/12/28 20:07:08 Movingviewport down
+2024/12/28 20:07:08 Movingviewport down
+2024/12/28 20:07:19 Movingviewport  
+2024/12/28 20:08:01 HomeModel: Resize: 152 36
+2024/12/28 20:08:01 GuideTreeModelWindowSizeMsg{Width:38 Height:31}
+2024/12/28 20:08:01 ConsoleModel: Resize: 114 9
+2024/12/28 20:08:01 InspectModel: Resize: 38 33
+2024/12/28 20:08:02 Movingviewport  

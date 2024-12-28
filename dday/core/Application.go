@@ -10,6 +10,8 @@ import (
 type Application struct {
 	TeaProgram *tea.Program
 
+	GuidesFolderPath string
+
 	ResourceList ResourceList
 
 	LogFunction func(string)

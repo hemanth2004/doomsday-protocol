@@ -128,7 +128,7 @@ func (m MainModel) View() string {
 	// Rendering first state line
 	stateNames := []string{"home", "downloads", "new resource(+)"}
 	var stateLine string
-	stateLine += styles.Accent3InvertedStyle.Render("[^Q] ← ") + " "
+	//stateLine += styles.Accent3InvertedStyle.Render("[^Q] ← ") + " "
 	for i, name := range stateNames {
 		if i == m.CurrentState.Index() {
 			stateLine += styles.MainStyle.Render(name)
@@ -139,7 +139,7 @@ func (m MainModel) View() string {
 			stateLine += "  •  "
 		}
 	}
-	stateLine += " " + styles.Accent3InvertedStyle.Render(" → [^E]")
+	//stateLine += " " + styles.Accent3InvertedStyle.Render(" → [^E]")
 	s += lipgloss.Place(m.width, topSectionHeight, lipgloss.Center, lipgloss.Center, stateLine) + "\n"
 
 	defaultHelpText := m.HelpSet.View("    ")
