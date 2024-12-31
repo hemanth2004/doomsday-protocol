@@ -100,3 +100,6 @@ var (
 		InnerDivider: "│",
 	}
 )
+
+var ScrollbarStyle = lipgloss.NewStyle().
+	Foreground(SecondaryColor)

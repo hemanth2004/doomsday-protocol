@@ -8,6 +8,17 @@ func Sum(arr []int) int {
 	return sum
 }
 
+func TrimString(str string, maxLength int) string {
+	// Handle invalid maxLength
+	if maxLength < 0 {
+		return str
+	}
+	if len(str) > maxLength {
+		return str[:maxLength]
+	}
+	return str
+}
+
 // Ternary Operator
 func IfElse[T any](cond bool, exp1, exp2 T) T {
 	if cond {

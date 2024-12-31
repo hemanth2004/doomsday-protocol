@@ -1,6 +1,11 @@
 package tree
 
 import (
+	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
+
 	"github.com/hemanth2004/doomsday-protocol/dday/core"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui/styles"
 )
@@ -28,6 +33,25 @@ func InitResourceTree() []Node {
 			Value:    "Custom Resources",
 			Desc:     styles.TreeDescriptionTitle.Render("Custom Resources:") + "\nResources that the user has added.",
 			Children: []Node{},
+		},
+	}
+}
+
+func ExampleResourceTree() []Node {
+	return []Node{
+		{
+			Value: "Example",
+			Desc:  "",
+			Children: []Node{
+				{
+					Value: "Example",
+					Desc:  "",
+				},
+				{
+					Value: "Example",
+					Desc:  "",
+				},
+			},
 		},
 	}
 }
@@ -79,4 +103,101 @@ func GenerateResourceTree(m core.ResourceList) []Node {
 	}
 
 	return a
+}
+
+func GenerateGuideTree(path string) []Node {
+	// Recursively build the tree
+	root := buildTreeRecursively(path)
+
+	return []Node{root}
+}
+
+// Helper function to recursively build the tree
+func buildTreeRecursively(currentPath string) Node {
+	// Get file or directory information
+	info, err := os.Stat(currentPath)
+	if err != nil {
+		// Return an error node if there's an issue reading the path
+		return Node{
+			Value: filepath.Base(currentPath),
+			Desc:  styles.TreeDescriptionTitle.Render("Error:") + "\n" + err.Error(),
+		}
+	}
+
+	// Create a new node for the current file/directory
+	node := Node{
+		Value:    info.Name(),
+		Desc:     currentPath,
+		Children: []Node{},
+	}
+
+	// If it's a directory, recurse into its children
+	if info.IsDir() {
+
+		node.Value = node.Value + string(os.PathSeparator)
+
+		entries, err := os.ReadDir(currentPath)
+		if err != nil {
+			// Add an error node if the directory can't be read
+			node.Children = append(node.Children, Node{
+				Value: "Error",
+				Desc:  "Error reading directory: " + err.Error(),
+			})
+			return node
+		}
+
+		// Process each entry in the directory
+		for _, entry := range entries {
+			childPath := filepath.Join(currentPath, entry.Name())
+			childNode := buildTreeRecursively(childPath)
+			node.Children = append(node.Children, childNode)
+		}
+	}
+
+	return node
+}
+
+// Helper function to generate description for files/directories
+func generateFileDescription(path string, info os.FileInfo) string {
+	desc := styles.TreeDescriptionTitle.Render(info.Name() + ":")
+	if info.IsDir() {
+		desc += "\nDirectory"
+	} else {
+		desc += fmt.Sprintf("\nFile Size: %d bytes\nLast Modified: %s\nExtension: %s",
+			info.Size(),
+			info.ModTime().Format("2006-01-02 15:04:05"),
+			filepath.Ext(path))
+	}
+	return desc
+}
+
+// Helper function to find the parent node based on relative path
+func findParentNode(nodes []Node, relPath string) *Node {
+	if relPath == "." || relPath == "" {
+		return nil
+	}
+
+	parts := strings.Split(relPath, string(os.PathSeparator))
+	current := nodes
+
+	for _, part := range parts {
+		found := false
+		for i := range current {
+			if current[i].Value == part {
+				if i < len(current) {
+					current = current[i].Children
+					found = true
+					break
+				}
+			}
+		}
+		if !found {
+			return nil
+		}
+	}
+
+	if len(current) > 0 {
+		return &current[len(current)-1]
+	}
+	return nil
 }

@@ -72,7 +72,7 @@ func InitialTeaModel(Application *core.Application) MainModel {
 		Application:  Application,
 		ResourceList: &Application.ResourceList,
 
-		CurrentState: util.NewStateHandler([]string{"guides", "downloads", "new resource"}, 1),
+		CurrentState: util.NewStateHandler([]string{"guides", "downloads", "new resource"}, 0),
 		Downloads: DownloadsModel{
 			ResourceList: &Application.ResourceList,
 
@@ -85,7 +85,7 @@ func InitialTeaModel(Application *core.Application) MainModel {
 				WithMultiline(true),
 			//WithPageSize(2),
 
-			ResourceTree: tree.New([]tree.Node{}),
+			ResourceTree: tree.New([]tree.Node{}, 5, 5),
 
 			ConsoleModel: submodels.ConsoleModel{
 				Viewport:      viewport.New(5, 5),
@@ -99,9 +99,14 @@ func InitialTeaModel(Application *core.Application) MainModel {
 		Home: HomeModel{
 			CurrentWindow: util.NewStateHandler([]int{2, 1, 0}, 0),
 			TextViewer: submodels.TextViewerModel{
-				Path: "README.md",
+				Path:      "README.md",
+				Scrollbar: submodels.NewScrollbar(),
 			},
-			GuideTree:   submodels.GuideTreeModel{},
+			GuideTree: submodels.GuideTreeModel{
+				GuidesPath:        Application.GuidesFolderPath,
+				ReadGuideCallback: Application.GuideViewerCallback,
+				Scrollbar:         submodels.NewScrollbar(),
+			},
 			StatusModel: submodels.StatusModel{},
 			HelpSet:     InitHomeHelpSet(),
 		},

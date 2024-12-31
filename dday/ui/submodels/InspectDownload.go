@@ -7,7 +7,6 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/hemanth2004/doomsday-protocol/dday/core"
-	"github.com/hemanth2004/doomsday-protocol/dday/debug"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui/styles"
 	"github.com/hemanth2004/doomsday-protocol/dday/util"
 )
@@ -49,10 +48,8 @@ func (m InspectModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case ResizeMsgL2:
 		m.Width = msg.Width
 		m.Height = msg.Height
-		debug.Log("InspectModel: Resize: " + strconv.Itoa(msg.Width) + " " + strconv.Itoa(msg.Height))
 		m.viewport = viewport.New(m.Width, m.Height-3)
 	case tea.KeyMsg:
-		debug.Log("Movingviewport " + msg.String())
 		if msg.String() == "up" {
 			m.viewport.HalfViewDown()
 		} else if msg.String() == "down" {

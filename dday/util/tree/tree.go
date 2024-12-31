@@ -1,23 +1,23 @@
 package tree
 
 import (
+	"errors"
 	"fmt"
 	"strings"
-
-	"github.com/hemanth2004/doomsday-protocol/dday/ui/styles"
 
 	"github.com/charmbracelet/bubbles/help"
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/hemanth2004/doomsday-protocol/dday/ui/styles"
+	"github.com/hemanth2004/doomsday-protocol/dday/util"
 )
 
 const (
 	bottomLeft string = " └─"
-
-	white  = styles.BrightWhite
-	black  = styles.Black
-	purple = styles.BrightBlue
+	pipe       string = "│"
+	tee        string = "├─"
+	bottomTee  string = "└─"
 )
 
 type Styles struct {
@@ -29,10 +29,10 @@ type Styles struct {
 
 func defaultStyles() Styles {
 	return Styles{
-		Shapes:     lipgloss.NewStyle().Margin(0, 0, 0, 0).Foreground(white),
-		Selected:   lipgloss.NewStyle().Margin(0, 0, 0, 0).Background(black),
-		Unselected: lipgloss.NewStyle().Margin(0, 0, 0, 0).Foreground(lipgloss.AdaptiveColor{Light: "#000000", Dark: "#ffffff"}),
-		Help:       lipgloss.NewStyle().Margin(0, 0, 0, 0).Foreground(lipgloss.AdaptiveColor{Light: "#000000", Dark: "#ffffff"}),
+		Shapes:     styles.Accent1InvertedStyle,
+		Selected:   styles.Accent1InvertedStyle,
+		Unselected: styles.PrimaryStyle,
+		Help:       styles.DebugStyle,
 	}
 }
 
@@ -57,14 +57,13 @@ type Model struct {
 	AdditionalShortHelpKeys func() []key.Binding
 }
 
-func New(nodes []Node) Model {
-	// Initialize with default dimensions
+func New(nodes []Node, width int, height int) Model {
 	return Model{
 		KeyMap: DefaultKeyMap(),
 		Styles: defaultStyles(),
 
-		width:  80, // default width
-		height: 25, // default height
+		width:  width,
+		height: height,
 		nodes:  nodes,
 
 		showHelp: true,
@@ -80,6 +79,7 @@ type KeyMap struct {
 	SectionUp   key.Binding
 	Down        key.Binding
 	Up          key.Binding
+	Quit        key.Binding
 
 	ShowFullHelp  key.Binding
 	CloseFullHelp key.Binding
@@ -121,6 +121,11 @@ func DefaultKeyMap() KeyMap {
 			key.WithKeys("?"),
 			key.WithHelp("?", "close help"),
 		),
+
+		Quit: key.NewBinding(
+			key.WithKeys("q", "esc"),
+			key.WithHelp("q", "quit"),
+		),
 	}
 }
 
@@ -148,6 +153,7 @@ func (m *Model) NumberOfNodes() int {
 	countNodes(m.nodes)
 
 	return count
+
 }
 
 func (m Model) Width() int {
@@ -190,6 +196,7 @@ func (m *Model) NavUp() {
 		m.cursor = 0
 		return
 	}
+
 }
 
 func (m *Model) NavDown() {
@@ -204,10 +211,10 @@ func (m *Model) NavDown() {
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
-		switch {
-		case key.Matches(msg, m.KeyMap.Up):
+		switch msg.String() {
+		case "up":
 			m.NavUp()
-		case key.Matches(msg, m.KeyMap.Down):
+		case "down":
 			m.NavDown()
 		}
 	}
@@ -216,7 +223,6 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 }
 
 func (m Model) View() string {
-	// Here, we allow dynamic updates of availableHeight based on the current height
 	availableHeight := m.height
 	var sections []string
 
@@ -229,45 +235,51 @@ func (m Model) View() string {
 	}
 
 	count := 0 // This is used to keep track of the index of the node we are on (important because we are using a recursive function)
-	sections = append(sections, lipgloss.NewStyle().Height(availableHeight).Render(m.renderTree(m.nodes, 0, &count)))
+	sections = append(sections, lipgloss.NewStyle().Height(availableHeight).Render(m.renderTree(m.nodes, 0, &count)), help)
 
 	if len(nodes) == 0 {
 		return "No data"
 	}
-
 	return lipgloss.JoinVertical(lipgloss.Left, sections...)
 }
 
 func (m *Model) renderTree(remainingNodes []Node, indent int, count *int) string {
 	var b strings.Builder
 
-	for _, node := range remainingNodes {
-
+	for i, node := range remainingNodes {
 		var str string
+		isLast := i == len(remainingNodes)-1
 
-		// If we aren't at the root, we add the arrow shape to the string
+		// Build the indent prefix
 		if indent > 0 {
-			shape := strings.Repeat(" ", (indent-1)*2) + m.Styles.Shapes.Render(bottomLeft) + " "
-			str += shape
+			// Add the proper indentation with pipes for previous levels
+			for j := 0; j < indent-1; j++ {
+				str += styles.TertiaryStyle.Render(pipe) + " "
+			}
+
+			// Add the appropriate connector (tee or bottomTee)
+			if isLast {
+				str += styles.TertiaryStyle.Render(bottomTee)
+			} else {
+				str += styles.TertiaryStyle.Render(tee)
+			}
 		}
 
 		// Generate the correct index for the node
 		idx := *count
 		*count++
 
-		// Format the string with fixed width for the value and description fields
-		valueWidth := 10
-		valueStr := fmt.Sprintf("%-*s", valueWidth, node.Value)
+		// Format the node name with cursor if selected
+		nodeStr := fmt.Sprintf("%s%s",
+			util.IfElse[string](m.cursor == idx, styles.Accent1InvertedStyle.Render(" ■ "), ""),
+			util.IfElse[string](m.cursor == idx, styles.Accent1InvertedStyle.Render(node.Value), styles.PrimaryStyle.Render(node.Value)),
+		)
 
-		// If we are at the cursor, we add the selected style to the string
-		if m.cursor == idx {
-			str += fmt.Sprintf("%s\n", m.Styles.Selected.Render(valueStr))
-		} else {
-			str += fmt.Sprintf("%s\n", m.Styles.Unselected.Render(valueStr))
-		}
+		str += nodeStr
 
-		b.WriteString(str)
+		b.WriteString(str + "\n")
 
+		// If this node has children, render them with the appropriate pipe continuation
 		if node.Children != nil {
 			childStr := m.renderTree(node.Children, indent+1, count)
 			b.WriteString(childStr)
@@ -291,50 +303,51 @@ func (m Model) ShortHelp() []key.Binding {
 		kb = append(kb, m.AdditionalShortHelpKeys()...)
 	}
 
-	return kb
+	return append(kb,
+		m.KeyMap.Quit,
+	)
 }
 
 func (m Model) FullHelp() [][]key.Binding {
-	return [][]key.Binding{
-		{
-			m.KeyMap.Up,
-			m.KeyMap.Down,
-		},
-	}
+	kb := [][]key.Binding{{
+		m.KeyMap.Up,
+		m.KeyMap.Down,
+	}}
+
+	return append(kb,
+		[]key.Binding{
+			m.KeyMap.Quit,
+			m.KeyMap.CloseFullHelp,
+		})
 }
 
-func (m *Model) Resize(width, height int) {
-	m.SetWidth(width)
-	m.SetHeight(height)
+func (m *Model) GetSelectedNode() (Node, error) {
+
+	count := 0
+	return m.findCursorNode(m.nodes, 0, &count)
 }
 
-// Returns the node at where the cursor is present
-func (m Model) NodeAtCursor() *Node {
-	// Initialize a counter for the node index
-	index := 0
+// GetSelectedNode returns the node at the current cursor position
+func (m *Model) findCursorNode(remainingNodes []Node, indent int, count *int) (Node, error) {
 
-	// Recursive function to traverse the tree and find the node at the cursor
-	var findNode func([]Node, int) *Node
-	findNode = func(nodes []Node, cursor int) *Node {
-		for i := 0; i < len(nodes); i++ {
-			// Check if the current index matches the cursor
-			if index == cursor {
-				return &nodes[i]
-			}
+	for _, node := range remainingNodes {
 
-			index++ // Increment index for each node traversed
+		// Generate the correct index for the node
+		idx := *count
+		*count++
 
-			// Recursively check the children of the current node
-			if len(nodes[i].Children) > 0 {
-				result := findNode(nodes[i].Children, cursor)
-				if result != nil {
-					return result
-				}
+		if idx == m.cursor {
+			return node, nil
+		}
+
+		// If this node has children, render them with the appropriate pipe continuation
+		if node.Children != nil {
+			childNode, err := m.findCursorNode(node.Children, indent+1, count)
+			if err == nil {
+				return childNode, nil
 			}
 		}
-		return nil // Node not found
 	}
 
-	// Start the traversal with the root nodes
-	return findNode(m.nodes, m.cursor)
+	return Node{}, errors.New("node not found")
 }

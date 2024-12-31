@@ -1,11 +1,9 @@
 package ui
 
 import (
-	"strconv"
-
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/hemanth2004/doomsday-protocol/dday/debug"
+	"github.com/hemanth2004/doomsday-protocol/dday/core"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui/submodels"
 	"github.com/hemanth2004/doomsday-protocol/dday/util"
 )
@@ -60,8 +58,6 @@ func (m HomeModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.Width = msg.Width
 		m.Height = msg.Height
 
-		debug.Log("HomeModel: Resize: " + strconv.Itoa(msg.Width) + " " + strconv.Itoa(msg.Height))
-
 		leftWidth, rightWidth, leftPrimaryHeight, leftSecondaryHeight, rightHeight := m.GetPanelDimensions()
 
 		if updatedGuides, _ := m.GuideTree.Update(submodels.ResizeMsgL2{Width: leftWidth, Height: leftPrimaryHeight}); updatedGuides != nil {
@@ -105,6 +101,12 @@ func (m HomeModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.StatusModel = updatedStatus.(submodels.StatusModel)
 				cmds = append(cmds, cmd)
 			}
+		}
+
+	case core.ChangeViewingGuideMsg:
+		if updatedViewer, cmd := m.TextViewer.Update(msg); updatedViewer != nil {
+			m.TextViewer = updatedViewer.(submodels.TextViewerModel)
+			cmds = append(cmds, cmd)
 		}
 	}
 

@@ -29,6 +29,11 @@ func (a *Application) StartPeriodicTicks(deltaTime int) {
 	}
 }
 
+func (a *Application) GuideViewerCallback(path string) {
+	// Send the message through the tea program
+	a.TeaProgram.Send(ChangeViewingGuideMsg(path))
+}
+
 // Initiate the downloads
 func (a *Application) InitiateProtocol() {
 	a.LogFunction("Initiating doomsday-protocol.")

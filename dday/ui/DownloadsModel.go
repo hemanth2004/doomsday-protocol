@@ -164,7 +164,6 @@ func (m DownloadsModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		leftWidth, rightWidth, _, rightHeightSecondary := m.GetPanelDimensions()
 
 		leftHeight := m.Height - 3
-		m.ResourceTree.Resize(leftWidth, leftHeight)
 
 		rows[1] = rows[1].Selected(true)
 		m.DownloadsTable = m.DownloadsTable.WithRows(rows)

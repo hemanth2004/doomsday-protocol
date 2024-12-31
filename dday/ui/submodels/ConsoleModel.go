@@ -2,7 +2,6 @@ package submodels
 
 import (
 	"fmt"
-	"strconv"
 
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
@@ -32,7 +31,6 @@ func (m ConsoleModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	switch msg := msg.(type) {
 	case ResizeMsgL2:
-		debug.Log("ConsoleModel: Resize: " + strconv.Itoa(msg.Width) + " " + strconv.Itoa(msg.Height))
 		m.Width = msg.Width
 		m.Height = msg.Height
 
@@ -46,7 +44,6 @@ func (m ConsoleModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		if m.Focused {
 			if msg.String() == "enter" {
 				m.ConsoleOpened = !m.ConsoleOpened
-				debug.Log("Console opened: " + strconv.FormatBool(m.ConsoleOpened))
 				if m.ConsoleOpened {
 					m.Viewport = viewport.New(m.Width, m.Height-3)
 					m.Viewport.SetContent(debug.SimpleSpread(m.LogsContent, true, styles.TertiaryInvertedStyle, styles.SecondaryStyle))
