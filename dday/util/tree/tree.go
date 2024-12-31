@@ -14,10 +14,10 @@ import (
 )
 
 const (
-	bottomLeft string = " └─"
+	bottomLeft string = " └──"
 	pipe       string = "│"
-	tee        string = "├─"
-	bottomTee  string = "└─"
+	tee        string = "├──"
+	bottomTee  string = "└──"
 )
 
 type Styles struct {
@@ -271,7 +271,7 @@ func (m *Model) renderTree(remainingNodes []Node, indent int, count *int) string
 
 		// Format the node name with cursor if selected
 		nodeStr := fmt.Sprintf("%s%s",
-			util.IfElse[string](m.cursor == idx, styles.Accent1InvertedStyle.Render(" ■ "), ""),
+			util.IfElse[string](m.cursor == idx, styles.Accent1InvertedStyle.Render(" →"), ""),
 			util.IfElse[string](m.cursor == idx, styles.Accent1InvertedStyle.Render(node.Value), styles.PrimaryStyle.Render(node.Value)),
 		)
 

@@ -133,8 +133,7 @@ func buildTreeRecursively(currentPath string) Node {
 
 	// If it's a directory, recurse into its children
 	if info.IsDir() {
-
-		node.Value = node.Value + string(os.PathSeparator)
+		node.Value = node.Value + "📁" + string(os.PathSeparator)
 
 		entries, err := os.ReadDir(currentPath)
 		if err != nil {
@@ -146,12 +145,25 @@ func buildTreeRecursively(currentPath string) Node {
 			return node
 		}
 
+		// Create separate slices for files and directories
+		var files, directories []Node
+
 		// Process each entry in the directory
 		for _, entry := range entries {
 			childPath := filepath.Join(currentPath, entry.Name())
+
 			childNode := buildTreeRecursively(childPath)
-			node.Children = append(node.Children, childNode)
+
+			// Add to appropriate slice based on whether it's a directory
+			if strings.HasSuffix(childNode.Value, string(os.PathSeparator)) {
+				directories = append(directories, childNode)
+			} else {
+				files = append(files, childNode)
+			}
 		}
+
+		// Combine files first, then directories
+		node.Children = append(files, directories...)
 	}
 
 	return node

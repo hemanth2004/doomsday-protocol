@@ -11,9 +11,11 @@ import (
 func InitHomeHelpSet() []HelpSet {
 	return []HelpSet{
 		{
+			{"↑/↓", "navigate"},
 			{"tab", "switch tabs"},
 		},
 		{
+			{"↑/↓", "navigate"},
 			{"tab", "switch tabs"},
 		},
 		{
