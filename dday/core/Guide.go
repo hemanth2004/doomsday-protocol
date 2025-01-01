@@ -1,9 +1,7 @@
 package core
 
 import (
-	"strings"
-
-	markdown "github.com/MichaelMure/go-term-markdown"
+	glamour "github.com/charmbracelet/glamour"
 )
 
 type Guide struct {
@@ -24,8 +22,15 @@ var FurtherFormattedFormats = []SpecificFormatter{
 		Extension: ".md",
 		Formatter: func(content string, width int, height int) string {
 			// Format markdown content
-			result := string(markdown.Render(string(content), width, 1))
-			result = strings.ReplaceAll(result, "\r", "")
+			renderer, _ := glamour.NewTermRenderer(
+				glamour.WithAutoStyle(),
+				glamour.WithWordWrap(width-2),
+			)
+
+			result, err := renderer.Render(content)
+			if err != nil {
+				return content
+			}
 			return result
 		},
 	},

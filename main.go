@@ -16,7 +16,7 @@ import (
 )
 
 var Application core.Application = core.Application{
-	GuidesFolderPath: "C:\\GIthubProjects\\doomsday-protocol\\app\\All_Guides",
+	GuidesFolderPath: "C:\\GIthubProjects\\doomsday-protocol\\app\\All Guides",
 	ResourceList: core.ResourceList{
 		DefaultResources: dday.DefaultResources,
 	},
@@ -32,13 +32,11 @@ func main() {
 	// Set the terminal to use the alternate screen buffer
 	if useAlternateBuffer {
 		fmt.Print("\033[?1049h")
+		// Reset the terminal to use the main screen buffer
+		defer fmt.Print("\033[?1049l")
 	}
 
 	defer debug.Close()
-	// Reset the terminal to use the main screen buffer
-	if useAlternateBuffer {
-		defer fmt.Print("\033[?1049l")
-	}
 
 	p = tea.NewProgram(ui.InitialTeaModel(&Application))
 	Application.TeaProgram = p

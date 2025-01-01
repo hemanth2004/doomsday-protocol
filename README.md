@@ -9,10 +9,10 @@ There’ll be a TUI interface to track and manage your downloads or even add new
 > ***The application is **very much** in design & developmental stages***
 
 > Screenshot of the download page
-> <img style="width: 800px; height: auto; " src="https://github.com/hemanth2004/doomsday-protocol/blob/main/screenshots/28-12-24/downloadsscreenshot.png" />
+> <img style="width: 800px; height: auto; " src="https://github.com/hemanth2004/doomsday-protocol/blob/main/app/screenshots/28-12-24/downloadsscreenshot.png" />
 
 > Screenshot of the home page with all the guides
-> <img style="width: 800px; height: auto; " src="https://github.com/hemanth2004/doomsday-protocol/blob/main/screenshots/28-12-24/homescreenshot.png" />
+> <img style="width: 800px; height: auto; " src="https://github.com/hemanth2004/doomsday-protocol/blob/main/app/screenshots/1-1-25/home.png" />
 
 *Being developed with Go and BubbleTea*
 

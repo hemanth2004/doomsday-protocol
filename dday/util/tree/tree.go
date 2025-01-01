@@ -252,10 +252,8 @@ func (m *Model) renderTree(remainingNodes []Node, indent int, count *int) string
 
 		// Build the indent prefix
 		if indent > 0 {
-			// Add the proper indentation with pipes for previous levels
-			for j := 0; j < indent-1; j++ {
-				str += styles.TertiaryStyle.Render(pipe) + " "
-			}
+			// Just add spaces for indentation instead of pipes
+			str += strings.Repeat("    ", indent-1)
 
 			// Add the appropriate connector (tee or bottomTee)
 			if isLast {

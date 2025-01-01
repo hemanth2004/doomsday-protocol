@@ -133,7 +133,7 @@ func buildTreeRecursively(currentPath string) Node {
 
 	// If it's a directory, recurse into its children
 	if info.IsDir() {
-		node.Value = node.Value + "📁" + string(os.PathSeparator)
+		node.Value = node.Value + string(os.PathSeparator)
 
 		entries, err := os.ReadDir(currentPath)
 		if err != nil {
