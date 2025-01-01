@@ -4,6 +4,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/hemanth2004/doomsday-protocol/dday"
@@ -24,8 +25,20 @@ var Application core.Application = core.Application{
 
 var p *tea.Program
 
+const useAlternateBuffer = false
+
 func main() {
+
+	// Set the terminal to use the alternate screen buffer
+	if useAlternateBuffer {
+		fmt.Print("\033[?1049h")
+	}
+
 	defer debug.Close()
+	// Reset the terminal to use the main screen buffer
+	if useAlternateBuffer {
+		defer fmt.Print("\033[?1049l")
+	}
 
 	p = tea.NewProgram(ui.InitialTeaModel(&Application))
 	Application.TeaProgram = p
