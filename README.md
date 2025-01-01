@@ -4,17 +4,15 @@
 
 A TUI application to download the world’s most important internet resources at the click of a button (and a few more). If the apocalypse/end/collapse was to arrive tomorrow, you’ll have the doomsday-protocol at hand to download and keep track of stuff.
 
-There’ll be a TUI interface to track and manage your downloads or even add new resources. We include a guides to understand how and where you can use each of these resources. Without the user actually initiating the **doomsday protocol**, we can still let the user update and add new resource links.
+The `downloads` page helps keep track of and manage your downloads or even add new resources. The `guides` page helps browse and read our guides that help understand how and where you can use each of these resources. The `new resource` page lets you add a new resource using a HTTP/s download url along with a description. 
 
-> ***The application is **very much** in design & developmental stages***
+> ***The application is **very much** in the design & developmental stages***
 
 > Screenshot of the download page
 > <img style="width: 800px; height: auto; " src="https://github.com/hemanth2004/doomsday-protocol/blob/main/app/screenshots/28-12-24/downloadsscreenshot.png" />
 
 > Screenshot of the guide browser in the home page
 > <img style="width: 800px; height: auto; " src="https://github.com/hemanth2004/doomsday-protocol/blob/main/app/screenshots/1-1-25/home.png" />
-
-*Being developed with Go and BubbleTea*
 
 ### Resources
 The resources in this tool are divided into `default resources` and `user defined resources`.  
@@ -30,7 +28,7 @@ The resources in this tool are divided into `default resources` and `user define
 | ❌ Tools | Essential utilities to access and use the downloaded resources, such as map viewers, PDF readers, a wiki database viewer, an inference tool for the LLM etc. Prefer lightweight CLI/Linux-based tools. | ~200 MB (varies) |
 ||***<center><h3> > `Tier 2 Resources (Optional)`*** ||
 | ❌ Educational Content | To preserve knowledge from fields like physics, chemistry, science, medicine, engineering, geography, philosophy and literature. (OpenStax, Internet Archive) | ~700MB–1GB (curated)  |
-| ✅ Small, portable OS | A thumb drive with all these resources important, environment and a general-purpose operating system that you can boot into anywhere. Tiny Core Linux and Puppy Linux are in consideration here. | <li>TCL: `~50MB`</li><li>fossapup: `~400MB`</li> |
+| ✅ Small, portable OS | A thumb drive with all these resources important, environment and a general-purpose operating system that you can boot into anywhere. AntiX, Tiny Core Linux and Puppy Linux are in consideration here. | <li>TCL: `~50MB`</li><li>fossapup: `~400MB`</li> |
 | ❌ Free LLM | A simple language model can be invaluable in an apocalypse, but its practicality depends heavily on its storage requirements and availability of processing power. | ~1GB–4GB (varies) |
 
 
