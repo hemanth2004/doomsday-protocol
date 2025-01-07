@@ -9,7 +9,7 @@ import (
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/hemanth2004/doomsday-protocol/dday/core"
+	"github.com/hemanth2004/doomsday-protocol/dday/core/guides"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui/styles"
 	"github.com/hemanth2004/doomsday-protocol/dday/util"
 )
@@ -44,7 +44,7 @@ func (m TextViewerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.Scrollbar.Height = m.Height - 2
 		m.Scrollbar.ViewHeight = m.Height - 2
 
-	case core.ChangeViewingGuideMsg:
+	case guides.ChangeViewingGuideMsg:
 		m.Path = string(msg)
 		m.GetSetViewerContent()
 
@@ -117,7 +117,7 @@ func (m *TextViewerModel) GetSetViewerContent() {
 
 		// Check if format is supported
 		isSupported := false
-		for _, format := range core.SupportedFormats {
+		for _, format := range guides.SupportedFormats {
 			if format == fileExt {
 				isSupported = true
 				break
@@ -128,9 +128,9 @@ func (m *TextViewerModel) GetSetViewerContent() {
 			m.Content = "Unsupported format"
 		} else {
 			// Check if format needs special formatting
-			for _, formatter := range core.FurtherFormattedFormats {
+			for _, formatter := range guides.FurtherFormattedFormats {
 				if formatter.Extension == fileExt {
-					m.Content = formatter.Formatter(string(source), m.Width-3, m.Height-2)
+					m.Content = formatter.Formatter(path, string(source), m.Width-3, m.Height-2)
 					m.Viewport.SetContent(m.Content)
 					return
 				}

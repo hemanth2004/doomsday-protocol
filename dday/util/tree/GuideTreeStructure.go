@@ -1,13 +1,11 @@
 package tree
 
-import (
-	"github.com/hemanth2004/doomsday-protocol/dday/core"
-)
+import "github.com/hemanth2004/doomsday-protocol/dday/core/guides"
 
 type GTNode struct {
 	Node
 	Path  string
-	Guide *core.Guide
+	Guide *guides.Guide
 }
 type GTTree struct {
 	Model

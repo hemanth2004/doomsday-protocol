@@ -2,6 +2,7 @@ package ui
 
 import (
 	"github.com/charmbracelet/bubbles/viewport"
+	"github.com/charmbracelet/lipgloss"
 	"github.com/hemanth2004/doomsday-protocol/dday/core"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui/styles"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui/submodels"
@@ -32,8 +33,8 @@ var (
 	}
 	progressBarPair = ColumnKeyWidthPair{
 		Key:      "bar",
-		Width:    4,
-		Flexible: true,
+		Width:    7,
+		Flexible: false,
 	}
 	statusPair = ColumnKeyWidthPair{
 		Key:      "status",
@@ -52,17 +53,17 @@ var (
 	}
 	etaPair = ColumnKeyWidthPair{
 		Key:      "eta",
-		Width:    2,
-		Flexible: true,
+		Width:    8,
+		Flexible: false,
 	}
 	downloadTableColumns = []table.Column{
 		table.NewColumn(idPair.Key, "ID", idPair.Width),
 		table.NewFlexColumn(namePair.Key, "Name", namePair.Width),
-		table.NewFlexColumn(progressBarPair.Key, "Progress", progressBarPair.Width),
+		table.NewColumn(progressBarPair.Key, "Progress", progressBarPair.Width).WithStyle(lipgloss.NewStyle().Width(namePair.Width).Align(lipgloss.Right)),
 		table.NewColumn(statusPair.Key, "Status", statusPair.Width),
 		table.NewFlexColumn(sizePair.Key, "Size", sizePair.Width),
 		table.NewColumn(speedPair.Key, "Speed", speedPair.Width),
-		table.NewFlexColumn(etaPair.Key, "ETA", etaPair.Width),
+		table.NewColumn(etaPair.Key, "ETA", etaPair.Width),
 	}
 )
 
@@ -72,17 +73,18 @@ func InitialTeaModel(Application *core.Application) MainModel {
 		Application:  Application,
 		ResourceList: &Application.ResourceList,
 
-		CurrentState: util.NewStateHandler([]string{"guides", "downloads", "new resource"}, 1),
+		CurrentState: util.NewStateHandler([]string{"guides", "downloads", "new resource"}, 0),
 		Downloads: DownloadsModel{
-			ResourceList: &Application.ResourceList,
+			ResourceList:   &Application.ResourceList,
+			LogFunction:    &Application.LogFunction,
+			LogsContentRef: &Application.LogsContent,
 
-			LogFunction:   &Application.LogFunction,
 			CurrentWindow: util.NewStateHandler([]int{2, 1, 0}, 2),
 
 			DownloadsTable: table.New(downloadTableColumns).
 				Border(styles.CustomBorder).
 				WithBaseStyle(styles.TableStyle).
-				WithMultiline(true),
+				WithMultiline(false),
 			//WithPageSize(2),
 
 			ResourceTree: tree.New([]tree.Node{}, 5, 5),
@@ -99,7 +101,7 @@ func InitialTeaModel(Application *core.Application) MainModel {
 		Home: HomeModel{
 			CurrentWindow: util.NewStateHandler([]int{2, 1, 0}, 0),
 			TextViewer: submodels.TextViewerModel{
-				Path:      "README.md",
+				Path:      "packaged/All Guides/_welcome.md",
 				Scrollbar: submodels.NewScrollbar(),
 			},
 			GuideTree: submodels.GuideTreeModel{

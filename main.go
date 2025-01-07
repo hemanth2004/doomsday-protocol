@@ -19,7 +19,7 @@ var (
 		ResourceList: core.ResourceList{
 			DefaultResources: dday.DefaultResources,
 		},
-		Logs: [][2]string{},
+		LogsContent: make(core.Logs, 0),
 	}
 
 	p *tea.Program

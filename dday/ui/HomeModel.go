@@ -3,7 +3,7 @@ package ui
 import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/hemanth2004/doomsday-protocol/dday/core"
+	"github.com/hemanth2004/doomsday-protocol/dday/core/guides"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui/submodels"
 	"github.com/hemanth2004/doomsday-protocol/dday/util"
 )
@@ -106,7 +106,7 @@ func (m HomeModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 		}
 
-	case core.ChangeViewingGuideMsg:
+	case guides.ChangeViewingGuideMsg:
 		if updatedViewer, cmd := m.TextViewer.Update(msg); updatedViewer != nil {
 			m.TextViewer = updatedViewer.(submodels.TextViewerModel)
 			cmds = append(cmds, cmd)

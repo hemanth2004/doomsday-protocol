@@ -10,12 +10,12 @@ func FormatTime(seconds uint64) string {
 		return fmt.Sprintf("%d day%s", days, plural(int(days)))
 	case seconds >= 3600:
 		hours := seconds / 3600
-		return fmt.Sprintf("%d hour%s", hours, plural(int(hours)))
+		return fmt.Sprintf("%d hr%s", hours, plural(int(hours)))
 	case seconds >= 60:
 		minutes := seconds / 60
-		return fmt.Sprintf("%d minute%s", minutes, plural(int(minutes)))
+		return fmt.Sprintf("%d min%s", minutes, plural(int(minutes)))
 	default:
-		return fmt.Sprintf("%d second%s", seconds, plural(int(seconds)))
+		return fmt.Sprintf("%d sec%s", seconds, plural(int(seconds)))
 	}
 }
 
@@ -30,13 +30,13 @@ func FormatSize(bytes int) string {
 
 	switch {
 	case bytes >= tb:
-		return fmt.Sprintf("%.2fTB", float64(bytes)/float64(tb))
+		return fmt.Sprintf("%.1fTB", float64(bytes)/float64(tb))
 	case bytes >= gb:
-		return fmt.Sprintf("%.2fGB", float64(bytes)/float64(gb))
+		return fmt.Sprintf("%.1fGB", float64(bytes)/float64(gb))
 	case bytes >= mb:
-		return fmt.Sprintf("%.2fMB", float64(bytes)/float64(mb))
+		return fmt.Sprintf("%.1fMB", float64(bytes)/float64(mb))
 	case bytes >= kb:
-		return fmt.Sprintf("%.2fKB", float64(bytes)/float64(kb))
+		return fmt.Sprintf("%.1fKB", float64(bytes)/float64(kb))
 	default:
 		return fmt.Sprintf("%dB", bytes)
 	}
@@ -53,15 +53,15 @@ func FormatSpeed(bytesPerSecond int) string {
 
 	switch {
 	case bytesPerSecond >= tb:
-		return fmt.Sprintf("%.2f TB/s", float64(bytesPerSecond)/float64(tb))
+		return fmt.Sprintf("%.1fTB/s", float64(bytesPerSecond)/float64(tb))
 	case bytesPerSecond >= gb:
-		return fmt.Sprintf("%.2f GB/s", float64(bytesPerSecond)/float64(gb))
+		return fmt.Sprintf("%.1fGB/s", float64(bytesPerSecond)/float64(gb))
 	case bytesPerSecond >= mb:
-		return fmt.Sprintf("%.2f MB/s", float64(bytesPerSecond)/float64(mb))
+		return fmt.Sprintf("%.1fMB/s", float64(bytesPerSecond)/float64(mb))
 	case bytesPerSecond >= kb:
-		return fmt.Sprintf("%.2f KB/s", float64(bytesPerSecond)/float64(kb))
+		return fmt.Sprintf("%.1fKB/s", float64(bytesPerSecond)/float64(kb))
 	default:
-		return fmt.Sprintf("%d B/s", bytesPerSecond)
+		return fmt.Sprintf("%dB/s", bytesPerSecond)
 	}
 }
 

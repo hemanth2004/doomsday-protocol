@@ -12,7 +12,6 @@ import (
 
 	"fmt"
 
-	"github.com/charmbracelet/bubbles/progress"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/evertras/bubble-table/table"
@@ -23,9 +22,9 @@ type DownloadsModel struct {
 	Width  int
 
 	// Core
-	LogFunction  *func(string)
-	LogsContent  [][2]string
-	ResourceList *core.ResourceList
+	LogFunction    *func(string)
+	LogsContentRef *[][2]string
+	ResourceList   *core.ResourceList
 
 	// UI
 	// 0-Downloads(topRight)
@@ -90,31 +89,38 @@ func InitRows(m *DownloadsModel, tableWidth int) ([]table.Row, [][]string) {
 
 		defaultResourcesHeader := []string{
 			" ",
-			"Default Resources",
-			"Tier " + strconv.Itoa(tier),
+			styles.DefaultResourceHeadStyle.Render(" Default Resources" + " [Tier " + strconv.Itoa(tier) + "] "),
+			" ",
 			" ",
 			" ",
 			" ",
 			" ",
 		}
-		rows = append(rows, convertStringToRow(defaultResourcesHeader, &core.EmptyResource).WithStyle(styles.DefaultResourceHeaderRowStyle))
+		rows = append(rows, convertStringToRow(defaultResourcesHeader, &core.EmptyResource).WithStyle(styles.TableRowSeperationStyle))
 		rowsString = append(rowsString, defaultResourcesHeader)
 		countInThisTier := 0
 		for i, resource := range m.ResourceList.DefaultResources {
 
 			if resource.Tier == tier {
-				width := tableutils.CalculateColumnWidth(downloadTableColumns, tableWidth, tableutils.GetColumnFromKey(downloadTableColumns, progressBarPair.Key))
+				//width := tableutils.CalculateColumnWidth(downloadTableColumns, tableWidth, tableutils.GetColumnFromKey(downloadTableColumns, progressBarPair.Key))
 
-				bar := progress.New(
-					progress.WithWidth(width-4),
-					progress.WithSolidFill(string(styles.Accent2Color)),
-				)
+				// bar := progress.New(
+				// 	progress.WithWidth(width-4),
+				// 	progress.WithSolidFill(string(styles.Accent2Color)),
+				// )
+				percentText := ""
+				if resource.Info.Done >= 0 && resource.Info.Size > 0 {
+					percentText = fmt.Sprintf("%.2f%%", float64(resource.Info.Done)/float64(resource.Info.Size)*100)
+				} else {
+					percentText = "0%"
+				}
+
 				rowString := []string{
 					strconv.Itoa(i + 1),
 					resource.Name,
-					bar.ViewAs(float64(resource.Info.Done) / float64(resource.Info.Size)),
+					percentText,
 					string(resource.Status),
-					util.FormatSize(int(resource.Info.Done)) + " / " + util.FormatSize(int(resource.Info.Size)),
+					util.FormatSize(int(resource.Info.Done)) + "/" + util.FormatSize(int(resource.Info.Size)),
 					util.FormatSpeed(int(resource.Info.Bandwidth)),
 					util.FormatTime(resource.Info.ETA),
 				}
@@ -161,7 +167,7 @@ func (m DownloadsModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	}
 
-	tableHeight := rightHeightPrimary - 10
+	tableHeight := rightHeightPrimary
 	m.DownloadsTable = m.DownloadsTable.
 		WithRows(rows).
 		WithTargetWidth(rightWidth).
@@ -184,6 +190,7 @@ func (m DownloadsModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		// Update Console Viewport
 		if updatedConsole, _ := m.ConsoleModel.Update(submodels.ResizeMsgL2{Width: rightWidth, Height: rightHeightSecondary}); updatedConsole != nil {
 			m.ConsoleModel = updatedConsole.(submodels.ConsoleModel)
+			m.ConsoleModel.LogsContent = *m.LogsContentRef
 		}
 		// Update Inspect Model Viewport
 		if updatedInspect, _ := m.InspectModel.Update(submodels.ResizeMsgL2{Width: leftWidth, Height: leftHeight}); updatedInspect != nil {

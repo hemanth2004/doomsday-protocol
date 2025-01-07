@@ -1,4 +1,4 @@
-package core
+package guides
 
 import (
 	glamour "github.com/charmbracelet/glamour"
@@ -14,13 +14,13 @@ type ChangeViewingGuideMsg string
 
 type SpecificFormatter struct {
 	Extension string
-	Formatter func(content string, width int, height int) string
+	Formatter func(path, content string, width, height int) string
 }
 
 var FurtherFormattedFormats = []SpecificFormatter{
 	{
 		Extension: ".md",
-		Formatter: func(content string, width int, height int) string {
+		Formatter: func(_, content string, width, height int) string {
 			// Format markdown content
 			renderer, _ := glamour.NewTermRenderer(
 				glamour.WithAutoStyle(),
@@ -33,6 +33,18 @@ var FurtherFormattedFormats = []SpecificFormatter{
 			}
 			return result
 		},
+	},
+	{
+		Extension: ".png",
+		Formatter: RenderImage,
+	},
+	{
+		Extension: ".jpg",
+		Formatter: RenderImage,
+	},
+	{
+		Extension: ".jpeg",
+		Formatter: RenderImage,
 	},
 }
 
@@ -78,6 +90,11 @@ var SupportedFormats = []string{
 	".sql",     // SQL scripts
 	".sparql",  // SPARQL queries
 	".graphql", // GraphQL queries
+
+	// Images
+	".png",
+	".jpg",
+	".jpeg",
 
 	// Scripting and Programming Files
 	".py",    // Python scripts

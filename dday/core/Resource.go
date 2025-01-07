@@ -2,6 +2,8 @@ package core
 
 import (
 	"time"
+
+	"github.com/hemanth2004/doomsday-protocol/dday/core/guides"
 )
 
 // N number of Downloads downloading at a time
@@ -12,7 +14,7 @@ type Resource struct {
 	Description string
 	Note        string
 	Tier        int
-	Guide       Guide
+	Guide       guides.Guide
 
 	UrlGetter        UrlGetter
 	FileName         string

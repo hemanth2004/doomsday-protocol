@@ -44,6 +44,40 @@ func (m *MultilineProgress) View(overlay string) string {
 
 	line := m.fillStyle.Render(filled) + m.style.Render(empty)
 
+	// For height=1, center the overlay text on the progress bar
+	if m.height == 1 {
+		if overlay != "" {
+			// Create inverted styles for overlay text
+			invertedFillStyle := m.fillStyle.
+				Background(m.fillStyle.GetForeground()).
+				Foreground(m.fillStyle.GetBackground())
+			invertedBackStyle := m.style.
+				Background(m.style.GetForeground()).
+				Foreground(m.style.GetBackground())
+
+			// Center the overlay text
+			padding := (m.width - lipgloss.Width(overlay)) / 2
+			if padding > 0 {
+				overlay = strings.Repeat(" ", padding) + overlay
+			}
+
+			// Render each character with appropriate style based on position
+			var renderedOverlay string
+			for j, ch := range overlay {
+				if j >= m.width {
+					break
+				}
+				if j < fillWidth {
+					renderedOverlay += invertedFillStyle.Render(string(ch))
+				} else {
+					renderedOverlay += invertedBackStyle.Render(string(ch))
+				}
+			}
+			return renderedOverlay
+		}
+		return line
+	}
+
 	lines := make([]string, m.height)
 	for i := 0; i < m.height; i++ {
 		lines[i] = line

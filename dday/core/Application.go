@@ -4,6 +4,7 @@ import (
 	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/hemanth2004/doomsday-protocol/dday/core/guides"
 )
 
 // Everything that the entire application should keep track of
@@ -16,7 +17,7 @@ type Application struct {
 	ResourceList      ResourceList
 
 	LogFunction func(string)
-	Logs        Log
+	LogsContent Logs
 }
 
 type TickMsg time.Time
@@ -31,7 +32,7 @@ func (a *Application) StartPeriodicTicks(deltaTime int) {
 }
 
 func (a *Application) GuideViewerCallback(path string) {
-	a.TeaProgram.Send(ChangeViewingGuideMsg(path))
+	a.TeaProgram.Send(guides.ChangeViewingGuideMsg(path))
 }
 
 // Initiate every resource download
@@ -54,12 +55,12 @@ func (a *Application) GetProgress() float64 {
 }
 
 // Logs Logic
-type Log = [][2]string
+type Logs = [][2]string
 
 // Log a message on the console
 func (a *Application) Log(s string) {
-	a.Logs = append(a.Logs, [2]string{s, time.Now().Format(time.DateTime)})
-	a.TeaProgram.Send(LoggedMsg(a.Logs))
+	a.LogsContent = append(a.LogsContent, [2]string{s, time.Now().Format(time.DateTime)})
+	a.TeaProgram.Send(LoggedMsg(a.LogsContent))
 }
 
 type LoggedMsg [][2]string
