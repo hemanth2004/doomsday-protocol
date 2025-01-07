@@ -2,7 +2,7 @@ package dday
 
 import (
 	"github.com/hemanth2004/doomsday-protocol/dday/core"
-	"github.com/hemanth2004/doomsday-protocol/dday/core/parts"
+	"github.com/hemanth2004/doomsday-protocol/dday/core/netcode"
 	"github.com/hemanth2004/doomsday-protocol/dday/resources"
 )
 
@@ -20,7 +20,7 @@ var DefaultResources []core.Resource = []core.Resource{
 			},
 		},
 		FileName:         "india-latest.osm.pbf",
-		InitiateDownload: parts.InitiateHTTPDownload,
+		InitiateDownload: netcode.InitiateHTTPDownload,
 		Info:             core.ResourceInformation{},
 		Status:           core.StatusQueued,
 		Error:            nil,
@@ -38,7 +38,7 @@ var DefaultResources []core.Resource = []core.Resource{
 			},
 		},
 		FileName:         "enwiki-latest-pages-articles.xml.bz2",
-		InitiateDownload: parts.InitiateHTTPDownload,
+		InitiateDownload: netcode.InitiateHTTPDownload,
 		Info:             core.ResourceInformation{},
 		Status:           core.StatusQueued,
 		Error:            nil,
@@ -62,7 +62,7 @@ var DefaultResources []core.Resource = []core.Resource{
 			},
 		},
 		FileName:         "100MB.zip",
-		InitiateDownload: parts.InitiateHTTPDownload,
+		InitiateDownload: netcode.InitiateHTTPDownload,
 		Info:             core.ResourceInformation{},
 		Status:           core.StatusQueued,
 		Error:            nil,
@@ -81,7 +81,7 @@ var DefaultResources []core.Resource = []core.Resource{
 	// 		},
 	// 	},
 	// 	FileName:         "1GB.zip",
-	// 	InitiateDownload: parts.InitiateFileDownload,
+	// 	InitiateDownload: netcode.InitiateFileDownload,
 	// 	Info:             core.ResourceInformation{},
 	// 	Status:           core.StatusQueued,
 	// 	Error:            nil,

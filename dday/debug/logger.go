@@ -12,12 +12,11 @@ var (
 	file        *os.File
 	initOnce    sync.Once
 	mutex       sync.Mutex
-	logDir      = "debug"
-	logFile     = "DEBUG.txt"
+	logDir      = "logs"
+	logFile     = "logs.txt"
 	logFilePath string
 )
 
-// initLogger initializes the logger and ensures the file and directory exist.
 func initLogger() {
 	logFilePath = filepath.Join(logDir, logFile)
 
@@ -33,22 +32,18 @@ func initLogger() {
 		log.Fatalf("Failed to open log file: %v", err)
 	}
 
-	// Create the logger
 	logger = log.New(file, "", log.LstdFlags)
 }
 
-// Log writes a log message to debug/DEBUG.txt
 func Log(message string) {
-	initOnce.Do(initLogger) // Ensure the logger is initialized only once
+	initOnce.Do(initLogger)
 
 	mutex.Lock()
 	defer mutex.Unlock()
 
-	// Write the message
 	logger.Printf("%s", message)
 }
 
-// Close cleans up the resources when the program exits.
 func Close() {
 	if file != nil {
 		file.Close()

@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-// 2-3 Downloads downloading at a time
+// N number of Downloads downloading at a time
 // Rest are queued
 // Appears on the Downloads list
 type Resource struct {

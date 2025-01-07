@@ -189,10 +189,10 @@ func findParentNode(nodes []Node, relPath string) *Node {
 		return nil
 	}
 
-	parts := strings.Split(relPath, string(os.PathSeparator))
+	netcode := strings.Split(relPath, string(os.PathSeparator))
 	current := nodes
 
-	for _, part := range parts {
+	for _, part := range netcode {
 		found := false
 		for i := range current {
 			if current[i].Value == part {

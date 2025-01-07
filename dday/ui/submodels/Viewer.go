@@ -41,7 +41,6 @@ func (m TextViewerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		m.Viewport = viewport.New(m.Width-1, m.Height-2)
 
-		// Update scrollbar dimensions
 		m.Scrollbar.Height = m.Height - 2
 		m.Scrollbar.ViewHeight = m.Height - 2
 
@@ -59,7 +58,6 @@ func (m TextViewerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	m.GetSetViewerContent()
 
-	// Update scrollbar state
 	content := m.Content
 	m.Scrollbar.ContentHeight = strings.Count(content, "\n") + 1
 	m.Scrollbar.ScrollOffset = m.Viewport.YOffset
@@ -86,7 +84,6 @@ func (m TextViewerModel) View() string {
 
 	mainContent = content + mainContent
 	if m.Focused {
-		// Highlight Window if active
 		s += styles.PanelHighlightStyle.Width(m.Width).Height(m.Height).Render(mainContent)
 	} else {
 		s += styles.PanelStyle.Width(m.Width).Height(m.Height).Render(mainContent)

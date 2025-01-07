@@ -1,5 +1,7 @@
 package core
 
+// TODO: We approach a file server to get the urls
+
 type UrlGetter struct {
 	Key           string // used to identify resouce in the server
 	RecentURLUsed string

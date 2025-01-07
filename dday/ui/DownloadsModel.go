@@ -58,11 +58,24 @@ type RowsMsg []table.Row
 
 func InitRows(m *DownloadsModel, tableWidth int) ([]table.Row, [][]string) {
 	convertStringToRow := func(s []string, resource *core.Resource) table.Row {
+
+		var statusStyle lipgloss.Style
+		switch resource.Status {
+		case core.StatusCompleted:
+			statusStyle = lipgloss.NewStyle().Foreground(styles.Green)
+		case core.StatusDownloading:
+			statusStyle = lipgloss.NewStyle().Foreground(styles.BrightYellow)
+		case core.StatusFailed:
+			statusStyle = lipgloss.NewStyle().Foreground(styles.Red)
+		default:
+			statusStyle = lipgloss.NewStyle().Foreground(styles.White)
+		}
+
 		return table.NewRow(table.RowData{
 			idPair.Key:          s[0],
 			namePair.Key:        s[1],
 			progressBarPair.Key: s[2],
-			statusPair.Key:      s[3],
+			statusPair.Key:      util.IfElse(util.IsEmptyOrWhitespace(s[3]), s[3], statusStyle.Render(s[3])),
 			sizePair.Key:        s[4],
 			speedPair.Key:       s[5],
 			etaPair.Key:         s[6],
@@ -93,7 +106,7 @@ func InitRows(m *DownloadsModel, tableWidth int) ([]table.Row, [][]string) {
 				width := tableutils.CalculateColumnWidth(downloadTableColumns, tableWidth, tableutils.GetColumnFromKey(downloadTableColumns, progressBarPair.Key))
 
 				bar := progress.New(
-					progress.WithWidth(width-5),
+					progress.WithWidth(width-4),
 					progress.WithSolidFill(string(styles.Accent2Color)),
 				)
 				rowString := []string{

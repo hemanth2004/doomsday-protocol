@@ -28,6 +28,22 @@ func IfElse[T any](cond bool, exp1, exp2 T) T {
 	}
 }
 
+func IsEmptyOrWhitespace(str string) bool {
+	if len(str) == 0 {
+		return true
+	}
+	for _, char := range str {
+		if !isWhitespace(char) {
+			return false
+		}
+	}
+	return true
+}
+
+func isWhitespace(char rune) bool {
+	return char == ' ' || char == '\t' || char == '\n' || char == '\r'
+}
+
 func DeleteElement[T any](slice []T, index int) []T {
 	// Handle invalid index cases
 	if index < 0 || index >= len(slice) {

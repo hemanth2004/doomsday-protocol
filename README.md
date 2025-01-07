@@ -9,10 +9,10 @@ The `downloads` page helps keep track of and manage your downloads or even add n
 > ***The application is **very much** in the design & developmental stages***
 
 > Screenshot of the download page
-> <img style="width: 800px; height: auto; " src="https://github.com/hemanth2004/doomsday-protocol/blob/main/app/screenshots/28-12-24/downloadsscreenshot.png" />
+> <img style="width: 800px; height: auto; " src="https://github.com/hemanth2004/doomsday-protocol/blob/main/packaged/screenshots/28-12-24/downloadsscreenshot.png" />
 
 > Screenshot of the guide browser in the home page
-> <img style="width: 800px; height: auto; " src="https://github.com/hemanth2004/doomsday-protocol/blob/main/app/screenshots/1-1-25/home.png" />
+> <img style="width: 800px; height: auto; " src="https://github.com/hemanth2004/doomsday-protocol/blob/main/packaged/screenshots/1-1-25/home.png" />
 
 ### Resources
 The resources in this tool are divided into `default resources` and `user defined resources`.  

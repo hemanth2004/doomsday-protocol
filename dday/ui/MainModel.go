@@ -3,7 +3,6 @@ package ui
 import (
 	"github.com/hemanth2004/doomsday-protocol/dday/core"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui/styles"
-	"github.com/hemanth2004/doomsday-protocol/dday/ui/submodels"
 	"github.com/hemanth2004/doomsday-protocol/dday/util"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -21,7 +20,6 @@ type MainModel struct {
 	Downloads    DownloadsModel
 	NewResource  NewResourceModel
 	Home         HomeModel
-	Statusbar    submodels.StatusbarModel
 	HelpSet      HelpSet
 }
 
@@ -66,8 +64,6 @@ func (m MainModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				cmds = append(cmds, cmd)
 			}
 		}
-
-		m.Statusbar.Width = m.width
 
 	case tea.KeyMsg:
 		if msg.String() == "ctrl+e" {

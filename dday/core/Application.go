@@ -12,7 +12,8 @@ type Application struct {
 
 	GuidesFolderPath string
 
-	ResourceList ResourceList
+	ProtocolInitiated bool
+	ResourceList      ResourceList
 
 	LogFunction func(string)
 	Logs        Log
@@ -30,12 +31,13 @@ func (a *Application) StartPeriodicTicks(deltaTime int) {
 }
 
 func (a *Application) GuideViewerCallback(path string) {
-	// Send the message through the tea program
 	a.TeaProgram.Send(ChangeViewingGuideMsg(path))
 }
 
-// Initiate the downloads
+// Initiate every resource download
+// TODO: Limit to N at a time and queue the rest
 func (a *Application) InitiateProtocol() {
+	a.ProtocolInitiated = true
 	a.LogFunction("Initiating doomsday-protocol.")
 	for i, r := range a.ResourceList.DefaultResources {
 		if r.Tier == 0 {
@@ -45,6 +47,10 @@ func (a *Application) InitiateProtocol() {
 		}
 
 	}
+}
+
+func (a *Application) GetProgress() float64 {
+	return 0.0
 }
 
 // Logs Logic

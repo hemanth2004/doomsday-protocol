@@ -7,7 +7,6 @@ import (
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/hemanth2004/doomsday-protocol/dday/debug"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui/styles"
 	"github.com/hemanth2004/doomsday-protocol/dday/util"
 	"github.com/hemanth2004/doomsday-protocol/dday/util/tree"
@@ -60,7 +59,6 @@ func (m GuideTreeModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 			// Adjust viewport based on cursor position
 			cursor := m.Tree.Cursor()
-
 			// Scroll down if cursor is near bottom
 			if cursor >= m.viewportOffset+m.visibleLines-2 {
 				m.viewportOffset = cursor - m.visibleLines + 2
@@ -68,7 +66,6 @@ func (m GuideTreeModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					m.viewportOffset = 0
 				}
 			}
-
 			// Scroll up if cursor is near top
 			if cursor <= m.viewportOffset+1 {
 				m.viewportOffset = cursor - 1
@@ -76,7 +73,6 @@ func (m GuideTreeModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					m.viewportOffset = 0
 				}
 			}
-
 			// Update viewport position
 			m.Viewport.SetYOffset(m.viewportOffset)
 
@@ -98,7 +94,6 @@ func (m GuideTreeModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	m.Scrollbar.ContentHeight = strings.Count(m.Tree.View(), "\n") + 1
 	m.Scrollbar.ScrollOffset = m.viewportOffset
 
-	debug.Log("\n------------------------------------\n" + m.Scrollbar.View())
 	return m, tea.Batch(cmds...)
 }
 

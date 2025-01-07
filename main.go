@@ -1,6 +1,3 @@
-//go dday.Resources[0].InitiateDownload("downloads/", DebugPrint, &dday.Resources[0])
-//go dday.Resources[1].InitiateDownload("downloads/", DebugPrint, &dday.Resources[1])
-
 package main
 
 import (
@@ -15,16 +12,20 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 )
 
-var Application core.Application = core.Application{
-	GuidesFolderPath: "C:\\GIthubProjects\\doomsday-protocol\\app\\All Guides",
-	ResourceList: core.ResourceList{
-		DefaultResources: dday.DefaultResources,
-	},
-	Logs: [][2]string{},
-}
+var (
+	Application core.Application = core.Application{
+		ProtocolInitiated: false,
+		GuidesFolderPath:  "C:\\GIthubProjects\\doomsday-protocol\\packaged\\All Guides",
+		ResourceList: core.ResourceList{
+			DefaultResources: dday.DefaultResources,
+		},
+		Logs: [][2]string{},
+	}
 
-var p *tea.Program
+	p *tea.Program
+)
 
+// Options
 const useAlternateBuffer = false
 
 func main() {
@@ -42,8 +43,8 @@ func main() {
 	Application.TeaProgram = p
 	Application.LogFunction = DebugPrintGoroutine
 
-	go Application.StartPeriodicTicks(250) // > 4FPS
-	//go Application.InitiateProtocol()
+	go Application.StartPeriodicTicks(250) // = 4 FPS
+	go Application.InitiateProtocol()
 
 	if _, err := p.Run(); err != nil {
 		log.Fatal(err)

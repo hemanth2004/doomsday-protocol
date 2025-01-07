@@ -19,6 +19,7 @@ func InitHomeHelpSet() []HelpSet {
 			{"tab", "switch tabs"},
 		},
 		{
+			{"ctrl+d+p", "initiate/pause/resume protocol"},
 			{"tab", "switch tabs"},
 		},
 	}

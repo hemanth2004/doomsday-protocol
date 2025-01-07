@@ -7,6 +7,11 @@ import (
 	"github.com/hemanth2004/doomsday-protocol/dday/ui/styles"
 )
 
+const (
+	ScrollbarTrack = "░"
+	ScrollbarThumb = "█"
+)
+
 type ScrollbarModel struct {
 	Height        int  // Total height of the scrollbar
 	ContentHeight int  // Total height of the content being scrolled
@@ -41,33 +46,14 @@ func (m ScrollbarModel) View() string {
 	// Ensure thumb position stays within bounds
 	thumbPos = max(0, min(m.Height-thumbSize, thumbPos))
 
-	// Build the scrollbar
 	bar := make([]string, m.Height)
 
-	// Fill with track character
 	for i := 0; i < m.Height; i++ {
-		bar[i] = "░"
+		bar[i] = ScrollbarTrack
 	}
-
-	// Place thumb
 	for i := thumbPos; i < thumbPos+thumbSize; i++ {
-		bar[i] = "█"
+		bar[i] = ScrollbarThumb
 	}
 
 	return styles.ScrollbarStyle.Render(strings.Join(bar, "\n"))
-}
-
-// Helper function for Go versions < 1.21
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
 }

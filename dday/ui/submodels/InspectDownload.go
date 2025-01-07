@@ -11,15 +11,10 @@ import (
 	"github.com/hemanth2004/doomsday-protocol/dday/util"
 )
 
-// script to handle detailed view of a download thats happening currently
+// Component to handle detailed view of a download thats happening currently
 
 var (
 	headStyle = lipgloss.NewStyle().Foreground(styles.Black).Background(styles.BrightYellow)
-
-	statusSuccessStyle     = lipgloss.NewStyle().Foreground(styles.Black).Background(styles.BrightGreen)
-	statusDownloadingStyle = lipgloss.NewStyle().Foreground(styles.Black).Background(styles.Yellow)
-	statusFailStyle        = lipgloss.NewStyle().Foreground(styles.Black).Background(styles.Red)
-	statusWaitStyle        = lipgloss.NewStyle().Foreground(styles.Black).Background(styles.Blue)
 
 	detailsStyle = lipgloss.NewStyle().Foreground(styles.Black).Background(styles.White)
 
@@ -101,13 +96,13 @@ func (m InspectModel) UpdateContent() string {
 		var statusStyle lipgloss.Style
 		switch m.InspectingDownload.Status {
 		case core.StatusCompleted:
-			statusStyle = statusSuccessStyle
+			statusStyle = styles.StatusSuccessStyle
 		case core.StatusDownloading:
-			statusStyle = statusDownloadingStyle
+			statusStyle = styles.StatusDownloadingStyle
 		case core.StatusFailed:
-			statusStyle = statusFailStyle
+			statusStyle = styles.StatusFailStyle
 		default:
-			statusStyle = statusWaitStyle
+			statusStyle = styles.StatusWaitStyle
 		}
 		header += "\nSTATUS: " + statusStyle.Render(util.MarginHor(string(m.InspectingDownload.Status), 1)) + "\n\n"
 

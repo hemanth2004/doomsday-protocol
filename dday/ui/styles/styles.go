@@ -103,3 +103,18 @@ var (
 
 var ScrollbarStyle = lipgloss.NewStyle().
 	Foreground(SecondaryColor)
+
+var StatusBackgroundStyle = lipgloss.NewStyle().
+	Foreground(Accent2Color).
+	Background(White)
+
+var StatusFillStyle = lipgloss.NewStyle().
+	Foreground(Accent1Color).
+	Background(BrightBlack)
+
+var (
+	StatusSuccessStyle     = lipgloss.NewStyle().Foreground(Black).Background(Green)
+	StatusDownloadingStyle = lipgloss.NewStyle().Foreground(Black).Background(BrightYellow)
+	StatusFailStyle        = lipgloss.NewStyle().Foreground(Black).Background(Red)
+	StatusWaitStyle        = lipgloss.NewStyle().Foreground(Black).Background(Blue)
+)

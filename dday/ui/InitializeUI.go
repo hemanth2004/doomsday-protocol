@@ -72,7 +72,7 @@ func InitialTeaModel(Application *core.Application) MainModel {
 		Application:  Application,
 		ResourceList: &Application.ResourceList,
 
-		CurrentState: util.NewStateHandler([]string{"guides", "downloads", "new resource"}, 0),
+		CurrentState: util.NewStateHandler([]string{"guides", "downloads", "new resource"}, 1),
 		Downloads: DownloadsModel{
 			ResourceList: &Application.ResourceList,
 
@@ -107,8 +107,11 @@ func InitialTeaModel(Application *core.Application) MainModel {
 				ReadGuideCallback: Application.GuideViewerCallback,
 				Scrollbar:         submodels.NewScrollbar(),
 			},
-			StatusModel: submodels.StatusModel{},
-			HelpSet:     InitHomeHelpSet(),
+			StatusModel: submodels.StatusModel{
+				ApplicationObject: Application,
+				Progress:          submodels.NewMultilineProgress(5, 3, styles.StatusFillStyle, styles.StatusBackgroundStyle),
+			},
+			HelpSet: InitHomeHelpSet(),
 		},
 
 		HelpSet: InitMainHelpSet(),
