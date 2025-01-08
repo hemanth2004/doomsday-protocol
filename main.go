@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/hemanth2004/doomsday-protocol/dday"
 	"github.com/hemanth2004/doomsday-protocol/dday/core"
 	"github.com/hemanth2004/doomsday-protocol/dday/debug"
+	"github.com/hemanth2004/doomsday-protocol/dday/resources"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -17,7 +17,7 @@ var (
 		ProtocolInitiated: false,
 		GuidesFolderPath:  "C:\\GIthubProjects\\doomsday-protocol\\packaged\\All Guides",
 		ResourceList: core.ResourceList{
-			DefaultResources: dday.DefaultResources,
+			DefaultResources: resources.CoreResources,
 		},
 		LogsContent: make(core.Logs, 0),
 	}
@@ -44,7 +44,7 @@ func main() {
 	Application.LogFunction = DebugPrintGoroutine
 
 	go Application.StartPeriodicTicks(250) // = 4 FPS
-	go Application.InitiateProtocol()
+	//go Application.InitiateProtocol()
 
 	if _, err := p.Run(); err != nil {
 		log.Fatal(err)

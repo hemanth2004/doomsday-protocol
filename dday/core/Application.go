@@ -14,7 +14,9 @@ type Application struct {
 	GuidesFolderPath string
 
 	ProtocolInitiated bool
-	ResourceList      ResourceList
+	ProtocolPaused    bool
+
+	ResourceList ResourceList
 
 	LogFunction func(string)
 	LogsContent Logs
@@ -39,6 +41,7 @@ func (a *Application) GuideViewerCallback(path string) {
 // TODO: Limit to N at a time and queue the rest
 func (a *Application) InitiateProtocol() {
 	a.ProtocolInitiated = true
+	a.ProtocolPaused = false
 	a.LogFunction("Initiating doomsday-protocol.")
 	for i, r := range a.ResourceList.DefaultResources {
 		if r.Tier == 0 {
@@ -50,17 +53,16 @@ func (a *Application) InitiateProtocol() {
 	}
 }
 
-func (a *Application) GetProgress() float64 {
-	return 0.0
+func (a *Application) OrderToInitiateProtocol() {
+	go a.InitiateProtocol()
 }
 
-// Logs Logic
-type Logs = [][2]string
-
-// Log a message on the console
-func (a *Application) Log(s string) {
-	a.LogsContent = append(a.LogsContent, [2]string{s, time.Now().Format(time.DateTime)})
-	a.TeaProgram.Send(LoggedMsg(a.LogsContent))
+func (a *Application) PauseProtocol() {
+	a.ProtocolPaused = true
+	a.ResourceList.PauseAllResources()
 }
 
-type LoggedMsg [][2]string
+func (a *Application) ResumeProtocol() {
+	a.ProtocolPaused = false
+	a.ResourceList.ResumeAllResources()
+}

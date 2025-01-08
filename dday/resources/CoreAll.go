@@ -1,12 +1,11 @@
-package dday
+package resources
 
 import (
 	"github.com/hemanth2004/doomsday-protocol/dday/core"
 	"github.com/hemanth2004/doomsday-protocol/dday/core/netcode"
-	"github.com/hemanth2004/doomsday-protocol/dday/resources"
 )
 
-var DefaultResources []core.Resource = []core.Resource{
+var CoreResources []core.Resource = []core.Resource{
 
 	{
 		Name:        "OpenStreetMaps India",
@@ -24,6 +23,7 @@ var DefaultResources []core.Resource = []core.Resource{
 		Info:             core.ResourceInformation{},
 		Status:           core.StatusQueued,
 		Error:            nil,
+		ControlChannel:   make(chan core.DownloadControl),
 	},
 
 	{
@@ -42,12 +42,13 @@ var DefaultResources []core.Resource = []core.Resource{
 		Info:             core.ResourceInformation{},
 		Status:           core.StatusQueued,
 		Error:            nil,
+		ControlChannel:   make(chan core.DownloadControl),
 	},
 
-	resources.SurvivalBooks[0],
-	resources.SurvivalBooks[1],
-	resources.SurvivalBooks[2],
-	resources.SurvivalBooks[3],
+	SurvivalBooks[0],
+	SurvivalBooks[1],
+	SurvivalBooks[2],
+	SurvivalBooks[3],
 
 	{
 		Name:        "Sample 100MB",
@@ -66,6 +67,7 @@ var DefaultResources []core.Resource = []core.Resource{
 		Info:             core.ResourceInformation{},
 		Status:           core.StatusQueued,
 		Error:            nil,
+		ControlChannel:   make(chan core.DownloadControl),
 	},
 
 	// {

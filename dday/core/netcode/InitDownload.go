@@ -1,6 +1,7 @@
 package netcode
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -19,7 +20,6 @@ import (
 // and if so, resume download
 
 func InitiateHTTPDownload(folderPath string, logFunction func(string), downloadStruct *core.Resource) error {
-	// Initialize download
 	if err := prepareFS(folderPath, logFunction, downloadStruct); err != nil {
 		return err
 	}
@@ -31,17 +31,14 @@ func InitiateHTTPDownload(folderPath string, logFunction func(string), downloadS
 	}
 	defer resp.Body.Close()
 
-	// Create and prepare file
 	file, err := createOutputFile(downloadStruct, logFunction)
 	if err != nil {
 		return err
 	}
 	defer file.Close()
 
-	// Initialize download info
 	initializeDownloadInfo(resp, downloadStruct)
 
-	// Perform the actual download
 	if err := performDownload(resp, file, downloadStruct, logFunction); err != nil {
 		return err
 	}
@@ -69,6 +66,7 @@ func performDownload(resp *http.Response, file *os.File, downloadStruct *core.Re
 			switch cmd {
 			case core.Pause:
 				isPaused = true
+				downloadStruct.Info.Bandwidth = 0.0
 				downloadStruct.Status = core.StatusPaused
 				logFunction(fmt.Sprintf("Download paused: %s", downloadStruct.Name))
 			case core.Start:
@@ -90,7 +88,7 @@ func performDownload(resp *http.Response, file *os.File, downloadStruct *core.Re
 						downloadStruct.Status = core.StatusFailed
 						errMsg := fmt.Sprintf("Error writing to file: %v", writeErr)
 						logFunction(errMsg)
-						return fmt.Errorf(errMsg)
+						return errors.New(errMsg)
 					}
 
 					// Update progress
@@ -106,25 +104,23 @@ func performDownload(resp *http.Response, file *os.File, downloadStruct *core.Re
 
 				if readErr == io.EOF {
 					downloadStruct.Status = core.StatusCompleted
-					break
+					return nil
 				}
 				if readErr != nil {
 					downloadStruct.Status = core.StatusFailed
 					errMsg := fmt.Sprintf("Error reading data: %v", readErr)
 					logFunction(errMsg)
-					return fmt.Errorf(errMsg)
+					return errors.New(errMsg)
 				}
 			}
 		}
 	}
-	return nil
 }
 
 func finalizeDownload(downloadStruct *core.Resource, logFunction func(string)) {
-
 	if downloadStruct.Status == core.StatusCompleted {
 		downloadStruct.Info.EndTime = time.Now()
-		downloadStruct.Info.Done = downloadStruct.Info.Size
+		downloadStruct.Info.Size = downloadStruct.Info.Done
 		downloadStruct.Info.Bandwidth = 0.0
 		downloadStruct.Info.ETA = 0
 		logFunction(fmt.Sprintf("Download completed: %s, Time taken: %.2fs",

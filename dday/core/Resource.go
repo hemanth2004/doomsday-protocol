@@ -28,21 +28,24 @@ type Resource struct {
 	CustomResource bool
 }
 
-// Download info to construct the UI
-type ResourceInformation struct {
-	Done      float64   // Bytes downloaded so far
-	Size      float64   // Total size of the download in bytes
-	Bandwidth float64   // Current download speed in bytes per second
-	ETA       uint64    // Estimated time remaining (formatted as a string, e.g., "10.5 seconds")
-	StartTime time.Time // Time when the download started
-	EndTime   time.Time // Time when the download completed
+func (r *Resource) SpacePressed() {
+	if r.Status == StatusDownloading {
+		r.PauseResource()
+	} else if r.Status == StatusPaused {
+		r.ResumeResource()
+	}
 }
 
-func (d ResourceInformation) ProgressPercent() float64 {
-	if d.Size == 0 {
-		return 0
-	}
-	return (d.Done / d.Size) * 100
+func (r *Resource) EnterPressed() {
+
+}
+
+func (r *Resource) PauseResource() {
+	r.ControlChannel <- Pause
+}
+
+func (r *Resource) ResumeResource() {
+	r.ControlChannel <- Start
 }
 
 type DownloadStatus string
@@ -63,6 +66,23 @@ const (
 	Pause
 	Cancel
 )
+
+// Download info to construct the UI
+type ResourceInformation struct {
+	Done      float64   // Bytes downloaded so far
+	Size      float64   // Total size of the download in bytes
+	Bandwidth float64   // Current download speed in bytes per second
+	ETA       uint64    // Estimated time remaining (formatted as a string, e.g., "10.5 seconds")
+	StartTime time.Time // Time when the download started
+	EndTime   time.Time // Time when the download completed
+}
+
+func (d ResourceInformation) ProgressPercent() float64 {
+	if d.Size == 0 {
+		return 0
+	}
+	return (d.Done / d.Size) * 100
+}
 
 var FillerResource = Resource{
 	Name:             "tableFiller",

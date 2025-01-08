@@ -1,6 +1,7 @@
 package netcode
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -21,12 +22,11 @@ func prepareFS(folderPath string, logFunction func(string), downloadStruct *core
 		if err != nil {
 			errMsg := fmt.Sprintf("Failed to create folder path: %s", folderPath)
 			logFunction(errMsg)
-			return fmt.Errorf(errMsg)
+			return errors.New(errMsg)
 		}
 		logFunction(fmt.Sprintf("Folder created: %s", folderPath))
 	}
 
-	// Create the full file path
 	filePath := filepath.Join(folderPath, downloadStruct.FileName)
 	downloadStruct.Location = filePath
 	return nil
@@ -43,15 +43,14 @@ func startHTTPRequest(downloadStruct *core.Resource, logFunction func(string)) (
 		downloadStruct.Status = core.StatusFailed
 		errMsg := fmt.Sprintf("Failed to start download: %v", err)
 		logFunction(errMsg)
-		return nil, fmt.Errorf(errMsg)
+		return nil, errors.New(errMsg)
 	}
 
-	// Check for HTTP errors
 	if resp.StatusCode != http.StatusOK {
 		downloadStruct.Status = core.StatusFailed
 		errMsg := fmt.Sprintf("HTTP %d error while fetching data", resp.StatusCode)
 		logFunction(errMsg)
-		return nil, fmt.Errorf(errMsg)
+		return nil, errors.New(errMsg)
 	}
 
 	return resp, nil
@@ -63,7 +62,7 @@ func createOutputFile(downloadStruct *core.Resource, logFunction func(string)) (
 		downloadStruct.Status = core.StatusFailed
 		errMsg := fmt.Sprintf("Error creating file: %v", err)
 		logFunction(errMsg)
-		return nil, fmt.Errorf(errMsg)
+		return nil, errors.New(errMsg)
 	}
 	return file, nil
 }

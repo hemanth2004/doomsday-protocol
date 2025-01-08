@@ -38,11 +38,21 @@ func (m StatusModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.KeyMsg:
 		if m.Focused {
 			switch msg.String() {
+			case "alt+d":
+				if m.ApplicationObject.ProtocolInitiated {
+					if m.ApplicationObject.ProtocolPaused {
+						m.ApplicationObject.ResumeProtocol()
+					} else {
+						m.ApplicationObject.PauseProtocol()
+					}
+				} else {
+					m.ApplicationObject.OrderToInitiateProtocol()
+				}
 			}
 		}
 	}
 
-	m.Progress.SetPercent(m.ApplicationObject.GetProgress())
+	m.Progress.SetPercent(m.ApplicationObject.ResourceList.CalculateProgress())
 
 	return m, tea.Batch(cmds...)
 }
@@ -56,11 +66,11 @@ func (m StatusModel) View() string {
 		overlay += "PROTOCOL UNINITIATED\n" +
 			strconv.Itoa(len(m.ApplicationObject.ResourceList.DefaultResources)) + " Default" + ", " +
 			strconv.Itoa(len(m.ApplicationObject.ResourceList.CustomResources)) + " Custom" + "\n" +
-			"INITIATE [CTRL + D + P]"
+			"INITIATE [ALT + D]"
 	} else {
-		overlay += "13.45%" + "\n" +
+		overlay += strconv.FormatFloat(m.ApplicationObject.ResourceList.CalculateProgress(), 'f', 2, 64) + "%" + "\n" +
 			//"ETA: 13 hours 6 mins" + "\n" +
-			"PAUSE [CTRL + D + P]"
+			"PAUSE [ALT + D]"
 	}
 
 	debug.Log(overlay)

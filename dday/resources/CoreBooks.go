@@ -24,6 +24,7 @@ var (
 			Info:             core.ResourceInformation{},
 			Status:           core.StatusQueued,
 			Error:            nil,
+			ControlChannel:   make(chan core.DownloadControl),
 		},
 
 		{
@@ -43,6 +44,7 @@ var (
 			Info:             core.ResourceInformation{},
 			Status:           core.StatusQueued,
 			Error:            nil,
+			ControlChannel:   make(chan core.DownloadControl),
 		},
 
 		{
@@ -62,6 +64,7 @@ var (
 			Info:             core.ResourceInformation{},
 			Status:           core.StatusQueued,
 			Error:            nil,
+			ControlChannel:   make(chan core.DownloadControl),
 		},
 
 		{
@@ -81,6 +84,7 @@ var (
 			Info:             core.ResourceInformation{},
 			Status:           core.StatusQueued,
 			Error:            nil,
+			ControlChannel:   make(chan core.DownloadControl),
 		},
 	}
 )

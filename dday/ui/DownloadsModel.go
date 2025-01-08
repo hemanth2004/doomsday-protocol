@@ -198,19 +198,31 @@ func (m DownloadsModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.CurrentWindow.PrevState()
 		}
 
-		m.DownloadsTable, cmd = m.DownloadsTable.Update(msg)
-		cmds = append(cmds, cmd)
-
-		if selectedResource := m.DownloadsTable.HighlightedRow().Data["resourceObject"].(*core.Resource); selectedResource.Name == "tableFiller" {
-			if msg.String() == "down" || msg.String() == "up" {
+		if m.CurrentWindow.Index() == 2 {
+			if msg.String() == "up" || msg.String() == "down" {
 				m.DownloadsTable, cmd = m.DownloadsTable.Update(msg)
 				cmds = append(cmds, cmd)
+
+				if selectedResource := m.DownloadsTable.HighlightedRow().Data["resourceObject"].(*core.Resource); selectedResource.Name == "tableFiller" {
+					if msg.String() == "down" || msg.String() == "up" {
+						m.DownloadsTable, cmd = m.DownloadsTable.Update(msg)
+						cmds = append(cmds, cmd)
+					}
+				}
+
+				// Inform InspectModel about the selected resource on the table
+				selectedResource := m.DownloadsTable.HighlightedRow().Data["resourceObject"].(*core.Resource)
+				m.InspectModel.InspectingDownload = selectedResource
+
+			} else if msg.String() == " " {
+				selectedResource := m.DownloadsTable.HighlightedRow().Data["resourceObject"].(*core.Resource)
+				selectedResource.SpacePressed()
+
+			} else if msg.String() == "enter" {
+				selectedResource := m.DownloadsTable.HighlightedRow().Data["resourceObject"].(*core.Resource)
+				selectedResource.EnterPressed()
 			}
 		}
-
-		// Inform InspectModel about the selected resource on the table
-		selectedResource := m.DownloadsTable.HighlightedRow().Data["resourceObject"].(*core.Resource)
-		m.InspectModel.InspectingDownload = selectedResource
 
 		m.ConsoleModel.Focused = m.CurrentWindow.Index() == 0
 		if updatedConsole, _ := m.ConsoleModel.Update(msg); updatedConsole != nil {
