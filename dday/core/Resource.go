@@ -64,18 +64,12 @@ const (
 	Cancel
 )
 
-var EmptyResource = Resource{
-	Name:        "example",
-	Description: "example",
-	Note:        "example",
-	Tier:        1,
-	UrlGetter: UrlGetter{
-		Key:           "example",
-		UpdatedURLURL: []string{},
-		DefaultURLs: []string{
-			"https://www.example.com",
-		},
-	},
+var FillerResource = Resource{
+	Name:             "tableFiller",
+	Description:      "tableFiller",
+	Note:             "tableFiller",
+	Tier:             1,
+	UrlGetter:        UrlGetter{},
 	FileName:         "example.txt",
 	InitiateDownload: func(path string, logFunction func(string), downloadStruct *Resource) error { return nil },
 	Info:             ResourceInformation{},

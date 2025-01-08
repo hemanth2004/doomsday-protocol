@@ -64,7 +64,7 @@ func (m InspectModel) View() string {
 
 	if m.InspectingDownload != nil {
 		buttonRender := ""
-		if m.InspectingDownload.Name != "example" {
+		if m.InspectingDownload.Name != "tableFiller" {
 			buttonRender = button1Style.Render(util.MarginHor(" Open Guide (ctrl+g) ", 3))
 		} else {
 			buttonRender = styles.TertiaryInvertedStyle.Render(util.MarginHor(" Open Guide (ctrl+g) ", 3))
@@ -81,7 +81,7 @@ func (m InspectModel) UpdateContent() string {
 	var s string
 	if m.InspectingDownload != nil {
 
-		if m.InspectingDownload.Name == "" || m.InspectingDownload.Name == "example" {
+		if m.InspectingDownload.Name == "" || m.InspectingDownload.Name == "tableFiller" {
 			s = "No download selected on the table."
 			return s
 		}

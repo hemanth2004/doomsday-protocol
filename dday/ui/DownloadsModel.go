@@ -59,6 +59,7 @@ func InitRows(m *DownloadsModel, tableWidth int) ([]table.Row, [][]string) {
 	convertStringToRow := func(s []string, resource *core.Resource) table.Row {
 
 		var statusStyle lipgloss.Style
+
 		switch resource.Status {
 		case core.StatusCompleted:
 			statusStyle = lipgloss.NewStyle().Foreground(styles.Green)
@@ -96,7 +97,7 @@ func InitRows(m *DownloadsModel, tableWidth int) ([]table.Row, [][]string) {
 			" ",
 			" ",
 		}
-		rows = append(rows, convertStringToRow(defaultResourcesHeader, &core.EmptyResource).WithStyle(styles.TableRowSeperationStyle))
+		rows = append(rows, convertStringToRow(defaultResourcesHeader, &core.FillerResource).WithStyle(styles.TableRowSeperationStyle))
 		rowsString = append(rowsString, defaultResourcesHeader)
 		countInThisTier := 0
 		for i, resource := range m.ResourceList.DefaultResources {
@@ -154,19 +155,6 @@ func (m DownloadsModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	_, rightWidth, rightHeightPrimary, _ := m.GetPanelDimensions()
 	rows, rowsString := InitRows(&m, rightWidth)
 
-	m.DownloadsTable, cmd = m.DownloadsTable.Update(msg)
-	cmds = append(cmds, cmd)
-
-	// Add the check here
-	if keyMsg, ok := msg.(tea.KeyMsg); ok {
-		if selectedResource := m.DownloadsTable.HighlightedRow().Data["resourceObject"].(*core.Resource); selectedResource.Name == "example" {
-			if keyMsg.String() == "down" || keyMsg.String() == "up" {
-				m.DownloadsTable, cmd = m.DownloadsTable.Update(msg)
-				cmds = append(cmds, cmd)
-			}
-		}
-	}
-
 	tableHeight := rightHeightPrimary
 	m.DownloadsTable = m.DownloadsTable.
 		WithRows(rows).
@@ -210,6 +198,20 @@ func (m DownloadsModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.CurrentWindow.PrevState()
 		}
 
+		m.DownloadsTable, cmd = m.DownloadsTable.Update(msg)
+		cmds = append(cmds, cmd)
+
+		if selectedResource := m.DownloadsTable.HighlightedRow().Data["resourceObject"].(*core.Resource); selectedResource.Name == "tableFiller" {
+			if msg.String() == "down" || msg.String() == "up" {
+				m.DownloadsTable, cmd = m.DownloadsTable.Update(msg)
+				cmds = append(cmds, cmd)
+			}
+		}
+
+		// Inform InspectModel about the selected resource on the table
+		selectedResource := m.DownloadsTable.HighlightedRow().Data["resourceObject"].(*core.Resource)
+		m.InspectModel.InspectingDownload = selectedResource
+
 		m.ConsoleModel.Focused = m.CurrentWindow.Index() == 0
 		if updatedConsole, _ := m.ConsoleModel.Update(msg); updatedConsole != nil {
 			m.ConsoleModel = updatedConsole.(submodels.ConsoleModel)
@@ -220,10 +222,6 @@ func (m DownloadsModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.InspectModel = updatedInspect.(submodels.InspectModel)
 		}
 	}
-
-	// Inform InspectModel about the selected resource on the table
-	selectedResource := m.DownloadsTable.HighlightedRow().Data["resourceObject"].(*core.Resource)
-	m.InspectModel.InspectingDownload = selectedResource
 
 	return m, tea.Batch(cmds...)
 }
