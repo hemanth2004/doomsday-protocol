@@ -10,8 +10,8 @@ import (
 	"github.com/hemanth2004/doomsday-protocol/dday/core"
 )
 
-func prepareDownload(folderPath string, downloadStruct *core.Resource, logFunction func(string)) error {
-	downloadStruct.Status = core.StatusQueued
+func prepareFS(folderPath string, logFunction func(string), downloadStruct *core.Resource) error {
+	downloadStruct.Status = core.StatusIdle
 
 	// Ensure the folder path exists or create it
 	if _, err := os.Stat(folderPath); os.IsNotExist(err) {

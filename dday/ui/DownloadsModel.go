@@ -42,7 +42,7 @@ type DownloadsModel struct {
 func (m DownloadsModel) GetPanelDimensions() (int, int, int, int) {
 	leftWidth := m.Width / 4
 	rightWidth := m.Width - leftWidth
-	rightHeightPrimary := int(0.75*float64(m.Height)) - 2
+	rightHeightPrimary := int(0.7*float64(m.Height)) - 2
 	rightHeightSecondary := m.Height - rightHeightPrimary - 2
 
 	if !m.ConsoleModel.ConsoleOpened {

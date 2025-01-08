@@ -19,10 +19,11 @@ type Resource struct {
 	UrlGetter        UrlGetter
 	FileName         string
 	Location         string
-	InitiateDownload func(path string, logFunction func(string), infoStruct *Resource) error
+	InitiateDownload func(path string, logFunction func(string), downloadStruct *Resource) error
 	Info             ResourceInformation
 	Status           DownloadStatus
 	Error            error
+	ControlChannel   chan DownloadControl // Channel for controlling the download
 
 	CustomResource bool
 }
@@ -52,6 +53,15 @@ const (
 	StatusPaused      DownloadStatus = "Paused"
 	StatusCompleted   DownloadStatus = "Completed"
 	StatusFailed      DownloadStatus = "Failed"
+	StatusIdle        DownloadStatus = "Idle"
+)
+
+type DownloadControl int
+
+const (
+	Start DownloadControl = iota // Synonymous with Continue
+	Pause
+	Cancel
 )
 
 var EmptyResource = Resource{
@@ -67,7 +77,7 @@ var EmptyResource = Resource{
 		},
 	},
 	FileName:         "example.txt",
-	InitiateDownload: func(path string, logFunction func(string), infoStruct *Resource) error { return nil },
+	InitiateDownload: func(path string, logFunction func(string), downloadStruct *Resource) error { return nil },
 	Info:             ResourceInformation{},
 	Status:           StatusQueued,
 	Error:            nil,

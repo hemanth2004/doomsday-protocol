@@ -43,8 +43,8 @@ var (
 	}
 	sizePair = ColumnKeyWidthPair{
 		Key:      "size",
-		Width:    2,
-		Flexible: true,
+		Width:    16,
+		Flexible: false,
 	}
 	speedPair = ColumnKeyWidthPair{
 		Key:      "speed",
@@ -61,7 +61,7 @@ var (
 		table.NewFlexColumn(namePair.Key, "Name", namePair.Width),
 		table.NewColumn(progressBarPair.Key, "Progress", progressBarPair.Width).WithStyle(lipgloss.NewStyle().Width(namePair.Width).Align(lipgloss.Right)),
 		table.NewColumn(statusPair.Key, "Status", statusPair.Width),
-		table.NewFlexColumn(sizePair.Key, "Size", sizePair.Width),
+		table.NewColumn(sizePair.Key, "Size", sizePair.Width),
 		table.NewColumn(speedPair.Key, "Speed", speedPair.Width),
 		table.NewColumn(etaPair.Key, "ETA", etaPair.Width),
 	}

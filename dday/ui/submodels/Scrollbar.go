@@ -3,7 +3,6 @@ package submodels
 import (
 	"strings"
 
-	tea "github.com/charmbracelet/bubbletea"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui/styles"
 )
 
@@ -24,14 +23,6 @@ func NewScrollbar() ScrollbarModel {
 	return ScrollbarModel{
 		ShowScrollbar: true,
 	}
-}
-
-func (m ScrollbarModel) Init() tea.Cmd {
-	return nil
-}
-
-func (m ScrollbarModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	return m, nil
 }
 
 func (m ScrollbarModel) View() string {
