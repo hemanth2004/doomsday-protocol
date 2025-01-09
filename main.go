@@ -27,6 +27,7 @@ var (
 
 // Options
 const useAlternateBuffer = false
+const tickInterval = 1000
 
 func main() {
 
@@ -43,7 +44,7 @@ func main() {
 	Application.TeaProgram = p
 	Application.LogFunction = DebugPrintGoroutine
 
-	go Application.StartPeriodicTicks(250) // = 4 FPS
+	go Application.StartPeriodicTicks(tickInterval) // = 1 FPS
 	core.CurrentApplicationInstance = &Application
 
 	if _, err := p.Run(); err != nil {
