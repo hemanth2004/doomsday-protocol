@@ -2,16 +2,18 @@ package resources
 
 import (
 	"github.com/hemanth2004/doomsday-protocol/dday/core"
+	"github.com/hemanth2004/doomsday-protocol/dday/core/guides"
 	"github.com/hemanth2004/doomsday-protocol/dday/core/netcode"
 )
 
 var CoreResources []core.Resource = []core.Resource{
 
 	{
-		Name:        "OpenStreetMaps India",
-		Description: "The latest map of all of India.",
-		Note:        "",
-		UrlGetter: core.UrlGetter{
+		Name:                "OpenStreetMaps India",
+		Description:         "The latest map of all of India.",
+		AssociatedGuidePath: guides.Guide("Guides/DefaultResources/Core/osm.md"),
+
+		UrlGetter: &core.UrlGetter{
 			Key:           "india-osm",
 			UpdatedURLURL: []string{},
 			DefaultURLs: []string{
@@ -21,16 +23,17 @@ var CoreResources []core.Resource = []core.Resource{
 		FileName:         "india-latest.osm.pbf",
 		InitiateDownload: netcode.InitiateHTTPDownload,
 		Info:             core.ResourceInformation{},
-		Status:           core.StatusQueued,
+		Status:           core.StatusIdle,
 		Error:            nil,
 		ControlChannel:   make(chan core.DownloadControl),
 	},
 
 	{
-		Name:        "Wikipedia English",
-		Description: "All text of all topics of the english Wikipedia.",
-		Note:        "",
-		UrlGetter: core.UrlGetter{
+		Name:                "Wikipedia English",
+		Description:         "All text of all topics of the english Wikipedia.",
+		AssociatedGuidePath: guides.Guide("Guides/DefaultResources/Core/wikipedia.md"),
+
+		UrlGetter: &core.UrlGetter{
 			Key:           "simple-wikipedia",
 			UpdatedURLURL: []string{},
 			DefaultURLs: []string{
@@ -40,7 +43,7 @@ var CoreResources []core.Resource = []core.Resource{
 		FileName:         "enwiki-latest-pages-articles.xml.bz2",
 		InitiateDownload: netcode.InitiateHTTPDownload,
 		Info:             core.ResourceInformation{},
-		Status:           core.StatusQueued,
+		Status:           core.StatusIdle,
 		Error:            nil,
 		ControlChannel:   make(chan core.DownloadControl),
 	},
@@ -51,11 +54,12 @@ var CoreResources []core.Resource = []core.Resource{
 	SurvivalBooks[3],
 
 	{
-		Name:        "Sample 100MB",
-		Description: "Sample 100MB file",
-		Note:        "",
-		Tier:        1,
-		UrlGetter: core.UrlGetter{
+		Name:                "Sample 100MB",
+		Description:         "Sample 100MB file",
+		Tier:                1,
+		AssociatedGuidePath: guides.Guide("Guides/DefaultResources/what-is-a-default-resource.md"),
+
+		UrlGetter: &core.UrlGetter{
 			Key:           "sample-100mb",
 			UpdatedURLURL: []string{},
 			DefaultURLs: []string{
@@ -65,7 +69,7 @@ var CoreResources []core.Resource = []core.Resource{
 		FileName:         "100MB.zip",
 		InitiateDownload: netcode.InitiateHTTPDownload,
 		Info:             core.ResourceInformation{},
-		Status:           core.StatusQueued,
+		Status:           core.StatusIdle,
 		Error:            nil,
 		ControlChannel:   make(chan core.DownloadControl),
 	},
@@ -73,7 +77,6 @@ var CoreResources []core.Resource = []core.Resource{
 	// {
 	// 	Name:        "Sample 1GB",
 	// 	Description: "Sample 1GB file",
-	// 	Note:        "",
 	// 	Tier:        1,
 	// 	UrlGetter: core.UrlGetter{
 	// 		Key:           "sample-1gb",
@@ -85,7 +88,7 @@ var CoreResources []core.Resource = []core.Resource{
 	// 	FileName:         "1GB.zip",
 	// 	InitiateDownload: netcode.InitiateFileDownload,
 	// 	Info:             core.ResourceInformation{},
-	// 	Status:           core.StatusQueued,
+	// 	Status:           core.StatusIdle,
 	// 	Error:            nil,
 	// },
 }

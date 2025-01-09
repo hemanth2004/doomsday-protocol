@@ -29,6 +29,9 @@ func (m *MultilineProgress) SetStyles(background, fill lipgloss.Style) {
 	m.fillStyle = fill
 }
 
+func (m *MultilineProgress) GetPercent() float64 {
+	return m.percent
+}
 func (m *MultilineProgress) SetPercent(percent float64) {
 	m.percent = percent
 }
@@ -44,7 +47,6 @@ func (m *MultilineProgress) View(overlay string) string {
 
 	line := m.fillStyle.Render(filled) + m.style.Render(empty)
 
-	// For height=1, center the overlay text on the progress bar
 	if m.height == 1 {
 		if overlay != "" {
 			// Create inverted styles for overlay text
@@ -58,10 +60,10 @@ func (m *MultilineProgress) View(overlay string) string {
 			// Center the overlay text
 			padding := (m.width - lipgloss.Width(overlay)) / 2
 			if padding > 0 {
-				overlay = strings.Repeat(" ", padding) + overlay
+				overlay = strings.Repeat(" ", padding) + overlay + strings.Repeat(" ", padding)
 			}
 
-			// Render each character with appropriate style based on position
+			// Render the overlay blended with the progress bar
 			var renderedOverlay string
 			for j, ch := range overlay {
 				if j >= m.width {
@@ -73,8 +75,15 @@ func (m *MultilineProgress) View(overlay string) string {
 					renderedOverlay += invertedBackStyle.Render(string(ch))
 				}
 			}
+
+			// Merge overlay with progress bar line
+			if lipgloss.Width(renderedOverlay) < m.width {
+				renderedOverlay += m.style.Render(strings.Repeat(" ", m.width-lipgloss.Width(renderedOverlay)))
+			}
+
 			return renderedOverlay
 		}
+		// If no overlay, return the progress bar line
 		return line
 	}
 

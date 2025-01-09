@@ -2,6 +2,7 @@ package ui
 
 import (
 	"github.com/hemanth2004/doomsday-protocol/dday/core"
+	"github.com/hemanth2004/doomsday-protocol/dday/core/guides"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui/styles"
 	"github.com/hemanth2004/doomsday-protocol/dday/util"
 
@@ -29,6 +30,10 @@ func (m MainModel) Init() tea.Cmd {
 
 func (m MainModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmds []tea.Cmd
+
+	if m.Downloads.NavigateToCtrlPanel == nil {
+		m.Downloads.NavigateToCtrlPanel = m.NavigateToCtrlPanel
+	}
 
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
@@ -138,7 +143,7 @@ func (m MainModel) View() string {
 	//stateLine += " " + styles.Accent3InvertedStyle.Render(" → [^E]")
 	s += lipgloss.Place(m.width, topSectionHeight, lipgloss.Center, lipgloss.Center, stateLine) + "\n"
 
-	defaultHelpText := m.HelpSet.View("    ")
+	defaultHelpText := m.HelpSet.View("  ")
 
 	sep := " | "
 	helpBoxContent := ""
@@ -146,19 +151,30 @@ func (m MainModel) View() string {
 	if m.CurrentState.Index() == 0 {
 
 		s += m.Home.View()
-		homeHelpText := m.Home.HelpSet[m.Home.CurrentWindow.Index()].View("    ")
+		homeHelpText := m.Home.HelpSet[m.Home.CurrentWindow.Index()].View("  ")
 		helpBoxContent += homeHelpText + sep + defaultHelpText
 	} else if m.CurrentState.Index() == 1 {
 		s += m.Downloads.View()
-		downloadsHelpText := m.Downloads.HelpSet[m.Downloads.CurrentWindow.Index()].View("    ")
+		downloadsHelpText := m.Downloads.HelpSet[m.Downloads.CurrentWindow.Index()].View("  ")
 		helpBoxContent += downloadsHelpText + sep + defaultHelpText
 	} else if m.CurrentState.Index() == 2 {
 		s += m.NewResource.View()
-		newresourceHelpText := m.NewResource.HelpSet.View("    ")
+		newresourceHelpText := m.NewResource.HelpSet.View("  ")
 		helpBoxContent += newresourceHelpText + sep + defaultHelpText
 	}
 
 	return s + lipgloss.Place(m.width, bottomSectionHeight-3, lipgloss.Center, lipgloss.Bottom, helpBoxContent) + "\n"
+}
+
+func (m *MainModel) NavigateToGuide(guide guides.Guide) {
+	m.CurrentState.SetState("home")
+	m.Home.CurrentWindow.SetState(2)
+
+}
+
+func (m *MainModel) NavigateToCtrlPanel() {
+	m.CurrentState.SetState("home")
+	m.Home.CurrentWindow.SetState(0)
 }
 
 type ResizeMsgL1 struct {

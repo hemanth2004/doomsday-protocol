@@ -66,3 +66,5 @@ func (a *Application) ResumeProtocol() {
 	a.ProtocolPaused = false
 	a.ResourceList.ResumeAllResources()
 }
+
+var CurrentApplicationInstance *Application

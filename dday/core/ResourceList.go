@@ -27,7 +27,7 @@ func (r *ResourceList) ResumeAllResources() {
 	}
 }
 
-func (r *ResourceList) CalculateProgress() float64 {
+func (r *ResourceList) GetOverallProgress() float64 {
 	var totalSize, downloadedSize float64
 
 	// Process default resources
@@ -43,6 +43,25 @@ func (r *ResourceList) CalculateProgress() float64 {
 		if resource.Info.Size > 0 {
 			totalSize += math.Abs(resource.Info.Size)
 			downloadedSize += math.Abs(resource.Info.Done)
+		}
+	}
+
+	if totalSize > 0 {
+		return downloadedSize / totalSize
+	}
+	return 0.0
+}
+
+func (r *ResourceList) GetCoreProgress() float64 {
+	var totalSize, downloadedSize float64
+
+	// Process default resources
+	for _, resource := range r.DefaultResources {
+		if resource.Tier == 0 {
+			if resource.Info.Size > 0 {
+				totalSize += math.Abs(resource.Info.Size)
+				downloadedSize += math.Abs(resource.Info.Done)
+			}
 		}
 	}
 

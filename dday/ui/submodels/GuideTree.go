@@ -7,6 +7,7 @@ import (
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/hemanth2004/doomsday-protocol/dday/core/guides"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui/styles"
 	"github.com/hemanth2004/doomsday-protocol/dday/util"
 	"github.com/hemanth2004/doomsday-protocol/dday/util/tree"
@@ -32,6 +33,8 @@ func (m GuideTreeModel) Init() tea.Cmd {
 	return nil
 }
 
+type NavigateToGuideMsg guides.Guide
+
 func (m GuideTreeModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmds []tea.Cmd
 
@@ -47,6 +50,10 @@ func (m GuideTreeModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.viewportOffset = 0
 		m.Scrollbar.Height = m.Height - 2
 		m.Scrollbar.ViewHeight = m.Height - 2
+
+	case NavigateToGuideMsg:
+		m.Tree.SetCursor(0)
+		m.viewportOffset = 0
 
 	case tea.KeyMsg:
 		if m.Focused {

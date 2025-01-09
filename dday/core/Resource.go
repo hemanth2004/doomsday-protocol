@@ -1,6 +1,7 @@
 package core
 
 import (
+	"math"
 	"time"
 
 	"github.com/hemanth2004/doomsday-protocol/dday/core/guides"
@@ -10,13 +11,12 @@ import (
 // Rest are queued
 // Appears on the Downloads list
 type Resource struct {
-	Name        string
-	Description string
-	Note        string
-	Tier        int
-	Guide       guides.Guide
+	Name                string
+	Description         string
+	Tier                int
+	AssociatedGuidePath guides.Guide // Relative path to the guides directory from the 'packaged' directory
 
-	UrlGetter        UrlGetter
+	UrlGetter        *UrlGetter
 	FileName         string
 	Location         string
 	InitiateDownload func(path string, logFunction func(string), downloadStruct *Resource) error
@@ -41,11 +41,16 @@ func (r *Resource) EnterPressed() {
 }
 
 func (r *Resource) PauseResource() {
-	r.ControlChannel <- Pause
+	if r.Status == StatusDownloading {
+		r.ControlChannel <- Pause
+	}
+
 }
 
 func (r *Resource) ResumeResource() {
-	r.ControlChannel <- Start
+	if r.Status == StatusPaused {
+		r.ControlChannel <- Start
+	}
 }
 
 type DownloadStatus string
@@ -78,18 +83,17 @@ type ResourceInformation struct {
 }
 
 func (d ResourceInformation) ProgressPercent() float64 {
-	if d.Size == 0 {
+	if d.Size <= 0 || d.Done <= 0 {
 		return 0
 	}
-	return (d.Done / d.Size) * 100
+	return math.Abs(d.Done) / math.Abs(d.Size)
 }
 
 var FillerResource = Resource{
 	Name:             "tableFiller",
 	Description:      "tableFiller",
-	Note:             "tableFiller",
 	Tier:             1,
-	UrlGetter:        UrlGetter{},
+	UrlGetter:        &UrlGetter{},
 	FileName:         "example.txt",
 	InitiateDownload: func(path string, logFunction func(string), downloadStruct *Resource) error { return nil },
 	Info:             ResourceInformation{},

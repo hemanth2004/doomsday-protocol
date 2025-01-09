@@ -52,7 +52,7 @@ func (m StatusModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	}
 
-	m.Progress.SetPercent(m.ApplicationObject.ResourceList.CalculateProgress())
+	m.Progress.SetPercent(m.ApplicationObject.ResourceList.GetOverallProgress())
 
 	return m, tea.Batch(cmds...)
 }
@@ -68,7 +68,7 @@ func (m StatusModel) View() string {
 			strconv.Itoa(len(m.ApplicationObject.ResourceList.CustomResources)) + " Custom" + "\n" +
 			"INITIATE [ALT + D]"
 	} else {
-		overlay += strconv.FormatFloat(m.ApplicationObject.ResourceList.CalculateProgress(), 'f', 2, 64) + "%" + "\n" +
+		overlay += strconv.FormatFloat(m.ApplicationObject.ResourceList.GetOverallProgress(), 'f', 2, 64) + "%" + "\n" +
 			//"ETA: 13 hours 6 mins" + "\n" +
 			"PAUSE [ALT + D]"
 	}
@@ -79,9 +79,9 @@ func (m StatusModel) View() string {
 
 	if m.Focused {
 		// Highlight Window if active
-		s += styles.PanelHighlightStyle.Width(m.Width).Height(m.Height).Render(content)
+		s += styles.CtrlPanelHighlightStyle.Width(m.Width).Height(m.Height).Render(content)
 	} else {
-		s += styles.PanelStyle.Width(m.Width).Height(m.Height).Render(content)
+		s += styles.CtrlPanelStyle.Width(m.Width).Height(m.Height).Render(content)
 	}
 	return s
 }

@@ -13,6 +13,15 @@ func NewStateHandler[T comparable](states []T, cur int) *StateHandler[T] {
 	return &StateHandler[T]{states: states, current: cur}
 }
 
+func (sh *StateHandler[T]) SetState(state T) {
+	for i, s := range sh.states {
+		if s == state {
+			sh.current = i
+			return
+		}
+	}
+}
+
 // CurrentState returns the current state.
 func (sh *StateHandler[T]) CurrentState() T {
 	return sh.states[sh.current]

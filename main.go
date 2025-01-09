@@ -15,7 +15,7 @@ import (
 var (
 	Application core.Application = core.Application{
 		ProtocolInitiated: false,
-		GuidesFolderPath:  "C:\\GIthubProjects\\doomsday-protocol\\packaged\\All Guides",
+		GuidesFolderPath:  "C:\\GIthubProjects\\doomsday-protocol\\packaged\\Guides",
 		ResourceList: core.ResourceList{
 			DefaultResources: resources.CoreResources,
 		},
@@ -44,7 +44,7 @@ func main() {
 	Application.LogFunction = DebugPrintGoroutine
 
 	go Application.StartPeriodicTicks(250) // = 4 FPS
-	//go Application.InitiateProtocol()
+	core.CurrentApplicationInstance = &Application
 
 	if _, err := p.Run(); err != nil {
 		log.Fatal(err)

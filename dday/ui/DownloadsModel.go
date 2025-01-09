@@ -4,6 +4,7 @@ import (
 	"strconv"
 
 	"github.com/hemanth2004/doomsday-protocol/dday/core"
+	"github.com/hemanth2004/doomsday-protocol/dday/core/guides"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui/styles"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui/submodels"
 	"github.com/hemanth2004/doomsday-protocol/dday/util"
@@ -22,9 +23,11 @@ type DownloadsModel struct {
 	Width  int
 
 	// Core
-	LogFunction    *func(string)
-	LogsContentRef *[][2]string
-	ResourceList   *core.ResourceList
+	LogFunction         *func(string)
+	LogsContentRef      *[][2]string
+	ResourceList        *core.ResourceList
+	NavigateToCtrlPanel func()
+	NavigateToGuide     func(guides.Guide)
 
 	// UI
 	// 0-Downloads(topRight)
@@ -224,12 +227,29 @@ func (m DownloadsModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 		}
 
+		if msg.String() == "ctrl+d" {
+			if m.NavigateToCtrlPanel != nil {
+				m.NavigateToCtrlPanel()
+			}
+		}
+
+		if msg.String() == "ctrl+g" {
+			if m.NavigateToGuide != nil {
+				m.NavigateToGuide(m.InspectModel.InspectingDownload.AssociatedGuidePath)
+			}
+		}
+
 		m.ConsoleModel.Focused = m.CurrentWindow.Index() == 0
 		if updatedConsole, _ := m.ConsoleModel.Update(msg); updatedConsole != nil {
 			m.ConsoleModel = updatedConsole.(submodels.ConsoleModel)
 		}
 
 		m.InspectModel.Focused = m.CurrentWindow.Index() == 1
+		if updatedInspect, _ := m.InspectModel.Update(msg); updatedInspect != nil {
+			m.InspectModel = updatedInspect.(submodels.InspectModel)
+		}
+
+	case core.TickMsg:
 		if updatedInspect, _ := m.InspectModel.Update(msg); updatedInspect != nil {
 			m.InspectModel = updatedInspect.(submodels.InspectModel)
 		}
@@ -248,11 +268,25 @@ func (m DownloadsModel) View() string {
 	// Rendering content in each window
 
 	// Downloads Table content
-	topRightContent := fmt.Sprintf("DOWNLOADS\n%s", "")
+	var actionSection string
+	if core.CurrentApplicationInstance != nil {
+		if core.CurrentApplicationInstance.ProtocolInitiated {
+			if core.CurrentApplicationInstance.ProtocolPaused {
+				actionSection += "[PRTCL paused]"
+			} else {
+				actionSection += "[PRTCL active]"
+			}
+		} else {
+			actionSection += "[PRTCL uninitiated]"
+		}
+	}
+	actionSection = styles.DebugStyle.Render(actionSection)
+
+	topRightContent := fmt.Sprintf("DOWNLOADS %s\n%s", actionSection, "")
 	topRightContent += m.DownloadsTable.View()
 
 	// Resource Tree content
-	leftContent := fmt.Sprintf("INSPECTOR\n%s\n", styles.DebugStyle.Render(util.DrawLine(leftWidth)))
+	leftContent := fmt.Sprintf("INSPECT\n%s\n", styles.DebugStyle.Render(util.DrawLine(leftWidth)))
 	leftContent += m.InspectModel.View()
 
 	//-------------

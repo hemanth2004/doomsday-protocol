@@ -73,7 +73,7 @@ func InitialTeaModel(Application *core.Application) MainModel {
 		Application:  Application,
 		ResourceList: &Application.ResourceList,
 
-		CurrentState: util.NewStateHandler([]string{"guides", "downloads", "new resource"}, 0),
+		CurrentState: util.NewStateHandler([]string{"home", "downloads", "new resource"}, 0),
 		Downloads: DownloadsModel{
 			ResourceList:   &Application.ResourceList,
 			LogFunction:    &Application.LogFunction,
@@ -101,7 +101,7 @@ func InitialTeaModel(Application *core.Application) MainModel {
 		Home: HomeModel{
 			CurrentWindow: util.NewStateHandler([]int{2, 1, 0}, 0),
 			TextViewer: submodels.TextViewerModel{
-				Path:      "packaged/All Guides/_welcome.md",
+				Path:      "packaged/Guides/_welcome.md",
 				Scrollbar: submodels.NewScrollbar(),
 			},
 			GuideTree: submodels.GuideTreeModel{
@@ -132,17 +132,19 @@ func InitDownloadsHelpSet() []HelpSet {
 		{
 			{"enter", "close/open"},
 			{"↑/↓", "navigate"},
+			{"ctrl+d", "show ctrl panel"},
 			{"tab", "switch panels"},
 		},
 		// Download Inspector
 		{
 			{"↑/↓", "navigate about"},
+			{"ctrl+d", "show ctrl panel"},
 			{"tab", "switch panels"},
 		},
 		// Downloads Table
 		{
 			{"↑/↓", "navigate"},
-			{"space", "pause selected"},
+			{"ctrl+d", "show ctrl panel"},
 			{"tab", "switch panels"},
 		},
 	}

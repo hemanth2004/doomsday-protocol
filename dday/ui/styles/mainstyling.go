@@ -28,14 +28,27 @@ const (
 
 var (
 	Border     = lipgloss.NormalBorder()
+	CtrlBorder = lipgloss.Border{
+		Top:         "▄",
+		Bottom:      "▀",
+		Left:        "│",
+		Right:       "│",
+		TopLeft:     "┌",
+		TopRight:    "┐",
+		BottomLeft:  "└",
+		BottomRight: "┘",
+	}
+
 	DebugStyle = lipgloss.NewStyle().Foreground(BrightBlack)
 	MainStyle  = lipgloss.NewStyle().Foreground(White)
 
 	HelpStyle1 = lipgloss.NewStyle().Foreground(White)
 	HelpStyle2 = lipgloss.NewStyle().Foreground(BrightBlack)
 
-	PanelStyle          = lipgloss.NewStyle().Border(Border).BorderForeground(BrightBlack)
-	PanelHighlightStyle = lipgloss.NewStyle().Border(Border).BorderForeground(White)
+	PanelStyle              = lipgloss.NewStyle().Border(Border).BorderForeground(BrightBlack)
+	PanelHighlightStyle     = lipgloss.NewStyle().Border(Border).BorderForeground(White)
+	CtrlPanelStyle          = lipgloss.NewStyle().Border(CtrlBorder).BorderForeground(BrightBlack)
+	CtrlPanelHighlightStyle = lipgloss.NewStyle().Border(CtrlBorder).BorderForeground(BrightBlue)
 
 	TreeDescriptionTitle = lipgloss.NewStyle().Foreground(Black).Background(Yellow).Bold(true)
 
