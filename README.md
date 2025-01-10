@@ -4,18 +4,15 @@
 
 A TUI application to download the world’s most important internet resources at the click of a button (and a few more). If the apocalypse/end/collapse was to arrive tomorrow, you’ll have the doomsday-protocol at hand to download and keep track of stuff.
 
-The `downloads` page helps keep track of and manage your downloads or even add new resources. The `guides` page helps browse and read our guides that help understand how and where you can use each of these resources. The `new resource` page lets you add a new resource using a HTTP/s download url along with a description. 
-
-> ***The application is **very much** in the design & developmental stages***
+The `downloads` page helps keep track of and manage your downloads. The `guides` page helps browse and read our guides that help understand how and where you can use each of these resources. The `new resource` page lets you add a new resource using a HTTP/s download url along with a description. 
 
 > Screenshot of the download page
-> <img style="width: 750px; height: auto; " src="https://github.com/hemanth2004/doomsday-protocol/blob/main/packaged/screenshots/10-1-25/downloads.png" />
+> <img style="width: 750px; height: auto; " src="https://github.com/hemanth2004/doomsday-protocol/blob/main/packaged/Screenshots/10-1-25/downloads.png" />
 
 > Screenshot of the guide browser in the home page
-> <img style="width: 750px; height: auto; " src="https://github.com/hemanth2004/doomsday-protocol/blob/main/packaged/screenshots/10-1-25/home.png" />
+> <img style="width: 750px; height: auto; " src="https://github.com/hemanth2004/doomsday-protocol/blob/main/packaged/Screenshots/10-1-25/home.png" />
 
 ## Resources
-The resources in this tool are divided into `default resources` and `user defined resources`.  
 - ✅ := I'm sure about the size and specifications of the resource
 - ❌ := Not yet sure about size and specs. Need further research.
 
@@ -35,9 +32,8 @@ These resources will add up to about ~10GB when choosing the low to medium size 
 
 ## TO-DO
 1. Better core download functionality
-	1. Pause, resume and retry downloads.
- 	2. Persistent download progress upon pausing and closing the program.
-	3. Concurrent download of upto N resources, rest will be queued and downloaded in series
+ 	1. Persistent download progress upon pausing and closing the program.
+	2. Concurrent download of upto N resources, rest will be queued and downloaded in series
    
 3. Write up guides and manuals for default resources
 4. New/Edit Resource Form Tab
