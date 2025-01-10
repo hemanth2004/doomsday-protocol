@@ -1,6 +1,8 @@
 package core
 
 import (
+	"errors"
+	"os"
 	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -68,3 +70,13 @@ func (a *Application) ResumeProtocol() {
 }
 
 var CurrentApplicationInstance *Application
+
+func GetWorkingDirectory() string {
+	mydir, err := os.Getwd()
+	if err == nil {
+		return mydir
+	} else {
+		panic(errors.New("failed to get working directory"))
+	}
+
+}

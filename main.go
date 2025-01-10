@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/hemanth2004/doomsday-protocol/dday/core"
+	"github.com/hemanth2004/doomsday-protocol/dday/core/guides"
 	"github.com/hemanth2004/doomsday-protocol/dday/debug"
 	"github.com/hemanth2004/doomsday-protocol/dday/resources"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui"
@@ -15,7 +16,7 @@ import (
 var (
 	Application core.Application = core.Application{
 		ProtocolInitiated: false,
-		GuidesFolderPath:  "C:\\GIthubProjects\\doomsday-protocol\\packaged\\Guides",
+		GuidesFolderPath:  guides.GuidesFolderFromWorkingDirectory(),
 		ResourceList: core.ResourceList{
 			DefaultResources: resources.CoreResources,
 		},

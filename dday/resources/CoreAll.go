@@ -10,7 +10,7 @@ var CoreResources []core.Resource = []core.Resource{
 
 	{
 		Name:                "OpenStreetMaps India",
-		Description:         "The latest map of all of India.",
+		Description:         "An offline .osm file provides a snapshot of geographic data for a specific area, mainly including:\n1.Road Networks\n2.Points of Interest\n3.Water Features\n4.Building Footprints",
 		AssociatedGuidePath: guides.Guide("Guides/DefaultResources/Core/osm.md"),
 
 		UrlGetter: &core.UrlGetter{

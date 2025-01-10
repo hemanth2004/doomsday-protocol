@@ -27,17 +27,9 @@ const (
 // 2.Provide option to revert to Mono-color
 
 var (
-	Border     = lipgloss.NormalBorder()
-	CtrlBorder = lipgloss.Border{
-		Top:         "▄",
-		Bottom:      "▀",
-		Left:        "│",
-		Right:       "│",
-		TopLeft:     "┌",
-		TopRight:    "┐",
-		BottomLeft:  "└",
-		BottomRight: "┘",
-	}
+	Border        = lipgloss.NormalBorder()
+	RoundedBorder = lipgloss.RoundedBorder()
+	CtrlBorder    = lipgloss.InnerHalfBlockBorder()
 
 	DebugStyle = lipgloss.NewStyle().Foreground(BrightBlack)
 	MainStyle  = lipgloss.NewStyle().Foreground(White)
@@ -45,8 +37,8 @@ var (
 	HelpStyle1 = lipgloss.NewStyle().Foreground(White)
 	HelpStyle2 = lipgloss.NewStyle().Foreground(BrightBlack)
 
-	PanelStyle              = lipgloss.NewStyle().Border(Border).BorderForeground(BrightBlack)
-	PanelHighlightStyle     = lipgloss.NewStyle().Border(Border).BorderForeground(White)
+	PanelStyle              = lipgloss.NewStyle().Border(RoundedBorder).BorderForeground(BrightBlack)
+	PanelHighlightStyle     = lipgloss.NewStyle().Border(RoundedBorder).BorderForeground(White)
 	CtrlPanelStyle          = lipgloss.NewStyle().Border(CtrlBorder).BorderForeground(BrightBlack)
 	CtrlPanelHighlightStyle = lipgloss.NewStyle().Border(CtrlBorder).BorderForeground(BrightBlue)
 
