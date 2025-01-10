@@ -39,9 +39,8 @@ These resources will add up to about ~10GB when choosing the low to medium size 
 4. New/Edit Resource Form Tab
 
 ### Known bugs
-1. Individual resource pausing/resume works but not with the overall resource list as in Application.PauseProtocol()
-2. Guides page markdown renderer's stylesheet (glow) is not compliant with escape codes available in virtual consoles
-3. For very small downloads (<download speed), the bytes downloaded are set as negative 1 Byte and eta is integer limit
+1. Guides page markdown renderer's stylesheet (glow) is not compliant with escape codes available in virtual consoles
+2. For very small downloads (<download speed), the bytes downloaded are set as negative 1 Byte and eta is integer limit
 
 ### Feature Ideations
 1. Let user add custom resources with links and descriptions ([huh](https://github.com/charmbracelet/huh) by charm)
