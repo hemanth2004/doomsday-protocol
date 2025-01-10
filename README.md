@@ -1,10 +1,8 @@
 # doomsday-protocol
 
-## What is it?
+A CLI tool to download the internet’s most important resources at the click of a button. 
 
-A TUI application to download the world’s most important internet resources at the click of a button (and a few more). If the apocalypse/end/collapse was to arrive tomorrow, you’ll have the doomsday-protocol at hand to download and keep track of stuff.
-
-The `downloads` page helps keep track of and manage your downloads. The `guides` page helps browse and read our guides that help understand how and where you can use each of these resources. The `new resource` page lets you add a new resource using a HTTP/s download url along with a description. 
+`downloads` helps keep track of and manage your downloads. The `guides` browse and read guides that help understand how and where you can use each of these resources. The `new resource` page lets you add a new resource using a url along with a description. 
 
 > Screenshot of the download page
 > <img style="width: 750px; height: auto; " src="https://github.com/hemanth2004/doomsday-protocol/blob/main/packaged/Screenshots/10-1-25/downloads.png" />
@@ -37,10 +35,11 @@ These resources will add up to about ~10GB when choosing the low to medium size 
    
 3. Write up guides and manuals for default resources
 4. New/Edit Resource Form Tab
+5. Probably need a more modular way to store resource info
 
 ### Known bugs
 1. Guides page markdown renderer's stylesheet (glow) is not compliant with escape codes available in virtual consoles
-2. For very small downloads (<download speed), the bytes downloaded are set as negative 1 Byte and eta is integer limit
+2. For very small downloads (<download speed), the bytes downloaded are set as negative 1 Byte and eta is integer limit. Change chunk size?
 
 ### Feature Ideations
 1. Let user add custom resources with links and descriptions ([huh](https://github.com/charmbracelet/huh) by charm)
