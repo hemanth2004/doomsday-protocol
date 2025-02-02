@@ -89,8 +89,6 @@ func CalculateExtraMultilineRows(columns []table.Column, rows [][]string, totalW
 		}
 	}
 
-	//debug.Log("Extra In Each Cell:\n" + printMatrix(extraInEachCell))
-
 	maxInEachRow := make([]int, len(rows))
 	for i := range rows {
 		var maximumExtra int = 0

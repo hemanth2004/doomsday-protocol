@@ -1,0 +1,24 @@
+[tui]
+
+[tui.main]
+theme = "ansi16" # "ansi16" or "twocolor"
+use_alternate_buffer = true
+tick_interval = 1000
+
+[tui.colors] 
+# ANSI-16 colors
+primary = "15"
+secondary = "7"
+tertiary = "8"
+accent1 = "11"
+accent2 = "13"
+accent3 = "3"
+accent4 = "12"
+
+
+[logs]
+save_logs = true
+log_level = "debug" # "debug" -> "warn" -> "error"
+log_file_path = "logs/logs.txt"
+show_timestamp = true
+max_log_lines = 1024

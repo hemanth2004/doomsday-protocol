@@ -31,11 +31,11 @@ var (
 	RoundedBorder = lipgloss.RoundedBorder()
 	CtrlBorder    = lipgloss.InnerHalfBlockBorder()
 
-	DebugStyle = lipgloss.NewStyle().Foreground(BrightBlack)
-	MainStyle  = lipgloss.NewStyle().Foreground(White)
+	DebugStyle = lipgloss.NewStyle().Foreground(TertiaryColor)
+	MainStyle  = lipgloss.NewStyle().Foreground(SecondaryColor)
 
-	HelpStyle1 = lipgloss.NewStyle().Foreground(White)
-	HelpStyle2 = lipgloss.NewStyle().Foreground(BrightBlack)
+	HelpStyle1 = lipgloss.NewStyle().Foreground(SecondaryColor)
+	HelpStyle2 = lipgloss.NewStyle().Foreground(TertiaryColor)
 
 	PanelStyle              = lipgloss.NewStyle().Border(RoundedBorder).BorderForeground(BrightBlack)
 	PanelHighlightStyle     = lipgloss.NewStyle().Border(RoundedBorder).BorderForeground(White)
@@ -44,7 +44,7 @@ var (
 
 	TreeDescriptionTitle = lipgloss.NewStyle().Foreground(Black).Background(Yellow).Bold(true)
 
-	TableStyle               = lipgloss.NewStyle().Foreground(White).BorderForeground(White)
+	TableStyle               = lipgloss.NewStyle().Foreground(SecondaryColor).BorderForeground(SecondaryColor)
 	TableRowSeperationStyle  = lipgloss.NewStyle().Foreground(Black).Background(Yellow).Align(lipgloss.Center)
 	DefaultResourceHeadStyle = lipgloss.NewStyle().Foreground(Black).Background(White).Align(lipgloss.Center)
 	CustomResourceHeadStyle  = lipgloss.NewStyle().Foreground(Yellow).Bold(true).Background(Blue)
@@ -58,6 +58,7 @@ var (
 	Accent1Color   = BrightYellow  // Bright Highlight
 	Accent2Color   = BrightMagenta // Slightly less important highlight
 	Accent3Color   = Yellow        // Least important highlight
+	Accent4Color   = BrightBlue    // Least important highlight
 
 	// Styles
 	PrimaryStyle   = lipgloss.NewStyle().Foreground(PrimaryColor)

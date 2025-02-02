@@ -15,6 +15,7 @@ import (
 
 var (
 	Application core.Application = core.Application{
+		Config:            core.LoadConfig("."),
 		ProtocolInitiated: false,
 		GuidesFolderPath:  guides.GuidesFolderFromWorkingDirectory(),
 		ResourceList: core.ResourceList{

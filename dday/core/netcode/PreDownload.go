@@ -29,6 +29,7 @@ func prepareFS(folderPath string, logFunction func(string), downloadStruct *core
 
 	filePath := filepath.Join(folderPath, downloadStruct.FileName)
 	downloadStruct.Location = filePath
+
 	return nil
 }
 
@@ -54,6 +55,7 @@ func startHTTPRequest(downloadStruct *core.Resource, logFunction func(string)) (
 	}
 
 	return resp, nil
+
 }
 
 func createOutputFile(downloadStruct *core.Resource, logFunction func(string)) (*os.File, error) {
@@ -64,7 +66,9 @@ func createOutputFile(downloadStruct *core.Resource, logFunction func(string)) (
 		logFunction(errMsg)
 		return nil, errors.New(errMsg)
 	}
+
 	return file, nil
+
 }
 
 func initializeDownloadInfo(resp *http.Response, downloadStruct *core.Resource) {

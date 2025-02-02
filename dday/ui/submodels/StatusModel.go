@@ -6,7 +6,6 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/hemanth2004/doomsday-protocol/dday/core"
-	"github.com/hemanth2004/doomsday-protocol/dday/debug"
 	"github.com/hemanth2004/doomsday-protocol/dday/ui/styles"
 )
 
@@ -73,7 +72,6 @@ func (m StatusModel) View() string {
 			"PAUSE [ALT + D]"
 	}
 
-	debug.Log(overlay)
 	overlayExpanded := lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, overlay)
 	content := m.Progress.View(overlayExpanded)
 

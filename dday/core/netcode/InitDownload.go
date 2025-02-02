@@ -11,8 +11,9 @@ import (
 	"github.com/hemanth2004/doomsday-protocol/dday/core"
 )
 
+const CHUNK_SIZE = 4096 // bytes in buffer
+
 // using http ranges
-// flow
 // first check if file exists
 // if yes, check if complete
 // if yes, finish up and set downloadStruct status
@@ -49,18 +50,20 @@ func InitiateHTTPDownload(folderPath string, logFunction func(string), downloadS
 }
 
 func performDownload(resp *http.Response, file *os.File, downloadStruct *core.Resource, logFunction func(string)) error {
+
 	logFunction(fmt.Sprintf("Starting download: %s -> %s", downloadStruct.Name, downloadStruct.UrlGetter.GetUrl()))
 
-	buffer := make([]byte, 4096)
+	buffer := make([]byte, CHUNK_SIZE)
 	var doneBytes float64
 	startTime := time.Now()
 	isPaused := false
 
 	downloadStruct.Status = core.StatusDownloading
 
-	// Download in chunks
+	// Download in CHUNK_SIZE chunks
 	for {
 		// Check control channel for commands
+		// As this download op is a seperate goroutine
 		select {
 		case cmd := <-downloadStruct.ControlChannel:
 			switch cmd {
@@ -91,7 +94,7 @@ func performDownload(resp *http.Response, file *os.File, downloadStruct *core.Re
 						return errors.New(errMsg)
 					}
 
-					// Update progress
+					// Update progress on downloadStruct
 					doneBytes += float64(n)
 					downloadStruct.Info.Done = doneBytes
 

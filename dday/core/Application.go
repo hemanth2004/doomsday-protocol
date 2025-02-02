@@ -11,6 +11,7 @@ import (
 
 // Everything that the entire application should keep track of
 type Application struct {
+	Config     *Config
 	TeaProgram *tea.Program
 
 	GuidesFolderPath string
