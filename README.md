@@ -2,31 +2,30 @@
 
 A CLI tool to download the internet’s most important resources at the click of a button. 
 
-`downloads` helps keep track of and manage your downloads. The `guides` browse and read guides that help understand how and where you can use each of these resources. The `new resource` page lets you add a new resource using a url along with a description. 
+`downloads` keeps track of and manage your resources.  `home` is where you can browse and read guides that help understand how & where you can use these resources. It also has the shortcut to initiate the protocol. `new resource` lets you add a new resource using a url along with a description.
 
-> Screenshot of the download page
+> Screenshots
+> 
 > <img style="width: 750px; height: auto; " src="https://github.com/hemanth2004/doomsday-protocol/blob/main/packaged/Screenshots/10-1-25/downloads.png" />
-
-> Screenshot of the guide browser in the home page
+>
 > <img style="width: 750px; height: auto; " src="https://github.com/hemanth2004/doomsday-protocol/blob/main/packaged/Screenshots/10-1-25/home.png" />
 
 ## Resources
-- ✅ := I'm sure about the size and specifications of the resource
-- ❌ := Not yet sure about size and specs. Need further research.
+`✅ := Sure about the size and specs of the resource.`
 
-|Resource| Why?| Size|
+`❌ := Not sure about size and specs. Need further research.`
+
+|Resource|Why?| Size|
 |-|-|-|
-||***<center><h3> > `Tier 0 Resources (Core)`*** ||
+||***<h3> > `Core Resources`*** ||
 | ✅ Wikipedia (simple) | The world's biggest encyclopedia / dictionary / knowledge base. **simple.wikipedia.org** has most of the important wiki pages, although not as extensive as the full version.| ~5GB |
-| ❌ Survival Guides | Guides on building shelters, gathering food, using HAM radio, basic treatment. The need to be .pdf/.epub ideally. Also convert to .txt for devices that can't open those formats.| ~0.5GB |
+| ❌ Survival Guides | Guides on building shelters, gathering food, using HAM radio, basic treatment. The need to be .pdf/.epub ideally. Also convert to .txt for devices that can't open those formats.| ~1GB |
 | ❌ Maps | The OpenStreetMaps database of your chosen countries. And possibly, other maps like those of soil and weather will be useful to the user. | ~1 to 5 GB per region. (Varies heavily. India is 1.4GB) |
-| ❌ Tools | Essential utilities to access and use the downloaded resources, such as map viewers, PDF readers, a wiki database viewer, an inference tool for the LLM etc. Prefer lightweight CLI/Linux-based tools. | ~200 MB (varies) |
-||***<center><h3> > `Tier 1 Resources (Optional)`*** ||
+| ❌ Tools | Essential utilities to access and use the downloaded resources, such as map viewers, PDF readers, a wiki database viewer, an inference tool for LLMs etc. Prefer lightweight CLI and/or Linux-based tools. [offline-osm-viewer](https://github.com/hemanth2004/offline-osm-viewer) | ~1GB (varies) |
+||***<h3> > `Additional Resources`*** ||
 | ❌ Educational Content | To preserve knowledge from fields like physics, chemistry, science, medicine, engineering, geography, philosophy and literature. (OpenStax, Internet Archive) | ~700MB–1GB (curated)  |
-| ✅ Small, portable OS | A thumb drive with all these resources important, environment and a general-purpose operating system that you can boot into anywhere. AntiX, Tiny Core Linux and Puppy Linux are in consideration here. | <li>TCL: `~50MB`</li><li>fossapup: `~400MB`</li> |
-| ❌ Free LLM | A simple language model can be invaluable in an apocalypse, but its practicality depends heavily on its storage requirements and availability of processing power. | ~1GB–4GB (varies) |
-
-These resources will add up to about ~10GB when choosing the low to medium size options. 
+| ✅ Small, portable OS | A thumb drive with all these resources important, environment and a general-purpose operating system that you can boot into anywhere. AntiX and Puppy Linux, both derived from debian, are in consideration here. | <li>fossapup: `~400MB`</li> |
+| ❌ Open LLM | A simple language model can be invaluable in an apocalypse, but its practicality depends heavily on its storage requirements and availability of processing power. | ~1GB–4GB (varies) |
 
 ## TO-DO
 1. Better core download functionality
